@@ -208,6 +208,8 @@ names(result_df) <- c("recall", "precision", "f-measure", "time")
 result_df$method <- c("vabl", "fabl_mm", "fastlink", "multilink_1",
                       "multilink_2", "multilink_3")
 
+result_df$errors <- ceiling(i/100)
+
 
 saveRDS(result_df, file = paste0("out/sadinle_sim/sim_",
                                  str_pad(i, 3, pad = "0")))
