@@ -26,11 +26,11 @@ hash <- hash_comparisons(cd, all_patterns = T, R = 3)
 
 hash_time <- unname(toc(quiet = T)$toc - start)
 
-time_df <- data.frame(batch = k,
-                      data = "NCVR",
-                      comparison = compare_time,
-                      hash = hash_time)
-saveRDS(time_df, glue("out/case_study_time/ncvr_{k}"))
+# time_df <- data.frame(batch = k,
+#                       data = "NCVR",
+#                       comparison = compare_time,
+#                       hash = hash_time)
+# saveRDS(time_df, glue("out/case_study_time/ncvr_{k}"))
 # paste0("out/ncvr/hash/", "hash_",
 #        stringr::str_pad(k, 2, pad = "0"))
 saveRDS(hash, paste0("out/ncvr/hash/", "hash_",

@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH -p compsci
 #SBATCH --array=1-300
 #SBATCH --mail-type=end
 #SBATCH --mail-user=bak47@duke.edu

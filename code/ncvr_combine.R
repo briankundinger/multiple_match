@@ -16,6 +16,6 @@ combine_time <- unname(toc(quiet = T)$toc - start)
 combine_df <- data.frame(data = "NCVR",
                          combine_time = combine_time)
 
-saveRDS(combine_df, "out/case_study_combine_time/ncvr")
+#saveRDS(combine_df, "out/case_study_combine_time/ncvr")
 
 saveRDS(hash, "out/ncvr/combine/hash")
