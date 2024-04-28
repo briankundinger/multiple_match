@@ -22,8 +22,7 @@ start <- tic()
 cd <- compare_records(ncvr_a, batch, flds = fields, types = types)
 compare_time <- unname(toc(quiet = T)$toc - start)
 start <- tic()
-hash <- hash_comparisons(cd, all_patterns = T, R = 3,
-                         method = c("vabl", "fabl"))
+hash <- hash_comparisons(cd, all_patterns = T, R = 3)
 
 hash_time <- unname(toc(quiet = T)$toc - start)
 
