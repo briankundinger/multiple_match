@@ -8,7 +8,7 @@ ncvr_b <- readRDS("data/ncvr_b")
 n1 <- nrow(ncvr_a)
 n2 <- nrow(ncvr_b)
 
-files <- list.files("out/ncvr/hash/", full.names = T)[851:875]
+files <- list.files("out/ncvr/hash/", full.names = T)[876:900]
 hash_list <- lapply(files, readRDS)
 start <- tic()
 hash <- combine_hash(hash_list, n1, n2)
