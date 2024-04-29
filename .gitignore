@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-out/ncvr/hash
-out/sadinle_sim/hash
+out/ncvr/hash/
+out/ncvr/combine/
+out/sadinle_sim/
 logs/
