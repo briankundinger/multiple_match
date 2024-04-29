@@ -1,4 +1,4 @@
-library(fabldev)
+library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
@@ -12,25 +12,29 @@ df1 <- ncvr_a %>%
 
 df2 <- ncvr_b %>%
   select(voter_id) %>%
+  mutate(rn = row_number()) %>%
   arrange(voter_id)
 
 n1 <- nrow(df1)
 n2 <- nrow(df2)
 
-joined <- right_join(df1, df2, by = "voter_id", copy = T, keep = T) %>%
+joined <- right_join(df1, df2, by = "voter_id", copy = T, keep = T,
+                     relationship = "many-to-many") %>%
   arrange(voter_id.y)
-joined$rn[is.na(joined$rn)] <- 0
-Z_true <- joined$rn
 
-#hash <- readRDS("out/ncvr/combine/hash")
+Z_true_pairs <- joined %>%
+  filter(!is.na(voter_id.x)) %>%
+  select(rn.x, rn.y)
+# joined$rn[is.na(joined$rn)] <- 0
+# Z_true <- joined$rn
+
 hash <- readRDS("out/ncvr/combine/hash")
 
 ptm <- proc.time()
-chain <- gibbs_efficient(hash, S = S, burn = burn)
-#saveRDS(chain, "out/ncvr_combine/ncvr_chain")
+chain <- fabl(hash, S = S, burn = burn)
 seconds <- proc.time() - ptm
-results <- estimate_links(chain$Z, n1)
-eval <- evaluate_links(results$Z_hat, Z_true, n1)
+results <- estimate_links(chain, hash)
+eval <- evaluate_links(results$Z_hat, Z_true_pairs, n1, "pairs")
 df <- data.frame(n1 = n1,
                  n2 = n2,
                  recall = eval[1],
