@@ -7,6 +7,6 @@
 #SBATCH --error=logs/%x_%a.err
 #SBATCH --job-name=sadinle_duplicates
 #SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=16G
+#SBATCH --mem-per-cpu=64G
 
 Rscript code/sadinle_duplicates.R
