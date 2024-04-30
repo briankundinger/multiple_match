@@ -15,8 +15,9 @@ last_batch <- n2 %% 225
 batch_id <-c(rep(1:normal_batches, each = 225), rep(normal_batches + 1, last_batch))
 batch <- ncvr_b[batch_id == k, ]
 
-fields <- c(4, 5, 6, 7, 9, 10, 13)
-types <- c("bi", "bi", "bi", "bi", "bi", "bi", "bi")
+#fields <- c(4, 5, 6, 7, 9, 10, 13)
+fields <- c(4, 5)
+types <- rep("bi", length(fields))
 
 start <- tic()
 cd <- compare_records(ncvr_a, batch, fields = fields, types = types)
