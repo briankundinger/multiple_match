@@ -16,11 +16,13 @@ batch_id <-c(rep(1:normal_batches, each = 225), rep(normal_batches + 1, last_bat
 batch <- ncvr_b[batch_id == k, ]
 
 #fields <- c(4, 5, 6, 7, 9, 10, 13)
-fields <- c(4, 5)
-types <- rep("bi", length(fields))
+#types <- rep("bi", length(fields))
 
+fields <- c(4, 5, 6, 7, 9, 10)
+types <- c("lv", "bi", "lv", "bi", "bi", "bi")
 start <- tic()
-cd <- compare_records(ncvr_a, batch, fields = fields, types = types)
+cd <- compare_records(ncvr_a, batch, fields = fields, types = types,
+                      breaks = c(0, .25))
 compare_time <- unname(toc(quiet = T)$toc - start)
 start <- tic()
 hash <- hash_comparisons(cd, all_patterns = T, R = 3, algorithm = c("vabl", "fabl"))
