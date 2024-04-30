@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p compsci
-#SBATCH --array=1-988%100
+#SBATCH --array=1-995%100
 #SBATCH --mail-type=end
 #SBATCH --mail-user=bak47@duke.edu
 #SBATCH --output=logs/%x_%a.out

@@ -1,4 +1,4 @@
-library(fabldev)
+library(vabldev)
 library(glue)
 library(tictoc)
 
@@ -19,7 +19,7 @@ fields <- c(4, 5, 6, 7, 9, 10, 13)
 types <- c("bi", "bi", "bi", "bi", "bi", "bi", "bi")
 
 start <- tic()
-cd <- compare_records(ncvr_a, batch, flds = fields, types = types)
+cd <- compare_records(ncvr_a, batch, fields = fields, types = types)
 compare_time <- unname(toc(quiet = T)$toc - start)
 start <- tic()
 hash <- hash_comparisons(cd, all_patterns = T, R = 3, algorithm = c("vabl", "fabl"))
