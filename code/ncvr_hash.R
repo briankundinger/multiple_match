@@ -20,6 +20,7 @@ batch <- ncvr_b[batch_id == k, ]
 
 fields <- c(4, 5, 6, 7, 9, 10)
 types <- c("lv", "bi", "lv", "bi", "bi", "bi")
+#2241
 
 # fields <- c(4, 5, 6)
 # types <- c("lv", "bi", "lv")
