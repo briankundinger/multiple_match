@@ -18,8 +18,11 @@ batch <- ncvr_b[batch_id == k, ]
 #fields <- c(4, 5, 6, 7, 9, 10, 13)
 #types <- rep("bi", length(fields))
 
-fields <- c(4, 5, 6, 7, 9, 10)
-types <- c("lv", "bi", "lv", "bi", "bi", "bi")
+# fields <- c(4, 5, 6, 7, 9, 10)
+# types <- c("lv", "bi", "lv", "bi", "bi", "bi")
+
+fields <- c(4, 5, 6)
+types <- c("lv", "bi", "lv")
 start <- tic()
 cd <- compare_records(ncvr_a, batch, fields = fields, types = types,
                       breaks = c(0, .25))
