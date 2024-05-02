@@ -55,8 +55,11 @@ file2 <- records %>%
   data.frame(.) %>%
   mutate(occup = as.numeric(occup))
 
-copy_index <- 1:overlap
-paste_index <- (overlap +1):(2*overlap)
+# copy_index <- 1:overlap
+# paste_index <- (overlap +1):(2*overlap)
+
+copy_index <- 1:(overlap/2)
+paste_index <- (overlap +1):(overlap + overlap/2)
 
 file1[paste_index, ] <- file1[copy_index, ]
 
