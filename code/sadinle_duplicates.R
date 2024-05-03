@@ -25,7 +25,7 @@ tmax= 200
 threshold = 1e-6
 resolve = T
 
-overlap <- 25
+overlap <- 250
 
 records <- read_csv(files[i], col_types = cols())
 records$file <- rep(2:1, length.out = dim(records)[1])
@@ -71,12 +71,12 @@ cd <- compare_records(file1, file2, c(2, 3, 5, 6) + 1,
 hash <- hash_comparisons(cd)
 
 # fabl
-start <- proc.time()[3]
-out <- fabl(hash, S = S, burn = burn)
-time <- proc.time()[3] - start
-result <- estimate_links(out, hash, resolve = F)
-Z_hat <- make_Zhat_pairs(result$Z_hat)
-fabl_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+# start <- proc.time()[3]
+# out <- fabl(hash, S = S, burn = burn)
+# time <- proc.time()[3] - start
+# result <- estimate_links(out, hash, resolve = F)
+# Z_hat <- make_Zhat_pairs(result$Z_hat)
+# fabl_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 
 # Multiple match
 start <- proc.time()[3]
@@ -213,7 +213,7 @@ fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 # result_df$method <- c("fabl", "fabl_mm", "fastlink", "multilink_1",
 #                       "multilink_2", "multilink_3")
 
-result_df <- rbind(fabl_result, fabl_mm_result, fastlink_result) %>%
+result_df <- rbind(fabl_mm_result, fastlink_result) %>%
   data.frame()
 
 
