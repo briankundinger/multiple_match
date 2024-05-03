@@ -15,7 +15,7 @@ m_prior = 1
 u_prior = 1
 alpha = 1
 beta = 1
-S = 1000
+S = 500
 burn = S * .1
 show_progress = F
 fast = F
@@ -218,7 +218,7 @@ result_df <- rbind(fabl_mm_result, fastlink_result) %>%
 
 
 names(result_df) <- c("recall", "precision", "f-measure", "time")
-result_df$method <- c("fabl", "fabl_mm", "fastlink")
+result_df$method <- c("fabl_mm", "fastlink")
 
 result_df$errors <- ceiling(i/100)
 result_df$sim_number <- i
