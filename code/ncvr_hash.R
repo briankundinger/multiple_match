@@ -9,10 +9,12 @@ ncvr_b <- readRDS("data/ncvr_b")
 n1 <- nrow(ncvr_a)
 n2 <- nrow(ncvr_b)
 
-normal_batches <- n2 %/% 100
-last_batch <- n2 %% 100
+batch_size <- 100
 
-batch_id <-c(rep(1:normal_batches, each = 225), rep(normal_batches + 1, last_batch))
+normal_batches <- n2 %/% batch_size
+last_batch <- n2 %% batch_size
+
+batch_id <-c(rep(1:normal_batches, each = batch_size), rep(normal_batches + 1, last_batch))
 batch <- ncvr_b[batch_id == k, ]
 
 #fields <- c(4, 5, 6, 7, 9, 10, 13)
