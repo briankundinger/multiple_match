@@ -25,7 +25,7 @@ tmax= 200
 threshold = 1e-6
 resolve = T
 
-overlap <- 100
+overlap <- 200
 
 records <- read_csv(files[i], col_types = cols())
 records$file <- rep(2:1, length.out = dim(records)[1])
