@@ -96,20 +96,20 @@ Z_hat <- data.frame(id_1 = estimate_fl$fs_linkages$a,
                     id_2 = estimate_fl$fs_linkages$b)
 fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 
-# MultiLink
-
-# all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
-# all_records$occup <- as.character(all_records$occup)
-# cd_multilink <- multilink::create_comparison_data(all_records,
-#                                                   types = c("lv", "lv", "bi", "bi"),
-#                                                   breaks = list(c(0, .25, .5),
-#                                                                 c(0, .25, .5),
-#                                                                 NA,
-#                                                                 NA),
-#                                                   file_sizes = c(n1, n2),
-#                                                   duplicates = c(1, 0),
-#                                                   verbose = T)
+# # MultiLink
 #
+# # all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
+# # all_records$occup <- as.character(all_records$occup)
+# # cd_multilink <- multilink::create_comparison_data(all_records,
+# #                                                   types = c("lv", "lv", "bi", "bi"),
+# #                                                   breaks = list(c(0, .25, .5),
+# #                                                                 c(0, .25, .5),
+# #                                                                 NA,
+# #                                                                 NA),
+# #                                                   file_sizes = c(n1, n2),
+# #                                                   duplicates = c(1, 0),
+# #                                                   verbose = T)
+# #
 # # One Match
 #
 # prior <- multilink::specify_prior(cd_multilink, NA, NA, 0,
@@ -141,38 +141,38 @@ fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 #
 # multilink1_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 #
-# # Two Match
-#
-# prior <- multilink::specify_prior(cd_multilink, NA, NA, 0,
-#                                   NA, c(2, 1), NA, list(1, 1), NA, NA)
-#
-# start <- proc.time()[3]
-# chain_multilink <- multilink::gibbs_sampler(cd_multilink, prior, n_iter = S)
-# time <- proc.time()[3] - start
-# result_ML <- multilink::find_bayes_estimate(chain_multilink$partitions, burn)
-#
-# cluster_labels <- unique(result_ML)
-#
-# df_1_clusters <- result_ML[1:500]
-# df_2_clusters <- result_ML[501:1000]
-#
-# Z_list <- list()
-#
-# for(x in cluster_labels){
-#   match1 <- which(df_1_clusters == x)
-#   match2 <- which(df_2_clusters == x)
-#
-#   if(length(match1) == 0 ||length(match2) == 0){
-#     next
-#   }
-#   Z_list[[x]] <- data.frame(id_1 = match1,
-#                             id_2 = match2)
-# }
-#
-# Z_hat <- do.call(rbind, Z_list)
-#
-# multilink2_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
-#
+# Two Match
+
+prior <- multilink::specify_prior(cd_multilink, NA, NA, 0,
+                                  NA, c(2, 1), NA, list(1, 1), NA, NA)
+
+start <- proc.time()[3]
+chain_multilink <- multilink::gibbs_sampler(cd_multilink, prior, n_iter = S)
+time <- proc.time()[3] - start
+result_ML <- multilink::find_bayes_estimate(chain_multilink$partitions, burn)
+
+cluster_labels <- unique(result_ML)
+
+df_1_clusters <- result_ML[1:500]
+df_2_clusters <- result_ML[501:1000]
+
+Z_list <- list()
+
+for(x in cluster_labels){
+  match1 <- which(df_1_clusters == x)
+  match2 <- which(df_2_clusters == x)
+
+  if(length(match1) == 0 ||length(match2) == 0){
+    next
+  }
+  Z_list[[x]] <- data.frame(id_1 = match1,
+                            id_2 = match2)
+}
+
+Z_hat <- do.call(rbind, Z_list)
+
+multilink2_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+
 # # Three Match
 #
 # prior <- multilink::specify_prior(cd_multilink, NA, NA, 0,
@@ -213,12 +213,12 @@ fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 # result_df$method <- c("fabl", "fabl_mm", "fastlink", "multilink_1",
 #                       "multilink_2", "multilink_3")
 
-result_df <- rbind(fabl_mm_result, fastlink_result) %>%
+result_df <- rbind(fabl_mm_result, fastlink_result, multilink2_result) %>%
   data.frame()
 
 
 names(result_df) <- c("recall", "precision", "f-measure", "time")
-result_df$method <- c("fabl_mm", "fastlink")
+result_df$method <- c("fabl_mm", "fastlink", "multilink_2")
 
 result_df$errors <- ceiling(i/100)
 result_df$sim_number <- i
