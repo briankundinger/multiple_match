@@ -4,6 +4,7 @@ ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
 S <- 200
 burn <- S * .1
+tmax = 1000
 
 df1 <- ncvr_a %>%
   select(voter_id) %>%
@@ -63,20 +64,29 @@ df <- data.frame(n1 = n1,
 saveRDS(df, "out/ncvr_results/fabl_mm")
 
 ptm <- proc.time()
-out <- variational_fastlink(hash, tmax = 1000)
+out <- variational_fastlink(hash, tmax = tmax)
 seconds <- proc.time() - ptm
-# results <- estimate_links_fl(out, hash flags_only = T)
-# eval <- evaluate_links(results$, Z_true_pairs, n1, "pairs")
-# df <- data.frame(n1 = n1,
-#                  n2 = n2,
-#                  recall = eval[1],
-#                  precision = eval[2],
-#                  f_measure = eval[3],
-#                  iterations = S,
-#                  time = seconds[3],
-#                  method = "fabl",
-#                  data = "ncvr")
-# saveRDS(df, "out/ncvr_results/fabl_mm")
+
+files <- list.files(path = "data/sadinle_sim_data/", full.names = T)
+fs_matches <- lapply(files, function(x){
+  batch <- readRDS(x)
+  result <- estimate_links_fl(out, batch)
+  Z_hat <- data.frame(id_1 = estimate_fl$fs_linkages$a,
+                      id_2 = estimate_fl$fs_linkages$b)
+  Z_hat
+}) %>%
+  do.call(rbind, .)
+eval <- evaluate_links(fs_matches, Z_true_pairs, n1, "pairs")
+df <- data.frame(n1 = n1,
+                 n2 = n2,
+                 recall = eval[1],
+                 precision = eval[2],
+                 f_measure = eval[3],
+                 iterations = tmax,
+                 time = seconds[3],
+                 method = "fastlink",
+                 data = "ncvr")
+saveRDS(df, "out/ncvr_results/fastlink")
 
 # trace_df <- data.frame(data = "ncvr",
 #                        trace = chain$overlap) %>%
