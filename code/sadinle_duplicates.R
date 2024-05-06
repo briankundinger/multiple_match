@@ -15,7 +15,7 @@ m_prior = 1
 u_prior = 1
 alpha = 1
 beta = 1
-S = 400
+S = 1000
 burn = S * .1
 show_progress = F
 fast = F
@@ -25,7 +25,7 @@ tmax= 200
 threshold = 1e-6
 resolve = T
 
-overlap <- 200
+overlap <- 100
 
 records <- read_csv(files[i], col_types = cols())
 records$file <- rep(2:1, length.out = dim(records)[1])
