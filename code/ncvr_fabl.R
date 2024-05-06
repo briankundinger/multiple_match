@@ -2,7 +2,7 @@ library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
-S <- 1000
+S <- 200
 burn <- S * .1
 
 df1 <- ncvr_a %>%
@@ -44,11 +44,44 @@ df <- data.frame(n1 = n1,
                  time = seconds[3],
                       method = "fabl",
                       data = "ncvr")
-saveRDS(df, "out/case_study_results/ncvr_fabl")
+saveRDS(df, "out/ncvr_results/fabl")
 
-trace_df <- data.frame(data = "ncvr",
-                       trace = chain$overlap) %>%
-  mutate(iter = row_number())
+ptm <- proc.time()
+chain <- fabl_mm(hash, S = S, burn = burn)
+seconds <- proc.time() - ptm
+results <- estimate_links(chain, hash)
+eval <- evaluate_links(results$Z_hat, Z_true_pairs, n1, "pairs")
+df <- data.frame(n1 = n1,
+                 n2 = n2,
+                 recall = eval[1],
+                 precision = eval[2],
+                 f_measure = eval[3],
+                 iterations = S,
+                 time = seconds[3],
+                 method = "fabl",
+                 data = "ncvr")
+saveRDS(df, "out/ncvr_results/fabl_mm")
 
-saveRDS(trace_df, "out/case_study_trace/ncvr")
+ptm <- proc.time()
+out <- variational_fastlink(hash, tmax = 1000)
+seconds <- proc.time() - ptm
+# results <- estimate_links_fl(out, hash flags_only = T)
+# eval <- evaluate_links(results$, Z_true_pairs, n1, "pairs")
+# df <- data.frame(n1 = n1,
+#                  n2 = n2,
+#                  recall = eval[1],
+#                  precision = eval[2],
+#                  f_measure = eval[3],
+#                  iterations = S,
+#                  time = seconds[3],
+#                  method = "fabl",
+#                  data = "ncvr")
+# saveRDS(df, "out/ncvr_results/fabl_mm")
+
+# trace_df <- data.frame(data = "ncvr",
+#                        trace = chain$overlap) %>%
+#   mutate(iter = row_number())
+#
+# saveRDS(trace_df, "out/case_study_trace/ncvr")
+
 
