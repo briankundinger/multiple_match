@@ -64,9 +64,9 @@ df <- data.frame(n1 = n1,
                  data = "ncvr")
 saveRDS(df, "out/ncvr_results/fabl_mm")
 
-# ptm <- proc.time()
-# out <- variational_fastlink(hash, tmax = tmax)
-# seconds <- proc.time() - ptm
+ptm <- proc.time()
+out <- variational_fastlink(hash, tmax = tmax)
+seconds <- proc.time() - ptm
 
 files <- list.files(path = "out/ncvr/hash/", full.names = T)
 file_1_labs <- 1:n1
