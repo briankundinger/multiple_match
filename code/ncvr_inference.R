@@ -32,22 +32,22 @@ Z_true_pairs <- joined %>%
 
 hash <- readRDS("out/ncvr/combine/hash")
 
-ptm <- proc.time()
-chain <- fabl(hash, S = S, burn = burn)
-seconds <- proc.time() - ptm
-results <- estimate_links(chain, hash)
-Z_hat <- make_Zhat_pairs(results$Z_hat)
-eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
-df <- data.frame(n1 = n1,
-                 n2 = n2,
-                 recall = eval[1],
-                      precision = eval[2],
-                      f_measure = eval[3],
-                      iterations = S,
-                 time = seconds[3],
-                      method = "fabl",
-                      data = "ncvr")
-saveRDS(df, "out/ncvr_results/fabl")
+# ptm <- proc.time()
+# chain <- fabl(hash, S = S, burn = burn)
+# seconds <- proc.time() - ptm
+# results <- estimate_links(chain, hash)
+# Z_hat <- make_Zhat_pairs(results$Z_hat)
+# eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
+# df <- data.frame(n1 = n1,
+#                  n2 = n2,
+#                  recall = eval[1],
+#                       precision = eval[2],
+#                       f_measure = eval[3],
+#                       iterations = S,
+#                  time = seconds[3],
+#                       method = "fabl",
+#                       data = "ncvr")
+# saveRDS(df, "out/ncvr_results/fabl")
 
 # ptm <- proc.time()
 # chain <- fabl_mm(hash, S = S, burn = burn)
@@ -80,8 +80,8 @@ last_batch <- n2 %% batch_size
 fs_matches <- list()
 
 for(i in 1:length(files)){
+  print(i)
   batch <- readRDS(files[i])
-
 
   batch_id <-c(rep(1:normal_batches, each = batch_size), rep(normal_batches + 1, last_batch))
   batch_labs <- df2[batch_id == i, ]$rn
