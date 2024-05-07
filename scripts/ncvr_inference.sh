@@ -6,7 +6,7 @@
 #SBATCH --error=logs/%x.err
 #SBATCH --job-name=ncvr_inference
 #SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=256G
+#SBATCH --mem-per-cpu=200G
 #
 # modules
 #
