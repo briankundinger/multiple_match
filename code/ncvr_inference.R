@@ -8,13 +8,14 @@ tmax = 1000
 
 df1 <- ncvr_a %>%
   select(voter_id) %>%
-  mutate(rn = row_number()) %>%
-  arrange(voter_id)
+  mutate(rn = row_number())
+# %>%
+#   arrange(voter_id)
 
 df2 <- ncvr_b %>%
   select(voter_id) %>%
-  mutate(rn = row_number()) %>%
-  arrange(voter_id)
+  mutate(rn = row_number())
+#%>% arrange(voter_id)
 
 n1 <- nrow(df1)
 n2 <- nrow(df2)
@@ -68,15 +69,30 @@ saveRDS(df, "out/ncvr_results/fabl_mm")
 # seconds <- proc.time() - ptm
 
 files <- list.files(path = "out/ncvr/hash/", full.names = T)
-fs_matches <- lapply(files, function(x){
-  batch <- readRDS(x)
-  result <- estimate_links_fl(out, batch)
-  Z_hat <- data.frame(id_1 = estimate_fl$fs_linkages$a,
-                      id_2 = estimate_fl$fs_linkages$b)
-  Z_hat
-}) %>%
-  do.call(rbind, .)
-eval <- evaluate_links(fs_matches, Z_true_pairs, n1, "pairs")
+file_1_labs <- 1:n1
+
+batch_size <- 100
+
+normal_batches <- n2 %/% batch_size
+last_batch <- n2 %% batch_size
+fs_matches <- list()
+
+for(i in 1:length(files)){
+  batch <- readRDS(files[i])
+
+
+  batch_id <-c(rep(1:normal_batches, each = batch_size), rep(normal_batches + 1, last_batch))
+  batch_labs <- df2[batch_id == i, ]$rn
+  ids <- expand.grid(file_1_labs, batch_labs)
+  fs_matches[[i]] <- data.frame(id_1 = ids[, 1],
+             id_2 = ids[, 2],
+             prob = out$fs_probs[batch$hash_id]) %>%
+    filter(prob > .5)
+}
+
+fs_df <- do.call(rbind, fs_matches)
+
+eval <- evaluate_links(fs_matches[, 1:2], Z_true_pairs, n1, "pairs")
 df <- data.frame(n1 = n1,
                  n2 = n2,
                  recall = eval[1],
