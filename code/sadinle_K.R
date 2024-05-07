@@ -128,7 +128,7 @@ cd_multilink <- multilink::create_comparison_data(all_records,
 for(k in 1:max_K){
 
 prior <- multilink::specify_prior(cd_multilink, NA, NA, 0,
-                                  NA, c(k, 1), NA, list(1, 1), NA, NA)
+                                  NA, dup_upper_bound = c(k, 1), NA, list(1, 1), NA, NA)
 
 start <- proc.time()[3]
 chain_multilink <- multilink::gibbs_sampler(cd_multilink, prior, n_iter = S)

@@ -67,7 +67,7 @@ ptm <- proc.time()
 out <- variational_fastlink(hash, tmax = tmax)
 seconds <- proc.time() - ptm
 
-files <- list.files(path = "data/sadinle_sim_data/", full.names = T)
+files <- list.files(path = "out/ncvr/hash/", full.names = T)
 fs_matches <- lapply(files, function(x){
   batch <- readRDS(x)
   result <- estimate_links_fl(out, batch)
