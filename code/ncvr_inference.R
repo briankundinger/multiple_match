@@ -92,7 +92,28 @@ for(i in 1:length(files)){
     filter(prob > .5)
 }
 
-fs_df <- do.call(rbind, fs_matches)
+# fs_df <- do.call(rbind, fs_matches)
+# Z_true <- Z_true_pairs
+#
+# Z_hat <- fs_df[, 1:2]
+# n_links <- dim(Z_hat)[1]
+# n_matches <- dim(Z_true)[1]
+# Z_hat_pair <- Z_hat %>%
+#   data.frame() %>%
+#   tidyr::unite("pair")
+#
+# Z_true_pair <- Z_true %>%
+#   data.frame() %>%
+#   tidyr::unite("pair")
+#
+# n_correct_links <- intersect(Z_hat_pair, Z_true_pair) %>%
+#   pull() %>%
+#   length()
+#
+# recall <- n_correct_links/n_matches
+# precision <- n_correct_links/n_links
+# fmeasure <- 2 * (recall * precision) / (recall + precision)
+# eval <- c(recall, precision, fmeasure)
 
 eval <- evaluate_links(fs_df[, 1:2], Z_true_pairs, n1, "pairs")
 df <- data.frame(n1 = n1,
