@@ -42,6 +42,7 @@ Z_hat <- make_Zhat_pairs(results$Z_hat)
 print(5)
 saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl")
 eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
+print(6)
 df <- data.frame(n1 = n1,
                  n2 = n2,
                  recall = eval[1],
