@@ -123,9 +123,9 @@ df <- data.frame(n1 = n1,
                  f_measure = eval[3],
                  iterations = tmax,
                  time = seconds[3],
-                 method = "fastlink",
+                 method = "variational_fastlink",
                  data = "ncvr")
-saveRDS(df, "out/ncvr_results/fastlink")
+saveRDS(df, "out/ncvr_results/variational_fastlink")
 
 # trace_df <- data.frame(data = "ncvr",
 #                        trace = chain$overlap) %>%
