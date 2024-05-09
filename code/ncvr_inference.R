@@ -92,7 +92,7 @@ for(i in 1:length(files)){
     filter(prob > .5)
 }
 
-# fs_df <- do.call(rbind, fs_matches)
+fs_df <- do.call(rbind, fs_matches)
 # Z_true <- Z_true_pairs
 #
 # Z_hat <- fs_df[, 1:2]
