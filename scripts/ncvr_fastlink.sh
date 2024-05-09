@@ -4,7 +4,7 @@
 #SBATCH --mail-user=bak47@duke.edu
 #SBATCH --output=logs/%x.out
 #SBATCH --error=logs/%x.err
-#SBATCH --job-name=ncvr_inference
+#SBATCH --job-name=ncvr_fastlink
 #SBATCH --time=24:00:00
 #SBATCH --mem-per-cpu=200G
 #
