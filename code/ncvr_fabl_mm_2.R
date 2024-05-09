@@ -2,7 +2,7 @@ library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
-S <- 100
+S <- 5
 burn <- ceiling(S * .1)
 tmax = 1000
 
@@ -29,29 +29,33 @@ Z_true_pairs <- joined %>%
   select(rn.x, rn.y)
 # joined$rn[is.na(joined$rn)] <- 0
 # Z_true <- joined$rn
+
+hash <- readRDS("out/ncvr/combine/hash")
+
 ptm <- proc.time()
-fl_out <- fastLink::fastLink(ncvr_a, ncvr_b, varnames = names(ncvr_a)[c(4, 5, 6, 7, 9, 10)],
-                   stringdist.match = names(ncvr_a)[c(4, 6)],
-                   partial.match = names(ncvr_a)[c(4, 6)],
-                   cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5)
+chain <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
 seconds <- proc.time() - ptm
-
-Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
-                    id_2 = fl_out$matches$inds.b)
-
-saveRDS(fs_df, "out/ncvr_results/Z_hat/fastlink")
-
+results <- estimate_links_mm(chain, hash)
+saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2")
+Z_hat <- make_Zhat_pairs(results$Z_hat)
 eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
 df <- data.frame(n1 = n1,
                  n2 = n2,
                  recall = eval[1],
                  precision = eval[2],
                  f_measure = eval[3],
-                 iterations = tmax,
+                 iterations = S,
                  time = seconds[3],
-                 method = "fastlink",
+                 method = "fabl_mm_2",
                  data = "ncvr")
-saveRDS(df, "out/ncvr_results/eval/fastlink")
+saveRDS(df, "out/ncvr_results/eval/fabl_mm_2")
 
+
+
+# trace_df <- data.frame(data = "ncvr",
+#                        trace = chain$overlap) %>%
+#   mutate(iter = row_number())
+#
+# saveRDS(trace_df, "out/case_study_trace/ncvr")
 
 
