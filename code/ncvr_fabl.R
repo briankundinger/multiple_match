@@ -2,7 +2,7 @@ library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
-S <- 5
+S <- 1000
 burn <- ceiling(S * .1)
 tmax = 1000
 
