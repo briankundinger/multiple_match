@@ -37,6 +37,7 @@ chain <- fabl(hash, S = S, burn = burn)
 print(3)
 seconds <- proc.time() - ptm
 print(4)
+results <- estimate_links(chain, hash)
 Z_hat <- make_Zhat_pairs(results$Z_hat)
 print(5)
 saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl")
