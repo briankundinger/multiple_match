@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -p compsci
+#SBATCH -p compsci-gpu
 #SBATCH --mail-type=end
 #SBATCH --mail-user=bak47@duke.edu
 #SBATCH --output=logs/%x.out
@@ -7,6 +7,6 @@
 #SBATCH --job-name=core_test
 #SBATCH --time=24:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=40
+#SBATCH --cpus-per-task=100
 
 Rscript code/core_test.R
