@@ -34,6 +34,7 @@ hash <- readRDS("out/ncvr/combine/hash")
 print(2)
 ptm <- proc.time()
 chain <- fabl(hash, S = S, burn = burn)
+saveRDS(chain, "out/ncvr_results/chain/fabl")
 print(3)
 seconds <- proc.time() - ptm
 print(4)
