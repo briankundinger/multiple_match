@@ -34,7 +34,7 @@ fl_out <- fastLink::fastLink(ncvr_a, ncvr_b, varnames = names(ncvr_a)[c(4, 5, 6,
                    stringdist.match = names(ncvr_a)[c(4, 6)],
                    partial.match = names(ncvr_a)[c(4, 6)],
                    cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
-                   n.cores = 20)
+                   n.cores = 40)
 seconds <- proc.time() - ptm
 
 Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,

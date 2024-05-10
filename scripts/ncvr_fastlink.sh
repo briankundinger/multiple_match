@@ -6,9 +6,9 @@
 #SBATCH --error=logs/%x.err
 #SBATCH --job-name=ncvr_fastlink
 #SBATCH --time=24:00:00
-#SBATCH --mem=200G
+#SBATCH --mem=400G
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=20
+#SBATCH --cpus-per-task=40
 #
 # modules
 #
