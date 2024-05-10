@@ -40,7 +40,7 @@ seconds <- proc.time() - ptm
 Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
                     id_2 = fl_out$matches$inds.b)
 
-saveRDS(fs_df, "out/ncvr_results/Z_hat/fastlink")
+saveRDS(Z_hat, "out/ncvr_results/Z_hat/fastlink")
 
 eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
 df <- data.frame(n1 = n1,
