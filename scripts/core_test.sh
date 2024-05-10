@@ -7,6 +7,5 @@
 #SBATCH --job-name=core_test
 #SBATCH --time=24:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=50
 
 Rscript code/core_test.R
