@@ -30,7 +30,7 @@ Z_true_pairs <- joined %>%
 # joined$rn[is.na(joined$rn)] <- 0
 # Z_true <- joined$rn
 ptm <- proc.time()
-fl_out <- fastLink::fastLink(ncvr_a, ncvr_b, varnames = names(ncvr_a)[c(4, 5, 6, 7, 9, 10)],
+fl_out <- fastLink::fastLink(ncvr_a[1:100, ], ncvr_b[1:100, ], varnames = names(ncvr_a)[c(4, 5, 6, 7, 9, 10)],
                    stringdist.match = names(ncvr_a)[c(4, 6)],
                    partial.match = names(ncvr_a)[c(4, 6)],
                    cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
