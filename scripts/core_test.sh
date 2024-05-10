@@ -4,9 +4,9 @@
 #SBATCH --mail-user=bak47@duke.edu
 #SBATCH --output=logs/%x_%a.out
 #SBATCH --error=logs/%x_%a.err
-#SBATCH --job-name=array_test
+#SBATCH --job-name=core_test
 #SBATCH --time=24:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=20
+#SBATCH --cpus-per-task=40
 
 Rscript code/core_test.R
