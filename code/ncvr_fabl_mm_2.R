@@ -2,7 +2,7 @@ library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
-S <- 3
+S <- 100
 burn <- ceiling(S * .1)
 tmax = 1000
 
@@ -33,12 +33,17 @@ Z_true_pairs <- joined %>%
 hash <- readRDS("out/ncvr/combine/hash")
 
 ptm <- proc.time()
+print(1)
 chain <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
 seconds <- proc.time() - ptm
+print(2)
 results <- estimate_links_mm(chain, hash)
-saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2")
-Z_hat <- make_Zhat_pairs(results$Z_hat)
-eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
+print(3)
+saveRDS(results$Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2")
+#Z_hat <- make_Zhat_pairs(results$Z_hat)
+
+eval <- evaluate_links(results$Z_hat, Z_true_pairs, n1, "pairs")
+print(4)
 df <- data.frame(n1 = n1,
                  n2 = n2,
                  recall = eval[1],
