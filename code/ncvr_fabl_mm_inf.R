@@ -34,14 +34,14 @@ hash <- readRDS("out/ncvr/combine/hash")
 
 ptm <- proc.time()
 print(1)
-chain <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
-saveRDS(chain, "out/ncvr_results/chain/fabl_mm_2")
+chain <- fabl_mm(hash, S = S, burn = burn)
+saveRDS(chain, "out/ncvr_results/chain/fabl_mm_inf")
 seconds <- proc.time() - ptm
 print(2)
 results <- estimate_links_mm(chain, hash, resolve = F)
 print(3)
-saveRDS(results$Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2")
-saveRDS(results$prob, "out/ncvr_results/prob/fabl_mm_2")
+saveRDS(results$Z_hat, "out/ncvr_results/Z_hat/fabl_mm_inf")
+saveRDS(results$prob, "out/ncvr_results/prob/fabl_mm_inf")
 #Z_hat <- make_Zhat_pairs(results$Z_hat)
 
 eval <- evaluate_links(results$Z_hat, Z_true_pairs, n1, "pairs")
@@ -53,9 +53,9 @@ df <- data.frame(n1 = n1,
                  f_measure = eval[3],
                  iterations = S,
                  time = seconds[3],
-                 method = "fabl_mm_2",
+                 method = "fabl_mm_inf",
                  data = "ncvr")
-saveRDS(df, "out/ncvr_results/eval/fabl_mm_2")
+saveRDS(df, "out/ncvr_results/eval/fabl_mm_inf")
 
 
 
