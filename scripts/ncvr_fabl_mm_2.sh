@@ -6,7 +6,7 @@
 #SBATCH --error=logs/%x.err
 #SBATCH --job-name=ncvr_fabl_mm_2
 #SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=32G
+#SBATCH --mem-per-cpu=64G
 #
 # modules
 #

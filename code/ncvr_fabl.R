@@ -42,7 +42,7 @@ results <- estimate_links(chain, hash, resolve = F)
 Z_hat <- make_Zhat_pairs(results$Z_hat)
 print(5)
 saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl")
-saveRDS(results$prob, "out/ncvr_results/prob/fabl")
+saveRDS(results$prob[Z_hat[, 2]], "out/ncvr_results/prob/fabl")
 eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
 print(6)
 df <- data.frame(n1 = n1,
