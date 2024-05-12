@@ -115,8 +115,8 @@ all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
 all_records$occup <- as.character(all_records$occup)
 cd_multilink <- multilink::create_comparison_data(all_records,
                                                   types = c("lv", "lv", "bi", "bi"),
-                                                  breaks = list(c(0, .25, .5),
-                                                                c(0, .25, .5),
+                                                  breaks = list(c(0, .25),
+                                                                c(0, .25),
                                                                 NA,
                                                                 NA),
                                                   file_sizes = c(n1, n2),
