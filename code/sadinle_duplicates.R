@@ -37,7 +37,7 @@ records <- records %>%
 n1 <- 500
 n2 <- 500
 
-Ztrue_pairs <- data.frame(id_1 = 1:(2*overlap),
+Z_true_pairs <- data.frame(id_1 = 1:(2*overlap),
                           id_2 = rep(1:overlap, 2)) %>%
   arrange(id_2)
 
@@ -75,7 +75,7 @@ hash <- hash_comparisons(cd)
 # time <- proc.time()[3] - start
 # result <- estimate_links(out, hash, resolve = F)
 # Z_hat <- make_Zhat_pairs(result$Z_hat)
-# fabl_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+# fabl_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 # Multiple match
 start <- proc.time()[3]
@@ -83,7 +83,7 @@ out_mm <- fabl_mm(hash, S = S, burn = burn)
 time <- proc.time()[3] - start
 result_mm <- estimate_links_mm(out_mm, hash, resolve = F)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
-fabl_mm_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+fabl_mm_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 # Var Fastlink
 
@@ -93,7 +93,7 @@ time <- proc.time()[3] - start
 estimate_fl <- estimate_links_fl(out_fl, hash)
 Z_hat <- data.frame(id_1 = estimate_fl$fs_linkages$a,
                     id_2 = estimate_fl$fs_linkages$b)
-var_fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+var_fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 # fastLink
 start <- proc.time()[3]
@@ -151,7 +151,7 @@ for(x in cluster_labels){
 
 Z_hat <- do.call(rbind, Z_list)
 
-multilink2_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+multilink2_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 # # Three Match
 #
@@ -183,7 +183,7 @@ multilink2_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 #
 # Z_hat <- do.call(rbind, Z_list)
 #
-# multilink3_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+# multilink3_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 # result_df <- rbind(fabl_result, fabl_mm_result, fastlink_result,
 #                    multilink1_result, multilink2_result, multilink3_result) %>%
 #   data.frame()
