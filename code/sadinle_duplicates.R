@@ -108,7 +108,7 @@ time <- proc.time()[3] - start
 Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
                     id_2 = fl_out$matches$inds.b)
 
-fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"),
+fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 # MultiLink
 
 all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
