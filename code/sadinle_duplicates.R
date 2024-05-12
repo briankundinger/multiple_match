@@ -79,7 +79,7 @@ hash <- hash_comparisons(cd)
 
 # Multiple match
 start <- proc.time()[3]
-out_mm <- fabl_mm(hash, S = S, burn = burn)
+out_mm <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
 time <- proc.time()[3] - start
 result_mm <- estimate_links_mm(out_mm, hash, resolve = F)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
