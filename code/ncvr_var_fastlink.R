@@ -4,7 +4,7 @@ ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
 S <- 100
 burn <- ceiling(S * .1)
-tmax = 1000
+tmax = 200
 
 df1 <- ncvr_a %>%
   select(voter_id) %>%
