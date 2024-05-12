@@ -64,9 +64,8 @@ paste_index <- (overlap +1):(2*overlap)
 file1[paste_index, ] <- file1[copy_index, ]
 
 cd <- compare_records(file1, file2, c(2, 3, 5, 6) + 1,
-                      types = c("lv", "lv", "bi", "bi"))
-
-                      #breaks = c(0, 0.25))
+                      types = c("lv", "lv", "bi", "bi"),
+                      breaks = c(0, 0.25))
 
 hash <- hash_comparisons(cd)
 
@@ -86,7 +85,7 @@ result_mm <- estimate_links_mm(out_mm, hash, resolve = F)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
 fabl_mm_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 
-# Fastlink
+# Var Fastlink
 
 start <- proc.time()[3]
 out_fl <- variational_fastlink(hash, tmax = 500)
@@ -94,8 +93,22 @@ time <- proc.time()[3] - start
 estimate_fl <- estimate_links_fl(out_fl, hash)
 Z_hat <- data.frame(id_1 = estimate_fl$fs_linkages$a,
                     id_2 = estimate_fl$fs_linkages$b)
-fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+var_fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 
+# fastLink
+start <- proc.time()[3]
+fl_out <- fastLink::fastLink(file1, file2, varnames = names(file1)[c(2, 3, 5, 6) + 1],
+                             stringdist.match = names(ncvr_a)[c(2, 3) + 1],
+                             partial.match = names(ncvr_a)[c(2, 3) + 1],
+                             stringdist.method = "lv",
+                             cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
+                             n.cores = 1, verbose = F, return.all = F, tol.em = 1e-07)
+time <- proc.time()[3] - start
+
+Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
+                    id_2 = fl_out$matches$inds.b)
+
+fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"),
 # MultiLink
 
 all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
@@ -180,12 +193,12 @@ multilink2_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 # result_df$method <- c("fabl", "fabl_mm", "fastlink", "multilink_1",
 #                       "multilink_2", "multilink_3")
 
-result_df <- rbind(fabl_mm_result, fastlink_result, multilink2_result) %>%
+result_df <- rbind(fabl_mm_result, var_fastlink_result, fastlink_result, multilink2_result) %>%
   data.frame()
 
 
 names(result_df) <- c("recall", "precision", "f-measure", "time")
-result_df$method <- c("fabl_mm", "fastlink", "multilink_2")
+result_df$method <- c("fabl_mm", "variational_fastlink", "fastlink", "multilink_2")
 
 result_df$errors <- ceiling(i/100)
 result_df$sim_number <- i
