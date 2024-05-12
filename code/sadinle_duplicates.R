@@ -98,8 +98,8 @@ var_fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
 # fastLink
 start <- proc.time()[3]
 fl_out <- fastLink::fastLink(file1, file2, varnames = names(file1)[c(2, 3, 5, 6) + 1],
-                             stringdist.match = names(ncvr_a)[c(2, 3) + 1],
-                             partial.match = names(ncvr_a)[c(2, 3) + 1],
+                             stringdist.match = names(file1)[c(2, 3) + 1],
+                             partial.match = names(file1)[c(2, 3) + 1],
                              stringdist.method = "lv",
                              cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
                              n.cores = 1, verbose = F, return.all = F, tol.em = 1e-07)
