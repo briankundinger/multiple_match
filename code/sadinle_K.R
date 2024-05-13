@@ -38,7 +38,7 @@ records <- records %>%
 n1 <- 500
 n2 <- 500
 
-Ztrue_pairs <- data.frame(id_1 = 1:(2*overlap),
+Z_true_pairs <- data.frame(id_1 = 1:(2*overlap),
                           id_2 = rep(1:overlap, 2)) %>%
   arrange(id_2)
 
@@ -65,9 +65,8 @@ paste_index <- (overlap +1):(2*overlap)
 file1[paste_index, ] <- file1[copy_index, ]
 
 cd <- compare_records(file1, file2, c(2, 3, 5, 6) + 1,
-                      types = c("lv", "lv", "bi", "bi"))
-
-                      #breaks = c(0, 0.25))
+                      types = c("lv", "lv", "bi", "bi"),
+                      breaks = c(0, 0.25))
 
 hash <- hash_comparisons(cd)
 
@@ -77,7 +76,7 @@ hash <- hash_comparisons(cd)
 # time <- proc.time()[3] - start
 # result <- estimate_links(out, hash, resolve = F)
 # Z_hat <- make_Zhat_pairs(result$Z_hat)
-# fabl_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), time)
+# fabl_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 # Multiple match
 
@@ -91,7 +90,7 @@ out_mm <- fabl_mm(hash, S = S, burn = burn, max_K = k)
 time <- proc.time()[3] - start
 result_mm <- estimate_links_mm(out_mm, hash, resolve = F)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
-fabl_k_result[k, ] <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), k,  time)
+fabl_k_result[k, ] <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), k,  time)
 }
 
 for(k in 1:max_K){
@@ -100,7 +99,7 @@ for(k in 1:max_K){
   time <- proc.time()[3] - start
   result_mm <- estimate_links_mm(out_mm, hash, resolve = F)
   Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
-  fabl_penalty_result[k, ] <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), k - 1,  time)
+  fabl_penalty_result[k, ] <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), k - 1,  time)
 }
 # Fastlink
 
@@ -110,7 +109,7 @@ time <- proc.time()[3] - start
 estimate_fl <- estimate_links_fl(out_fl, hash)
 Z_hat <- data.frame(id_1 = estimate_fl$fs_linkages$a,
                     id_2 = estimate_fl$fs_linkages$b)
-fastlink_result <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), NA, time)
+fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), NA, time)
 
 # MultiLink
 
@@ -118,8 +117,8 @@ all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
 all_records$occup <- as.character(all_records$occup)
 cd_multilink <- multilink::create_comparison_data(all_records,
                                                   types = c("lv", "lv", "bi", "bi"),
-                                                  breaks = list(c(0, .25, .5),
-                                                                c(0, .25, .5),
+                                                  breaks = list(c(0, .25),
+                                                                c(0, .25),
                                                                 NA,
                                                                 NA),
                                                   file_sizes = c(n1, n2),
@@ -155,18 +154,36 @@ for(x in cluster_labels){
 
 Z_hat <- do.call(rbind, Z_list)
 
-multilink_result[k, ] <- c(evaluate_links(Z_hat, Ztrue_pairs, n1, "pairs"), k, time)
+multilink_result[k, ] <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), k, time)
 }
 
-result_df <- rbind(fabl_k_result, fabl_penalty_result, fastlink_result, multilink_result) %>%
+# fastLink
+start <- proc.time()[3]
+fl_out <- fastLink::fastLink(file1, file2, varnames = names(file1)[c(2, 3, 5, 6) + 1],
+                             stringdist.match = names(file1)[c(2, 3) + 1],
+                             partial.match = names(file1)[c(2, 3) + 1],
+                             stringdist.method = "lv",
+                             cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
+                             n.cores = 1, verbose = F, return.all = F, tol.em = 1e-07)
+time <- proc.time()[3] - start
+
+Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
+                    id_2 = fl_out$matches$inds.b)
+
+fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), NA, time)
+# MultiLink
+
+
+result_df <- rbind(fabl_k_result, fabl_penalty_result, fastlink_result, multilink_result, fastlink_result) %>%
   data.frame()
 
 
 names(result_df) <- c("recall", "precision", "f-measure", "K", "time")
 result_df$method <- c(rep("fabl_mm", max_K),
                       rep("fabl_penalty", max_K),
-                      "fastlink",
-                      rep("multilink", max_K))
+                      "variational_fastlink",
+                      rep("multilink", max_K),
+                      "fastlink")
 
 result_df$errors <- ceiling(i/100)
 result_df$sim_number <- i

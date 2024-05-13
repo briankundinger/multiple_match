@@ -206,3 +206,9 @@ result_df$sim_number <- i
 
 saveRDS(result_df, file = paste0("out/sadinle_sim/sim_",
                                  str_pad(i, 3, pad = "0")))
+
+
+
+union(hash$total_counts, fl_out$EM$patterns.w[, 5])
+
+fl_out$posterior > .5
