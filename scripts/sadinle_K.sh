@@ -7,6 +7,6 @@
 #SBATCH --error=logs/%x_%a.err
 #SBATCH --job-name=sadinle_K
 #SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=64G
+#SBATCH --mem-per-cpu=32G
 
 Rscript code/sadinle_K.R
