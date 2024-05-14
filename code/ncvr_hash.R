@@ -4,7 +4,9 @@ library(tictoc)
 
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 ncvr_a <- readRDS("data/ncvr_a")
+ncvr_a[ncvr_a == ""] <- NA
 ncvr_b <- readRDS("data/ncvr_b")
+ncvr_b[ncvr_b == ""] <- NA
 
 n1 <- nrow(ncvr_a)
 n2 <- nrow(ncvr_b)
