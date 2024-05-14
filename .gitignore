@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 out/ncvr/hash/
+out/ncvr/combine/
 out/ncvr_results/chain/
 out/sadinle_sim/
 out/sadinle_K_sim/
