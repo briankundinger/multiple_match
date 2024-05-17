@@ -34,11 +34,11 @@ hash <- readRDS("out/ncvr/combine/hash")
 
 ptm <- proc.time()
 print(1)
-chain <- fabl_mm(hash, S = S, burn = burn, max_K = 3)
+chain <- fabl_mm(hash, S = S, burn = burn, max_K = 5)
 saveRDS(chain, "out/ncvr_results/chain/fabl_mm_inf")
 seconds <- proc.time() - ptm
 print(2)
-results <- estimate_links_mm(chain, hash, resolve = F)
+results <- estimate_links_mm(chain, hash, resolve = T)
 print(3)
 saveRDS(results$Z_hat, "out/ncvr_results/Z_hat/fabl_mm_inf")
 saveRDS(results$prob, "out/ncvr_results/prob/fabl_mm_inf")
