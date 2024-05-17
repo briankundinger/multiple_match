@@ -2,7 +2,7 @@ library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
-S <- 100
+S <- 1000
 burn <- ceiling(S * .1)
 tmax = 1000
 
@@ -34,7 +34,7 @@ hash <- readRDS("out/ncvr/combine/hash")
 
 ptm <- proc.time()
 print(1)
-chain <- fabl_mm(hash, S = S, burn = burn, max_K = 5)
+chain <- fabl_mm(hash, S = S, burn = burn)
 saveRDS(chain, "out/ncvr_results/chain/fabl_mm_inf")
 seconds <- proc.time() - ptm
 print(2)

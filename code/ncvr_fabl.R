@@ -27,6 +27,8 @@ joined <- right_join(df1, df2, by = "voter_id", copy = T, keep = T,
 Z_true_pairs <- joined %>%
   filter(!is.na(voter_id.x)) %>%
   select(rn.x, rn.y)
+
+#saveRDS(Z_true_pairs, "data/ncvr_Z_true")
 # joined$rn[is.na(joined$rn)] <- 0
 # Z_true <- joined$rn
 

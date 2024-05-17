@@ -6,7 +6,3 @@ eval <- lapply(eval_files, readRDS) %>%
   do.call(rbind, .) %>%
   data.frame() %>%
   mutate(method = methods)
-
-eval <- lapply(seq_along(methods), function(x){
-  Z
-})
