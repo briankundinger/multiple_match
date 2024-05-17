@@ -81,7 +81,7 @@ hash <- hash_comparisons(cd)
 start <- proc.time()[3]
 out_mm <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
 time <- proc.time()[3] - start
-result_mm <- estimate_links_mm(out_mm, hash, resolve = F)
+result_mm <- estimate_links_mm(out_mm, hash, resolve = T)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
 fabl_mm_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
@@ -206,9 +206,3 @@ result_df$sim_number <- i
 
 saveRDS(result_df, file = paste0("out/sadinle_sim/sim_",
                                  str_pad(i, 3, pad = "0")))
-
-
-
-union(hash$total_counts, fl_out$EM$patterns.w[, 5])
-
-fl_out$posterior > .5
