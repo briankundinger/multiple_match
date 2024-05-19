@@ -24,8 +24,12 @@ all_patterns = TRUE
 tmax= 200
 threshold = 1e-6
 resolve = T
+overlap_vec <- c(25, 125, 225)
+result_list <- list()
 
-overlap <- 100
+
+for(j in seq_along(overlap_vec)){
+  overlap <- overlap_vec[j]
 
 records <- read_csv(files[i], col_types = cols())
 records$file <- rep(2:1, length.out = dim(records)[1])
@@ -36,10 +40,6 @@ records <- records %>%
 
 n1 <- 500
 n2 <- 500
-
-Z_true_pairs <- data.frame(id_1 = 1:(2*overlap),
-                          id_2 = rep(1:overlap, 2)) %>%
-  arrange(id_2)
 
 file1 <- records %>%
   filter(file ==1,
@@ -58,25 +58,30 @@ file2 <- records %>%
 copy_index <- 1:overlap
 paste_index <- (overlap +1):(2*overlap)
 
-# copy_index <- 1:(overlap/2)
-# paste_index <- (overlap +1):(overlap + overlap/2)
-
 file1[paste_index, ] <- file1[copy_index, ]
+file2[paste_index, ] <- file2[copy_index, ]
 
-all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
+Z_true_pairs <- data.frame(id_1 = rep(1:(2*overlap), 2),
+                          id_2 = c(rep(1:overlap, 2),
+                                   rep(1:overlap, 2) + overlap)) %>%
+  arrange(id_2)
+
+#all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
+all_records <- rbind(file1, file2)[, c(2, 3, 4, 5, 6) + 1]
 all_records$occup <- as.character(all_records$occup)
 cd_multilink <- multilink::create_comparison_data(all_records,
-                                                  types = c("lv", "lv", "bi", "bi"),
+                                                  types = c("lv", "lv", "bi", "bi", "bi"),
                                                   breaks = list(c(0, .25),
                                                                 c(0, .25),
                                                                 NA,
+                                                                NA,
                                                                 NA),
                                                   file_sizes = c(n1, n2),
-                                                  duplicates = c(1, 0),
+                                                  duplicates = c(1, 1),
                                                   verbose = T)
 
 prior <- multilink::specify_prior(cd_multilink, NA, NA, 0,
-                                  NA, c(2, 1), NA, list(1, 1), NA, NA)
+                                  NA, c(2, 2), NA, list(1, 1), NA, NA)
 
 start <- proc.time()[3]
 chain_multilink <- multilink::gibbs_sampler(cd_multilink, prior, n_iter = S)
@@ -104,8 +109,15 @@ for(x in cluster_labels){
 Z_hat <- do.call(rbind, Z_list)
 
 multilink2_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
+result_list[[j]] <- multilink2_result
+}
+
+result_final <- do.call(rbind, result_list)
+result_final$errors <- ceiling(i/100)
+result_final$sim_number <- i
+result_final$overlap <- overlap_vec
 
 
 
-saveRDS(multilink2_result, file = paste0("out/sadinle_sim_ml/sim_",
+saveRDS(result_final, file = paste0("out/sadinle_sim_ml/sim_",
                                  str_pad(i, 3, pad = "0")))
