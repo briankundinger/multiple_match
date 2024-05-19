@@ -2,7 +2,7 @@ library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
 ncvr_b <- readRDS("data/ncvr_b")
-S <- 200
+S <- 1000
 burn <- ceiling(S * .1)
 
 df1 <- ncvr_a %>%
@@ -37,7 +37,7 @@ chain <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
 saveRDS(chain, "out/ncvr_results/chain/fabl_mm_2")
 seconds <- proc.time() - ptm
 print(2)
-results <- estimate_links_mm(chain, hash, resolve = F)
+results <- estimate_links_mm(chain, hash, resolve = T)
 print(3)
 saveRDS(results$Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2")
 saveRDS(results$prob, "out/ncvr_results/prob/fabl_mm_2")
