@@ -66,8 +66,8 @@ paste_index <- (overlap +1):(2*overlap)
 
 file1[paste_index, ] <- file1[copy_index, ]
 
-cd <- compare_records(file1, file2, c(2, 3, 5, 6) + 1,
-                      types = c("lv", "lv", "bi", "bi"),
+cd <- compare_records(file1, file2, c(2, 3, 4, 5, 6) + 1,
+                      types = c("lv", "lv", "bi", "bi", "bi"),
                       breaks = c(0, 0.25))
 
 hash <- hash_comparisons(cd)
@@ -107,7 +107,7 @@ fabl_mm_inf_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 # fastLink
 start <- proc.time()[3]
-fl_out <- fastLink::fastLink(file1, file2, varnames = names(file1)[c(2, 3, 5, 6) + 1],
+fl_out <- fastLink::fastLink(file1, file2, varnames = names(file1)[c(2, 3, 4, 5, 6) + 1],
                              stringdist.match = names(file1)[c(2, 3) + 1],
                              partial.match = names(file1)[c(2, 3) + 1],
                              stringdist.method = "lv",
