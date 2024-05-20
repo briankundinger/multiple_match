@@ -6,5 +6,6 @@
 #SBATCH --error=logs/%x.err
 #SBATCH --job-name=mms_fabl_inf
 #SBATCH --time=24:00:00
+#SBATCH --mem-per-cpu=64G
 
 Rscript code/get_mms_Z_hat/fabl_mm_inf.R
