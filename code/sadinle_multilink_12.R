@@ -59,12 +59,17 @@ copy_index <- 1:overlap
 paste_index <- (overlap +1):(2*overlap)
 
 file1[paste_index, ] <- file1[copy_index, ]
-file2[paste_index, ] <- file2[copy_index, ]
 
-Z_true_pairs <- data.frame(id_1 = rep(1:(2*overlap), 2),
-                          id_2 = c(rep(1:overlap, 2),
-                                   rep(1:overlap, 2) + overlap)) %>%
-  arrange(id_2)
+# copy_index <- 1:overlap
+# paste_index <- (overlap +1):(2*overlap)
+#
+# file1[paste_index, ] <- file1[copy_index, ]
+# file2[paste_index, ] <- file2[copy_index, ]
+#
+# Z_true_pairs <- data.frame(id_1 = rep(1:(2*overlap), 2),
+#                           id_2 = c(rep(1:overlap, 2),
+#                                    rep(1:overlap, 2) + overlap)) %>%
+#   arrange(id_2)
 
 #all_records <- rbind(file1, file2)[, c(2, 3, 5, 6) + 1]
 all_records <- rbind(file1, file2)[, c(2, 3, 4, 5, 6) + 1]
@@ -77,14 +82,14 @@ cd_multilink <- multilink::create_comparison_data(all_records,
                                                                 NA,
                                                                 NA),
                                                   file_sizes = c(n1, n2),
-                                                  duplicates = c(1, 1),
+                                                  duplicates = c(1, 0),
                                                   verbose = T)
 
 prior <- multilink::specify_prior(cd_multilink, mus = NA,
                                   nus = NA, flat = 0, alphas = NA,
-                                  dup_upper_bound = c(2, 2),
+                                  dup_upper_bound = c(2, 1),
                                   dup_count_prior_family = NA,
-                                  dup_count_prior_pars = list(2, 2),
+                                  dup_count_prior_pars = list(2, 1),
                                   n_prior_family = NA,
                                   n_prior_pars = NA)
 
@@ -125,5 +130,5 @@ result_final$overlap <- overlap_vec
 
 
 
-saveRDS(result_final, file = paste0("out/sadinle_sim_ml/sim_",
+saveRDS(result_final, file = paste0("out/sadinle_sim_ml_12/sim_",
                                  str_pad(i, 3, pad = "0")))

@@ -61,9 +61,6 @@ file2 <- records %>%
 copy_index <- 1:overlap
 paste_index <- (overlap +1):(2*overlap)
 
-# copy_index <- 1:(overlap/2)
-# paste_index <- (overlap +1):(overlap + overlap/2)
-
 file1[paste_index, ] <- file1[copy_index, ]
 
 cd <- compare_records(file1, file2, c(2, 3, 4, 5, 6) + 1,
