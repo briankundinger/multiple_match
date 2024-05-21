@@ -1,7 +1,7 @@
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
-hash <- readRDS("../../multiple_match/out/ncvr/combine/hash")
-out <- readRDS("../../multiple_match/out/ncvr_results/chain/fabl_mm_2")
+hash <- readRDS("out/ncvr/combine/hash")
+out <- readRDS("out/ncvr_results/chain/fabl_mm_2")
 
 
 n1 <- hash$n1
@@ -35,9 +35,9 @@ for(j in seq_along(record_vec)){
   mms_probs[j] <- max(prob)
 }
 
-saveRDS(mms, paste0("out/ncvr/mms/mms_batch", "mms_",
+saveRDS(mms, paste0("out/ncvr/mms/mms_batch/", "mms_",
                      stringr::str_pad(k, 4, pad = "0")))
 
-saveRDS(mms_probs, paste0("out/ncvr/mms/prob_batch", "prob_",
+saveRDS(mms_probs, paste0("out/ncvr/mms/prob_batch/", "prob_",
                      stringr::str_pad(k, 4, pad = "0")))
 
