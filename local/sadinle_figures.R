@@ -33,6 +33,8 @@ df %>%
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw()
 
+ggsave("figures/recall_precision_2_to_1.png")
+
 df %>%
   filter(metric == "f-measure") %>%
   ggplot() +
