@@ -1,3 +1,5 @@
+library(dplyr)
+
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
 hash <- readRDS("out/ncvr/combine/hash")
