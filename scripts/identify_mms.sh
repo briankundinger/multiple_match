@@ -11,4 +11,4 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=16G
 
-Rscript code/identify_hash.R
+Rscript code/identify_mms.R
