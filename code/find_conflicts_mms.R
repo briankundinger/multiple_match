@@ -35,7 +35,7 @@ conflicts <- parallel::mclapply(unique_mms[record_vec],
 
 
 
-saveRDS(mms, paste0("out/ncvr/mms/combine/", "conflicts_",
+saveRDS(mms, paste0("out/ncvr/mms/conflicts/", "conflicts_",
                     stringr::str_pad(k, 4, pad = "0")))
 #
 # saveRDS(mms_probs, paste0("out/ncvr/mms/prob_batch/", "prob_",
