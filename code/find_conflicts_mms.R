@@ -18,7 +18,7 @@ normal_batches <- n_mms %/% batch_size
 last_batch <- n_mms %% batch_size
 
 batch_id <-c(rep(1:normal_batches, each = batch_size), rep(normal_batches + 1, last_batch))
-record_vec <- seq(1:n2)[batch_id == k]
+record_vec <- seq(1:n_mms)[batch_id == k]
 
 identify_conflicts <- function(set, mms){
   common_entities <- sapply(seq_along(mms), function(j){
