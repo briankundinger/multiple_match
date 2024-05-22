@@ -87,14 +87,16 @@ hash <- hash_comparisons(cd)
 start <- proc.time()[3]
 out_mm <- fabl_mm(hash, S = S, burn = burn, max_K = 2)
 time <- proc.time()[3] - start
-result_mm <- get_mms(out_mm, hash)
+#result_mm <- get_mms(out_mm, hash)
+result_mm <- estimate_links_mm(out_mm, hash, transitivity = T)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
 fabl_mm_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
 start <- proc.time()[3]
 out_mm <- fabl_mm(hash, S = S, burn = burn)
 time <- proc.time()[3] - start
-result_mm <- get_mms(out_mm, hash)
+#result_mm <- get_mms(out_mm, hash)
+result_mm <- estimate_links_mm(out_mm, hash, transitivity = T)
 Z_hat <- cbind(result_mm$Z_hat$target_id, result_mm$Z_hat$base_id)
 fabl_mm_inf_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
