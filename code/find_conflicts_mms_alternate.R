@@ -5,10 +5,25 @@ cores <- parallel::detectCores()
 
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
-mms <- readRDS("out/ncvr/mms/combine/mms")
-prob <- readRDS("out/ncvr/mms/combine/prob")
+Z_hat <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2")
+prob <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2")
 
-n2 <- length(prob)
+Z_hat <- data.frame(Z_hat, prob)
+
+
+mms_df <- Z_hat %>%
+  group_split(base_id, .keep = T)
+
+# mms_df[[201]] <- data.frame(target_id = 25,
+#                             base_id = 201,
+#                             prob = .9)
+
+mms <- mms_df %>%
+  lapply(., `[[`, "target_id")
+
+mms_prob <- mms_df %>%
+  lapply(., `[[`, "prob")
+
 unique_mms <- unique(mms)
 n_mms <- length(unique_mms)
 unique_mms_map <- match(mms, unique_mms)
@@ -28,7 +43,6 @@ identify_conflicts <- function(set, mms){
   max(0, which(common_entities > 0 & common_entities < length(set)))
 }
 
-#conflicts <- sapply(unique_mms, identify_conflicts, unique_mms)
 conflicts <- parallel::mclapply(unique_mms[set_vec],
                                 identify_conflicts,
                                 unique_mms, mc.cores = cores)
@@ -36,7 +50,7 @@ conflicts <- parallel::mclapply(unique_mms[set_vec],
 
 
 
-saveRDS(conflicts, paste0("out/ncvr/mms/conflicts/", "conflicts_",
+saveRDS(conflicts, paste0("out/ncvr/mms/conflicts_alternate/", "conflicts_",
                     stringr::str_pad(k, 4, pad = "0")))
 
 
