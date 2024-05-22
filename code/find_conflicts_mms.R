@@ -8,6 +8,7 @@ k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 mms <- readRDS("out/ncvr/mms/combine/mms")
 prob <- readRDS("out/ncvr/mms/combine/prob")
 
+n2 <- length(prob)
 unique_mms <- unique(mms)
 n_mms <- length(unique_mms)
 unique_mms_map <- match(mms, unique_mms)
@@ -32,7 +33,8 @@ identify_conflicts <- function(set, mms){
 #conflicts <- sapply(unique_mms, identify_conflicts, unique_mms)
 conflicts <- parallel::mclapply(unique_mms[record_vec],
                                 identify_conflicts,
-                                unique_mms, mc.cores = cores)
+                                unique_mms, mc.cores = cores) %>%
+  unlist()
 
 
 
