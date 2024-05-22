@@ -8,6 +8,6 @@
 #SBATCH --job-name=find_conflicts_mms
 #SBATCH --time=24:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-40
+
 
 Rscript code/find_conflicts_mms.R
