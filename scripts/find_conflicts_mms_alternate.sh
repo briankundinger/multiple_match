@@ -8,6 +8,7 @@
 #SBATCH --job-name=find_conflicts_mms_alternate
 #SBATCH --time=24:00:00
 #SBATCH --ntasks=1
+#SBATCH --mem=32G
 
 
 Rscript code/find_conflicts_mms_alternate.R
