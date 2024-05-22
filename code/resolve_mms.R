@@ -2,8 +2,9 @@ library(dplyr)
 
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
-hash <- readRDS("out/ncvr/combine/hash")
-out <- readRDS("out/ncvr_results/chain/fabl_mm_2")
+mms <- readRDS("out/ncvr/mms/combine/mms")
+prob <- readRDS("out/ncvr/mms/combine/prob")
+prob
 
 
 n1 <- hash$n1
@@ -18,8 +19,8 @@ last_batch <- n2 %% batch_size
 batch_id <-c(rep(1:normal_batches, each = batch_size), rep(normal_batches + 1, last_batch))
 record_vec <- seq(1:n2)[batch_id == k]
 
-mms <- vector("list")
-mms_probs <- vector("double")
+mms <- vector("list", n2)
+mms_probs <- vector("double", n2)
 
 for(j in seq_along(record_vec)){
   record <- record_vec[j]

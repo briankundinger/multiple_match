@@ -9,5 +9,4 @@ prob <- lapply(files, readRDS) %>%
   do.call(c, .)
 
 saveRDS(mms, paste0("out/ncvr/mms/combine/mms"))
-
 saveRDS(prob, paste0("out/ncvr/mms/combine/prob"))
