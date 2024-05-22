@@ -21,14 +21,12 @@ batch_id <-c(rep(1:normal_batches, each = batch_size), rep(normal_batches + 1, l
 set_vec <- seq(1:n_mms)[batch_id == k]
 
 identify_conflicts <- function(set, mms){
-  common_entities <- sapply(seq_along(mms), function(j){
-    intersect(set, mms[[j]]) %>%
+  common_entities <- sapply(seq_along(unique_mms), function(j){
+    intersect(set, unique_mms[[j]]) %>%
       length()
   })
   max(0, which(common_entities > 0 & common_entities < length(set)))
 }
-
-
 
 #conflicts <- sapply(unique_mms, identify_conflicts, unique_mms)
 conflicts <- parallel::mclapply(unique_mms[set_vec],
@@ -40,7 +38,5 @@ conflicts <- parallel::mclapply(unique_mms[set_vec],
 
 saveRDS(mms, paste0("out/ncvr/mms/conflicts/", "conflicts_",
                     stringr::str_pad(k, 4, pad = "0")))
-#
-# saveRDS(mms_probs, paste0("out/ncvr/mms/prob_batch/", "prob_",
-#                      stringr::str_pad(k, 4, pad = "0")))
+
 
