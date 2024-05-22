@@ -1,14 +1,13 @@
 #!/bin/bash
 #SBATCH -p compsci
-#SBATCH --array=1-2241%200
+#SBATCH --array=758%200
 #SBATCH --mail-type=end
 #SBATCH --mail-user=bak47@duke.edu
 #SBATCH --output=logs/%x_%a.out
 #SBATCH --error=logs/%x_%a.err
-#SBATCH --job-name=identify_mms
+#SBATCH --job-name=find_conflicts_mms
 #SBATCH --time=24:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=16G
+#SBATCH --cpus-per-40
 
 Rscript code/find_conflicts_mms.R
