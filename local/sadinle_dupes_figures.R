@@ -3,7 +3,15 @@ library(ggplot2)
 library(tidyr)
 
 results <- readRDS("out/sadinle_double_dupes_all")
-results_ml <- readRDS("out/sadinle_ml_all")
+#results_ml <- readRDS("out/sadinle_ml_all")
+error_vec <- c("One Error", "Two Errors", "Three Errors")
+results$errors <- error_vec[results$errors]
+results$errors <- factor(results$errors, error_vec)
+
+overlap_vec <- c("Low Overlap", "Mid Overlap", "High Overlap")
+results$overlap <- match(results$overlap, unique(results$overlap))
+results$overlap <- overlap_vec[results$overlap]
+results$overlap <- factor(results$overlap, overlap_vec)
 results[is.na(results)] <- 0
 df <- results %>%
   filter(method %in% c("fabl_mm_inf", "fastlink")) %>%
@@ -34,7 +42,9 @@ df %>%
   geom_pointrange(position = position_dodge2(width = .5)) +
   facet_grid(overlap~errors) +
   labs(x = NULL, y = NULL, color = NULL) +
-  theme_bw()
+  theme_bw(base_size = 12)
+
+ggsave("figures/sadinle_recall_precision_2to2.png")
 
 # df %>%
 #   filter(metric == "f-measure") %>%

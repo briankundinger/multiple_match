@@ -43,9 +43,15 @@ identify_conflicts <- function(set, mms){
   max(0, which(common_entities > 0 & common_entities < length(set)))
 }
 
-conflicts <- parallel::mclapply(unique_mms[set_vec],
-                                identify_conflicts,
-                                unique_mms, mc.cores = cores)
+# conflicts <- parallel::mclapply(unique_mms[set_vec],
+#                                 identify_conflicts,
+#                                 unique_mms, mc.cores = cores)
+
+conflicts <- list()
+for(i in seq_along(set_vec)){
+  print(i)
+  conflicts[[i]] <- identify_conflicts(unique_mms[[set_vec[i]]], unique_mms)
+}
 
 
 
@@ -53,5 +59,4 @@ conflicts <- parallel::mclapply(unique_mms[set_vec],
 saveRDS(conflicts, paste0("out/ncvr/mms/conflicts_alternate/", "conflicts_",
                     stringr::str_pad(k, 4, pad = "0")))
 
-readRDS("out/ncvr/mms/conflicts/conflicts_0001")
 
