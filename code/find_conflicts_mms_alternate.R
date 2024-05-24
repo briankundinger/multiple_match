@@ -6,15 +6,15 @@ cores <- parallel::detectCores()
 
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
-out <- readRDS("out/ncvr_results/chain/fabl_mm_2")
-hash <- readRDS("out/ncvr/combine/hash")
-result <- estimate_links_mm(out, hash, resolve = F, transitivity = F)
+# out <- readRDS("out/ncvr_results/chain/fabl_mm_2")
+# hash <- readRDS("out/ncvr/combine/hash")
+# result <- estimate_links_mm(out, hash, resolve = F, transitivity = F)
+#
+# Z_hat <- results$Z_hat
+# prob <- results$prob
 
-Z_hat <- results$Z_hat
-prob <- results$prob
-
-# Z_hat <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2")
-# prob <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2")
+Z_hat <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2_raw")
+prob <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2_raw")
 
 Z_hat <- data.frame(Z_hat, prob)
 
