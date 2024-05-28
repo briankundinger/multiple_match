@@ -2,15 +2,51 @@ library(dplyr)
 
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
+Z_hat <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2_raw")
+prob <- readRDS("out/ncvr_results/prob/fabl_mm_2_raw")
+Z_hat <- data.frame(Z_hat, prob)
+
+Z_true <- readRDS("data/ncvr_Z_true")
+names(Z_true) <- c("target_id", "base_id")
+
+Z_true %>%
+  filter(base_id == 88601)
+
+mms_df <- Z_hat %>%
+  group_split(base_id, .keep = T)
+
+mms <- mms_df %>%
+  lapply(., `[[`, "target_id")
+
+mms_prob <- mms_df %>%
+  lapply(., `[[`, "prob")
+
+
+unique_mms <- unique(mms)
+unique_mms_map <- match(mms, unique_mms)
+
+set_id_df <- lapply(seq_along(mms), function(j){
+  data.frame(mms_df[[j]], set_id = unique_mms_map[j])
+}) %>%
+  do.call(rbind, .)
+
 
 files <- list.files("out/ncvr/mms/conflicts_alternate/", full.names = T)
-conflicts <- lapply(files, readRDS)
-conflicts_list <- purrr::flatten(conflicts)
+conflicts <- lapply(files, readRDS) %>%
+  purrr::flatten()
 conflicts_df <- lapply(seq_along(conflicts), function(x){
-  data.frame(set_1 = conflicts_list[[x]], set_2 = x)
+  data.frame(set_1 = conflicts[[x]], set_2 = x)
 }) %>%
   do.call(rbind, .) %>%
   filter(set_1 >0)
+
+# ncvr_b %>%
+#   mutate(rn = row_number()) %>%
+#   filter(rn == 432)
+#
+# ncvr_a %>%
+#   mutate(rn = row_number()) %>%
+#   filter(rn == 88512)
 
 #if(any(conflicts >0)){
 if(nrow(conflicts_df > 0)){
@@ -22,9 +58,9 @@ if(nrow(conflicts_df > 0)){
     higher_prob <- set_id_df %>%
       filter(set_id %in% conflicts_df[i, ]) %>%
       group_by(base_id) %>%
-      mutate(total_prob = sum(prob)) %>%
+      mutate(avg_prob = mean(prob)) %>%
       ungroup() %>%
-      filter(total_prob == max(total_prob)) %>%
+      filter(avg_prob == max(avg_prob)) %>%
       select(set_id) %>%
       pull() %>%
       unique()
@@ -33,6 +69,7 @@ if(nrow(conflicts_df > 0)){
 
     set_id_df <- set_id_df %>%
       filter(!(set_id %in% lower_prob))
+    print(i)
     # mms[[which(unique_mms_map ==  lower_prob)]] <- 0
     # mms_prob[[which(unique_mms_map ==  lower_prob)]] <- 0
   }
@@ -52,3 +89,6 @@ Z_hat <- set_id_df %>%
 
 probs_matches <- set_id_df %>%
   select(prob)
+
+saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2_sad_bayes")
+saveRDS(probs_matches, "out/ncvr_results/prob/fabl_mm_2_sad_bayes")

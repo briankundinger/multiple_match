@@ -40,10 +40,6 @@ records <- records %>%
 n1 <- 500
 n2 <- 500
 
-Z_true_pairs <- data.frame(id_1 = 1:(2*overlap),
-                          id_2 = rep(1:overlap, 2)) %>%
-  arrange(id_2)
-
 file1 <- records %>%
   filter(file ==1,
          rec_id <= n1) %>%
@@ -62,6 +58,10 @@ copy_index <- 1:overlap
 paste_index <- (overlap +1):(2*overlap)
 
 file1[paste_index, ] <- file1[copy_index, ]
+
+Z_true_pairs <- data.frame(id_1 = 1:(2*overlap),
+                           id_2 = rep(1:overlap, 2)) %>%
+  arrange(id_2)
 
 cd <- compare_records(file1, file2, c(2, 3, 4, 5, 6) + 1,
                       types = c("lv", "lv", "bi", "bi", "bi"),
