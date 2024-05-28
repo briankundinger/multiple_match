@@ -3,7 +3,7 @@ library(ggplot2)
 library(tidyr)
 
 results <- readRDS("out/sadinle_double_dupes_all")
-#results_ml <- readRDS("out/sadinle_ml_all")
+results_ml <- readRDS("out/sadinle_ml_all")
 error_vec <- c("One Error", "Two Errors", "Three Errors")
 results$errors <- error_vec[results$errors]
 results$errors <- factor(results$errors, error_vec)

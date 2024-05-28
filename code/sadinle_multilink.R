@@ -82,7 +82,7 @@ cd_multilink <- multilink::create_comparison_data(all_records,
 
 prior <- multilink::specify_prior(cd_multilink, mus = NA,
                                   nus = NA, flat = 0, alphas = NA,
-                                  dup_upper_bound = c(2, 2),
+                                  dup_upper_bound = c(3, 3),
                                   dup_count_prior_family = NA,
                                   dup_count_prior_pars = list(2, 2),
                                   n_prior_family = NA,
