@@ -90,5 +90,8 @@ Z_hat <- set_id_df %>%
 probs_matches <- set_id_df %>%
   select(prob)
 
+eval <- evaluate_links(Z_hat, Z_true, hash$n1, "pairs")
+
+saveRDS(eval, "out/ncvr_results/eval/fabl_mm_2_sad_bayes")
 saveRDS(Z_hat, "out/ncvr_results/Z_hat/fabl_mm_2_sad_bayes")
 saveRDS(probs_matches, "out/ncvr_results/prob/fabl_mm_2_sad_bayes")

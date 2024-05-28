@@ -14,7 +14,7 @@ k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 # prob <- results$prob
 
 Z_hat <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2_raw")
-prob <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2_raw")
+prob <- readRDS("out/ncvr_results/prob/fabl_mm_2_raw")
 
 Z_hat <- data.frame(Z_hat, prob)
 
