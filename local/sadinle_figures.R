@@ -1,9 +1,21 @@
 library(tidyverse)
 
 results <- readRDS("out/sadinle_all")
-results[is.na(results)] <- 0
-df <- results %>%
-  filter(method %in% c("fabl_mm_inf", "fastlink")) %>%
+results_ml <- readRDS("out/sadinle_ml_all_12") %>%
+  data.frame() %>%
+  mutate(method = "multilink") %>%
+  relocate(method, .before = errors)
+names(results_ml)[1:4] <- names(results)[1:4]
+names(results_ml)
+names(results)
+
+
+results_all <- rbind(results, results_ml)
+
+
+#results[is.na(results)] <- 0
+df <- results_all %>%
+  filter(method %in% c("fabl_mm_inf", "fastlink", "multilink")) %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric,
                          c("recall", "precision", "f-measure"))) %>%

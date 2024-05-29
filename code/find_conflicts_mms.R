@@ -1,7 +1,6 @@
 library(dplyr)
 library(parallel)
 
-cores <- parallel::detectCores()
 
 k <-  as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
@@ -29,9 +28,14 @@ identify_conflicts <- function(set, mms){
 }
 
 #conflicts <- sapply(unique_mms, identify_conflicts, unique_mms)
-conflicts <- parallel::mclapply(unique_mms[set_vec],
-                                identify_conflicts,
-                                unique_mms, mc.cores = cores)
+# conflicts <- parallel::mclapply(unique_mms[set_vec],
+#                                 identify_conflicts,
+#                                 unique_mms, mc.cores = cores)
+conflicts <- list()
+for(i in seq_along(set_vec)){
+  print(i)
+  conflicts[[i]] <- identify_conflicts(unique_mms[[set_vec[i]]], unique_mms)
+}
 
 
 
