@@ -8,11 +8,16 @@ results_ml <- readRDS("out/sadinle_ml_all_12") %>%
   mutate(method = "multilink") %>%
   relocate(method, .before = errors)
 names(results_ml)[1:4] <- names(results)[1:4]
-names(results_ml)
-names(results)
-
-
 results_all <- rbind(results, results_ml)
+
+error_vec <- c("One Error", "Two Errors", "Three Errors")
+results_all$errors <- error_vec[results_all$errors]
+results_all$errors <- factor(results_all$errors, error_vec)
+
+overlap_vec <- c("Low Overlap", "Mid Overlap", "High Overlap")
+results_all$overlap <- match(results_all$overlap, unique(results_all$overlap))
+results_all$overlap <- overlap_vec[results_all$overlap]
+results_all$overlap <- factor(results_all$overlap, overlap_vec)
 
 
 #results[is.na(results)] <- 0
