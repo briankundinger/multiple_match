@@ -114,16 +114,32 @@ time <- proc.time()[3] - start
 
 Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
                     id_2 = fl_out$matches$inds.b)
-
 fastlink_result <- c(evaluate_links(Z_hat, Z_true_pairs, n1, "pairs"), time)
 
-result_df <- rbind(fabl_mm_result, fabl_mm_inf_result, fastlink_result) %>%
+
+Z_true_swap <- Z_true_pairs[, c(2, 1)]
+
+cd <- compare_records(file2, file1, c(2, 3, 4, 5, 6) + 1,
+                      types = c("lv", "lv", "bi", "bi", "bi"),
+                      breaks = c(0, 0.25))
+hash <- hash_comparisons(cd)
+
+start <- proc.time()[3]
+out_mm <- fabl(hash, S = S, burn = burn)
+time <- proc.time()[3] - start
+result_mm <- estimate_links(out_mm, hash, resolve = F)
+Z_hat <- make_Zhat_pairs(result_mm$Z_hat)
+fabl_swap_result <- c(evaluate_links(Z_hat, Z_true_swap, n1, "pairs"), time)
+
+
+
+result_df <- rbind(fabl_mm_result, fabl_mm_inf_result, fastlink_result, fabl_swap_result) %>%
   data.frame()
 
 
 names(result_df) <- c("recall", "precision", "f-measure", "time")
 #result_df$method <- c("fabl_mm", "fabl_mm_inf", "variational_fastlink", "fastlink", "multilink_2")
-result_df$method <- c("fabl_mm", "fabl_mm_inf", "fastlink")
+result_df$method <- c("fabl_mm", "fabl_mm_inf", "fastlink", "fabl_swap")
 
 
 result_df$errors <- ceiling(i/100)
