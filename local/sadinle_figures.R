@@ -22,7 +22,7 @@ results_all$overlap <- factor(results_all$overlap, overlap_vec)
 
 #results[is.na(results)] <- 0
 df <- results_all %>%
-  filter(method %in% c("fabl_mm_inf", "fastlink", "multilink")) %>%
+  filter(method %in% c("fabl_mm_inf", "fastlink", "multilink", "fabl_swap")) %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric,
                          c("recall", "precision", "f-measure"))) %>%
@@ -52,17 +52,17 @@ df %>%
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw()
 
-ggsave("figures/recall_precision_2_to_1.png")
+#ggsave("figures/recall_precision_2_to_1.png")
 
-# df %>%
-#   filter(metric == "f-measure") %>%
-#   ggplot() +
-#   aes(x = metric,
-#       y = median,
-#       min = lower,
-#       max = upper,
-#       color = method) +
-#   geom_pointrange(position = position_dodge2(width = .5)) +
-#   facet_grid(overlap~errors) +
-#   labs(x = NULL, y = NULL, color = NULL) +
-#   theme_bw()
+df %>%
+  filter(metric == "f-measure") %>%
+  ggplot() +
+  aes(x = metric,
+      y = median,
+      min = lower,
+      max = upper,
+      color = method) +
+  geom_pointrange(position = position_dodge2(width = .5)) +
+  facet_grid(overlap~errors) +
+  labs(x = NULL, y = NULL, color = NULL) +
+  theme_bw()
