@@ -44,6 +44,6 @@ hash_time <- unname(toc(quiet = T)$toc - start)
 # saveRDS(time_df, glue("out/case_study_time/ncvr_{k}"))
 # paste0("out/ncvr/hash/", "hash_",
 #        stringr::str_pad(k, 2, pad = "0"))
-saveRDS(hash, paste0("../../usr/xtmp/bak47/mm/ncvr_b_dedupe/hash/",
+saveRDS(hash, paste0("../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/hash/",
                      "hash_",
                      stringr::str_pad(k, 4, pad = "0")))
