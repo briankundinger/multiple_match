@@ -11,4 +11,4 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=16G
 
-Rscript code/ncvr_hash_b_dedup.R
+Rscript code/b_dedup/ncvr_hash.R
