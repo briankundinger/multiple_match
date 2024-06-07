@@ -43,7 +43,7 @@ chain <- fabl(hash, S = S, burn = burn)
 saveRDS(chain, "../../../../../usr/xtmp/bak47/mm/swap/chain/fabl")
 seconds <- proc.time() - ptm
 print(2)
-results <- estimate_links_mm(chain, hash, resolve = T)
+results <- estimate_links(chain, hash, resolve = F)
 print(3)
 saveRDS(results$Z_hat, "../../../../../usr/xtmp/bak47/mm/swap/Z_hat/fabl")
 saveRDS(results$prob, "../../../../../usr/xtmp/bak47/mm/swap/prob/fabl")
