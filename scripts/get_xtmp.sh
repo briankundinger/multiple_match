@@ -13,4 +13,4 @@
 #
 
 cp ../../../../../usr/xtmp/bak47/mm/swap/eval/fabl out/xtmp/fabl_swap
-cp ../../../../../usr/xtmp/bak47/mm/b_dedupe/eval/fabl out/xtmp/fabl_dedup
+cp ../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/eval/fabl out/xtmp/fabl_dedup
