@@ -1,4 +1,4 @@
-library(tidyverse)
+library(dplyr)
 
 methods <- list.files("out/ncvr_results/eval/")
 eval_files <- list.files("out/ncvr_results/eval/", full.names = T)
@@ -34,3 +34,8 @@ E_m
 chain_mm$pi %>%
   do.call(rbind, .) %>%
   colMeans()
+
+eval_files <- list.files("out/xtmp/", full.names = T)
+eval <- lapply(eval_files, readRDS) %>%
+  do.call(rbind, .) %>%
+  data.frame()
