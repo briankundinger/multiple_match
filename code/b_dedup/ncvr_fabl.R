@@ -2,7 +2,7 @@ library(vabldev)
 
 # ncvr_a <- readRDS("data/ncvr_a")
 # ncvr_b <- readRDS("data/ncvr_b_dedup")
-S <- 3
+S <- 1000
 burn <- ceiling(S * .1)
 #
 #
