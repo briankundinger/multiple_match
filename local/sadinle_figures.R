@@ -31,6 +31,8 @@ df <- results_all %>%
             lower = quantile(value, .025, na.rm = T),
             upper = quantile(value, .975, na.rm = T))
 
+df$method[df$method == "fabl_mm_inf"] <- "fabl_mm"
+
 # results %>%
 #   filter(method %in% c("fabl_mm_inf", "fastlink")) %>%
 #   pivot_longer(cols = 1:3, names_to = "metric") %>%
@@ -52,7 +54,7 @@ df %>%
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw()
 
-#ggsave("figures/recall_precision_2_to_1.png")
+ggsave("figures/recall_precision_2_to_1.png")
 
 df %>%
   filter(metric == "f-measure") %>%
