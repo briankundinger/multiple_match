@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2021/W32TeX)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: multiple_match.aux
+The style file: agsm.bst
+Database file #1: biblio.bib
+"{" immediately follows a field part---line 513 of file biblio.bib
+ :   howpublished= \url
+ :                     {http://www.cs.utexas.edu/users/ml/riddle/}
+I'm skipping whatever remains of this entry
+You've used 2 entries,
+            2909 wiz_defined-function locations,
+            648 strings with 5069 characters,
+and the built_in function-call counts, 7470 in all, are:
+= -- 1217
+> -- 94
+< -- 0
++ -- 578
+- -- 28
+* -- 628
+:= -- 1543
+add.period$ -- 2
+call.type$ -- 2
+change.case$ -- 27
+chr.to.int$ -- 2
+cite$ -- 2
+duplicate$ -- 26
+empty$ -- 47
+format.name$ -- 33
+if$ -- 1326
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 9
+num.names$ -- 21
+pop$ -- 8
+preamble$ -- 1
+purify$ -- 30
+quote$ -- 0
+skip$ -- 26
+stack$ -- 0
+substring$ -- 1705
+swap$ -- 2
+text.length$ -- 28
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 8
+warning$ -- 0
+while$ -- 42
+width$ -- 0
+write$ -- 29
+(There was 1 error message)

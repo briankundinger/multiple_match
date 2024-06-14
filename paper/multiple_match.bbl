@@ -1,0 +1,14 @@
+\begin{thebibliography}{xx}
+
+\harvarditem[Kundinger et~al.]{Kundinger, Reiter \harvardand\
+  Steorts}{2024}{kundinger_2023}
+Kundinger, B., Reiter, J. \harvardand\ Steorts, R.~C.  \harvardyearleft
+  2024\harvardyearright , `{Efficient and Scalable Bipartite Matching with Fast
+  Beta Linkage (fabl)}', {\em Bayesian Analysis (Accepted)} .
+
+\harvarditem{Wortman}{2019}{wortman2019}
+Wortman, J. P.~H.  \harvardyearleft 2019\harvardyearright , Record linkage
+  methods with applications to causal inference and election voting data, PhD
+  thesis, Duke University.
+
+\end{thebibliography}
