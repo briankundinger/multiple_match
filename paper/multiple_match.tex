@@ -101,7 +101,7 @@
 
 \section{Multiple Match}
 
-We provide updated notation to allow us to describe one record in $B$ having multiple matches in $A$. Let $Z_j$ be a set containing the indices for all of the records in $A$ that are a match with record $B_j$, and let $Z = \{Z_j | j = 1, \ldots, n_B\}$ denote the collection of all such set. Let $|Z_j| = \sum_{k=1}^{\infty} I(Z_{j, k} > 0)$ denote the number of links associated with record $B_j$. We use $Z_j = \emptyset$ to denote when $B_j$ has no match in $A$.
+We provide updated notation to allow us to describe one record in $B$ having multiple matches in $A$. Let $Z_j$ be a set containing the indices for all of the records in $A$ that are a match with record $B_j$, and let $Z = \{Z_j | j = 1, \ldots, n_B\}$ denote the collection of such sets for all records in $B$. Let $|Z_j| = \sum_{k=1}^{\infty} I(Z_{j, k} > 0)$ denote the number of records in $A$ that are linked to $B_j$. We use $Z_j = \emptyset$ to denote when $B_j$ has no match in $A$.
 
 We can allow each record in $B$ to match to multiple records in $A$ through a Dirichlet process prior. Define a vector of probabilities $\bm{\pi} = (\pi_0, \ldots)$ where $\pi_k$ is the probability that some record in $B$ has exactly $k$ matches in $A$. In implementation, we model each $\pi_k$ as a product of conditional probabilities: let $\eta_k$ be the probability that some record in $B$ has at least $k$ matches, given that it has at least $k-1$ matches. This gives us the stick breaking representation
 \begin{align}
@@ -109,24 +109,35 @@ We can allow each record in $B$ to match to multiple records in $A$ through a Di
 \end{align}
 where $\eta_k$ are independent random variables from a $\text{Beta}(\alpha_{\eta}, \beta_{\eta})$ distribution.
 
-Similar to fabl, we adopt a prior specification on $Z$ so that each matching $Z_j$ of length $|Z_j| = k$ is equally likely. Formally, we have
+Note that when considering possible values that $Z_j$ can take, the order of its elements are irrelevant for record linkage. That is, $Z_j = (i, i')$ and $Z_j = (i', i)$ both communicate that record $B_j$ is matched to records $A_i$ and $A_{i'}$. Let $\sigma(q)$ denote all possible orderings of the elements of $q$. We define the equivalence relation $q' \equiv q$ if and only if $q' \in \sigma(q)$, and note that $|\sigma(q)| = |q|!$. 
 
-\begin{subequations}
-	\begin{align}
-		\mathcal{L}(Z, \bm{m}, \bm{u} \mid \gamma) &= \prod_{i=1}^{n_A}  \prod_{j=1}^{n_B}\prod_{f=1}^{F}\prod_{l=1}^{L_f}\left[  m_{fl}^{I(i \in Z_j)}u_{fl}^{I(i \notin Z_j)}\right]^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}, \label{eqn:likelihood}\\
-		\bm{m}_f &\sim \text{Dirichlet}(\alpha_{f1}, \ldots, \alpha_{f L_f}), \forall f = 1, \ldots, F, \label{eqn:m} \\
-		\bm{u}_f &\sim \text{Dirichlet}(\beta_{f1}, \ldots, \beta_{f L_f}),\forall f = 1, \ldots, F,  \label{eqn:u}\\
-%		p(Z_j = q| \bm{\pi})  &=
-%		\begin{cases} 
-%			\frac{(n_A - k)! k!}{n_A!} \pi_k,  & q \neq 0, \\
-%			\pi_0, &  q  = 0; \\
-%		\end{cases} \label{eqn:z}\\
-		p(Z_j = q| \bm{\pi}) &= \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}
- \label{eqn:z}\\
-		\pi_k &= (1 - \eta_{k+1}) \prod_{c=1}^{k} \eta_c,  \\
-		\eta_k &\sim \text{Beta}(\alpha_{\eta}, \beta_{\eta})\label{eqn:pi}.
-	\end{align}
-\end{subequations}
+Similar to fabl, we adopt a prior specification on $Z$ so that each matching $Z_j$ of length $|Z_j| = k$ is equally likely. We can write this prior in two equivalent ways. We can write the prior in terms of a particular vector $q$ as
+\begin{align}\label{eqn:z}
+	p(Z_j = q| \bm{\pi}) = \frac{(n_A - |q|)!}{n_A!} \pi_{|q|}.
+\end{align}
+Equivalently, we can write the prior in terms of the equivalence class $\sigma(q)$ as 
+\begin{align}\label{eqn:z_equivalence}
+	p(Z_j \equiv q| \bm{\pi}) = \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}, 
+\end{align}
+where the additional $|q|!$ accounts for the multiple orderings of $q$. Though the representation in (\ref{eqn:z_equivalence}) is more natural in the record linkage settings, the representation in (\ref{eqn:z}) will provide more clear derivations in the sections that follow. 
+%Similar to fabl, we adopt a prior specification on $Z$ so that each matching $Z_j$ of length $|Z_j| = k$ is equally likely. Formally, we have
+%
+%\begin{subequations}
+%	\begin{align}
+%		\mathcal{L}(Z, \bm{m}, \bm{u} \mid \gamma) &= \prod_{i=1}^{n_A}  \prod_{j=1}^{n_B}\prod_{f=1}^{F}\prod_{l=1}^{L_f}\left[  m_{fl}^{I(i \in Z_j)}u_{fl}^{I(i \notin Z_j)}\right]^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}, \label{eqn:likelihood}\\
+%		\bm{m}_f &\sim \text{Dirichlet}(\alpha_{f1}, \ldots, \alpha_{f L_f}), \forall f = 1, \ldots, F, \label{eqn:m} \\
+%		\bm{u}_f &\sim \text{Dirichlet}(\beta_{f1}, \ldots, \beta_{f L_f}),\forall f = 1, \ldots, F,  \label{eqn:u}\\
+%%		p(Z_j = q| \bm{\pi})  &=
+%%		\begin{cases} 
+%%			\frac{(n_A - k)! k!}{n_A!} \pi_k,  & q \neq 0, \\
+%%			\pi_0, &  q  = 0; \\
+%%		\end{cases} \\
+%		p(Z_j = q| \bm{\pi}) &= \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}
+% \\
+%		\pi_k &= (1 - \eta_{k+1}) \prod_{c=1}^{k} \eta_c,  \\
+%		\eta_k &\sim \text{Beta}(\alpha_{\eta}, \beta_{\eta})\label{eqn:pi}.
+%	\end{align}
+%\end{subequations}
 
 
 %Below, we explain how this prior is implemented in the MCMC and variational inference frameworks, and the computational considerations relevant to each. 
@@ -134,7 +145,7 @@ Similar to fabl, we adopt a prior specification on $Z$ so that each matching $Z_
 
 \subsection{Derivation of Joint Distribution}\label{sec:joint-distribution}
 
-We first derive the Gibbs sampler for a the joint distribution of the set $Z_j$. Following the observation of \cite{wortman2019} and elaborated by \cite{kundinger_2023}, when $B_j$ does not link to any record in $A$ (such that $|Z_j| = 0$) the contribution to the likelihood is simply a product of $u$ parameters, which we will call $c_j$:
+We first derive the Gibbs sampler for a the joint distribution of the vector $Z_j$. Following the observation of \cite{wortman2019} and elaborated by \cite{kundinger_2023}, when $B_j$ does not link to any record in $A$ (such that $|Z_j| = 0$) the contribution to the likelihood is simply a product of $u$ parameters, which we will call $c_j$:
 \begin{align}
 	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi, Z_j = \emptyset) = \prod_{i=1}^{n_A}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} = c_j.
 \end{align}
@@ -149,13 +160,19 @@ We multiply and divide by the $u$ parameters for the matching record pairs to ob
 \end{align}
 
 %Since $Z_j$ is a categorical random variable with every possible combination of the records in $A$ as its potential values, its distribution is given by the likelihood of one outcome divided by the sum of the likelihood for all outcomes.
-Lastly, we multiply the likelihood by the prior in (\label{eqn:z}) to obtain the posterior distribution. For $Z_j = q$ where $|q| = k$, we have
-\begin{align}\label{eqn:joint_posterior}
-	p\left(Z_j  = q|\gamma, \bm{m}, \bm{u}, \pi \right) &= \frac{\frac{(n_A - k)! k!}{n_A!} \pi_{k} c_j \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)! |h|!}{n_A!} \pi_{|h|} c_j \prod_{i \in h} w_{ij}} \\
-	&= \frac{\frac{(n_A - k)! k!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)! |h|!}{n_A!} \pi_{|h|} \prod_{i \in h} w_{ij}} \\
-	&\propto \frac{(n_A - k)! k!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}
+Lastly, we multiply the likelihood by the prior in (\ref{eqn:z}) to obtain the posterior distribution. For $Z_j = q$ where $|q| = k$, we have
+\begin{subequations}
+	\begin{align}
+		p\left(Z_j  = q|\gamma, \bm{m}, \bm{u}, \pi \right) &= \frac{\frac{(n_A - k)!}{n_A!} \pi_{k} c_j \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)!}{n_A!} \pi_{|h|} c_j \prod_{i \in h} w_{ij}} \\
+		&= \frac{\frac{(n_A - k)!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)!}{n_A!} \pi_{|h|} \prod_{i \in h} w_{ij}} \\
+		&\propto \frac{(n_A - k)!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij} \label{eqn:joint_posterior}
+	\end{align}
+\end{subequations}
+Importantly, the constant $c_j$ is not found in the final expression because the probability mass associated with every potential value for $Z_j$ shares the same $c_j$. This does not occur due to proportionality. We emphasize that this full conditional is for one particular representation $q$ of the equivalence class $\sigma(q)$. The full conditional for entire class of representations is given by
+\begin{align}\label{eqn:joint_posterior_class}
+	p\left(Z_j  \equiv q|\gamma, \bm{m}, \bm{u}, \pi \right)
+	&\propto \frac{(n_A - k)! k!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}.
 \end{align}
-Importantly, the constant $c_j$ is not found in the final expression because the probability mass associated with every potential value for $Z_j$ shares the same $c_j$. This does not occur due to proportionality. 
 
 %Lastly, we multiply the likelihood by the prior $\pi_k$ and divide by $c_j$ to obtain the full conditional
 %Lastly, we multiply the likelihood by the prior in (\label{eqn:z}) to obtain the posterior distribution. Note that $Z_j$ is a categorical random variable with every possible combination of the records in $A$ as its potential values. Since $c_j$ is included in the likelihood for every possible term 
@@ -185,45 +202,52 @@ Sampling this joint distribution is computationally prohibitive as the number of
 We generalize the fast beta prior from \cite{kundinger_2023} to a sequence of priors that allows for multiple matchings. When $B_j$ has been linked to $k-1$ records, we say that the probability that $B_j$ has a $k^{th}$ match is $\eta_k$, and that all remaining records in $A$ are equally likely to be linked. let $Z_{j, -k} = (Z_{j, 1}, \ldots, Z_{j, k-1})$ be the set of records linked to $B_j$ before the $k^{th}$ matching phase. We use
 \begin{align} \label{eqn:sequential_prior}
 	p(Z_{j, k} = q_k|\eta_k) &= \begin{cases}
-		\frac{\eta_k}{n_A - (k + 1)}, &  q_k \notin N_{j, k}, \\
+		\frac{\eta_k}{n_A - (k - 1)}, &  q_k \notin N_{j, k}, \\
 		1 - \eta_k, & z_{j, k} = \emptyset;
-	\end{cases} \\
-	\eta_k &\sim \text{Beta}(\alpha_{\eta}, \beta_{\eta})
+	\end{cases}
 \end{align}
-where $N_{j, k} = [n_A] \setminus Z_{j, -k}$ is the set of records in $A$ that are available to be matched with $B_j$.
-
-This sequence of priors leads to sequence of posteriors that can be used to sample arbitrarily many links for record $B_j$. Through an argument analogous to that of Section \ref{sec:joint-distribution} (see Appendix \ref{app:sequential-sampler}), we have,
+where $N_{j, k} = [n_A] \setminus Z_{j, -k}$ is the set of records in $A$ that are available to be matched with $B_j$. This sequence of priors leads to sequence of posteriors that can be used to sample arbitrarily many links for record $B_j$. These posteriors are given by 
 \begin{align} \label{eqn:sequential_posterior}
 	p(Z_{j, k} = q_k|Z_{j, k-1}, \eta_k, \bm{m}, \bm{u}, \gamma) &\propto \begin{cases}
-		\frac{\eta_k}{n_A - (k + 1)} w_{q_k, j}, & q_k \in N_{j, k}, \\
-		1 - \eta_k, & q_k= \emptyset;
-	\end{cases} \\
-	\eta_k &\sim \text{Beta}(\alpha_{\eta} + n_k(Z), \beta_{\eta} + n_{k-1}(Z) - n_k(Z))
+		\frac{\eta_k}{n_A - (k - 1)} w_{q_k, j}, & q_k \in N_{j, k}, \\
+		1 - \eta_k, & q_k= \emptyset,
+	\end{cases}
+%	\eta_k &\sim \text{Beta}(\alpha_{\eta} + n_k(Z), \beta_{\eta} + n_{k-1}(Z) - n_k(Z))
 \end{align}
-where $n_k(Z) = \sum_{j=1}^{n_B} I( |Z_j| \geq k)$ is the number of records in $B$ that have at least $k$ matches in $A$. Note that $n_0(Z) = n_B$, and that for each $k$, we can view $n_{k-1}{(Z)}$ as a number of trials, and $n_{k}{(Z)}$ as a number of successes, and thus update $\eta_k$ as a straightforward Beta random variable. 
+as derived in Appendix \ref{app:sequential-sampler}.
+%Through an argument analogous to that of Section \ref{sec:joint-distribution} (see Appendix \ref{app:sequential-sampler}), we have,
+%\brian{Note for Serge: If the full conditional in (\ref{eqn:sequential_posterior}) were to have a scaling factor $k$, it would have to come from the prior in (\ref{eqn:sequential_prior}). This would make it an improper prior}
+%where $n_k(Z) = \sum_{j=1}^{n_B} I( |Z_j| \geq k)$ is the number of records in $B$ that have at least $k$ matches in $A$. Note that $n_0(Z) = n_B$, and that for each $k$, we can view $n_{k-1}{(Z)}$ as a number of trials, and $n_{k}{(Z)}$ as a number of successes, and thus update $\eta_k$ as a straightforward Beta random variable. 
+%
+%While the set $Z_j$ is unordered, the sequential sampler necessarily samples $Z_{j, k}$ in an ordered fashion. Let $\sigma(Z_j)$ denote every possible ordering of the elements of $Z_j$. Because we regard each element $\sigma(Z_j)$ as equal, they must be equally likely. Since there are $|q|!$ possible orderings of the elements of $q$, we have
+%\begin{align}
+%	\prod_{k=1}^{|q|} p(Z_{j, k} = q_k| \Gamma, m, u, \eta_k, Z_{j, k-1}) = \frac{1}{|q|!} \sum_{q' \in \sigma(q)} \prod_{k=1}^{|q|} p(Z_{j, k} = q'_k| \Gamma, m, u, \eta_k, Z_{j, k-1}).
+%\end{align}
 
-While the set $Z_j$ is unordered, the sequential sampler necessarily samples $Z_{j, k}$ in an ordered fashion. Let $\sigma(Z_j)$ denote every possible ordering of the elements of $Z_j$. Because we regard each element $\sigma(Z_j)$ as equal, they must be equally likely. Therefore we have
-\begin{align}
-	%p(Z_j = q| \Gamma, m, u, \pi) 
-	\prod_{q' \in \sigma(q)} \prod_{k=1}^{|q|} p(Z_{j, k} = q'_k| \Gamma, m, u, \eta_k, Z_{j, k-1}) = |q|! \prod_{k=1}^{|q|} p(Z_{j, k} = q_k| \Gamma, m, u, \eta_k, Z_{j, k-1}).
-\end{align}
+%With this established, we see that the joint posterior discussed in Section \ref{sec:joint-distribution} is proportional to the product of sequential posteriors provided in (\ref{eqn:sequential_posterior}). Since the vector produced by the sequential sampler is necessarily ordered, we target the full conditional for a particular representation of $Z_j$ provided in (\ref{eqn:joint_posterior}), rather than the full conditional for the equivalence class in (\ref{eqn:joint_posterior_class}). For $Z_j = q$ where $|q| = k$, we have
+%\begin{align}
+%	p\left(Z_j  = q |\gamma, \bm{m}, \bm{u}, \pi\right) &\propto \frac{(n_A - k)!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij} \\
+%	&= \prod_{c = 1}^{k} \frac{1}{n_A - (c + 1)} (1 - \eta_{k+1})\prod_{c = 1}^{k} \eta_{k} \prod_{c = 1}^{k} w_{q_c, j} \\
+%	&= (1 - \eta_{k+1})\prod_{c = 1}^{k} \frac{\eta_{k} }{n_A - (c + 1)}  \prod_{c = 1}^{k} w_{q_c, j} \\
+%	&\propto p(Z_{j, k+1} = \emptyset| \eta_{k}) \prod_{c = 1}^{k} p(Z_{j, c} = q_c|\eta_c) p(\Gamma_{.j}| \bm{m}, \bm{u}, \bm{\eta}, q_c \in Z_j) \\
+%	&\propto p(Z_{j, k+1} = \emptyset | \Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) \prod_{c = 1}^{k} p(Z_{j, c} = q_c|\Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}).
+%\end{align}
+%As such, the joint distribution for any set $Z_j$ of length $k$ is proportional to the probability of any sequence of matching phases that attains all elements of $Z_j$ times the probability that the sequential samplers stops at the $k+1$ step. 
 
-With this established, we see that the joint posterior for the set $Z_j$ provided in (\ref{eqn:joint_posterior}) is proportional to the product of sequential posteriors provided in (\ref{eqn:sequential_posterior}). For $Z_j = q$ where $|q| = k$, we have
+This sequential sampler produces an output $Z_j = q = (q_1, \ldots, q_k)$ when $Z_{j, c} = q_c$ for steps $c \in \{1, \ldots, k\}$, and the $k+1$ step produces $Z_{j, k+1} = \emptyset$. Observe that 
 \begin{align}
-	p\left(Z_j  = q |\gamma, \bm{m}, \bm{u}, \pi\right) &\propto \frac{(n_A - k)!k!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij} \\
-	&= \prod_{c = 1}^{k} \frac{1}{n_A - (c + 1)} (1 - \eta_{k+1}) k!\prod_{c = 1}^{k} \eta_{k} \prod_{c = 1}^{k} w_{q_c, j} \\
-	&= (1 - \eta_{k+1}) k!\prod_{c = 1}^{k} \frac{\eta_{k} }{n_A - (c + 1)}  \prod_{c = 1}^{k} w_{q_c, j} \\
-	&\propto p(Z_{j, k+1} = \emptyset| \eta_{k})k! \prod_{c = 1}^{k} p(Z_{j, c} = q_c|\eta_c) p(\Gamma_{.j}| \bm{m}, \bm{u}, \bm{\eta}, q_c \in Z_j) \\
-	&\propto p(Z_{j, k+1} = \emptyset | \Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) k!\prod_{c = 1}^{k} p(Z_{j, c} = q_c|\Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) \\
-	&= p(Z_{j, k+1} = \emptyset | \Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) \prod_{q' \in \sigma(q)} \prod_{c = 1}^{k} p(Z_{j, c} = q'_c|\Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta})
+	p(Z_{j, k+1} = \emptyset | \Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) \prod_{c = 1}^{k} &p(Z_{j, c} = q_c|\Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) \\
+	&\propto (1 - \eta_{k+1})\prod_{c = 1}^{k} \frac{\eta_{c} }{n_A - (c - 1)}  \prod_{c = 1}^{k} w_{q_c, j} \\
+	&= \frac{(n_A - k)!}{n_A!} (1 - \eta_{k+1})\prod_{c = 1}^{k} \eta_{c} \prod_{c = 1}^{k} w_{q_c, j} \\
+	&= \frac{(n_A - k)!}{n_A!} \pi_k \prod_{c = 1}^{k} w_{q_c, j} \\
+	&= p\left(Z_j  = q |\gamma, \bm{m}, \bm{u}, \pi\right).
 \end{align}
-As such, the joint distribution for any set $Z_j$ of length $k$ is proportional to the probability of any sequence of matching phases that attains all elements of $Z_j$ times the probability that the sequential samplers stops at the $k+1$ step. 
-%Note that the $k!$ in the final line reflects the fact that there are $k!$ potential orderings of the components $q_c$ that produce the equivalent result $Z_j = q$. Additionally, the two proportionality symbols denote the same normalizing constant, and thus the distribution implied by the sequential sampler is exactly equal to the joint distribution. See Appendix \ref{app:extended-proof} for details. \brian{I believe this is true, but I might need to talk it out to explain better why.}
+Since the output of the sequential sampler is necessarily ordered, it produces a particular represention for a set of matches as shown in (\ref{eqn:joint_posterior}), rather than the full equivalence class as shown in (\ref{eqn:joint_posterior_class}).
 
 This sequential sampler amounts to an extension of \texttt{fabl} with an iterative matching phase. In each iteration of the Gibbs sampler, we sample an initial set of links using $\eta_1$. For each record in $B$ that was found to have a link, we remove the linked record in $A$ from consideration, and then sample another potential link with $\eta_2$. We continue, using $\eta_k$ in the $k^{th}$ matching step, until no new links are found, at which we point the matching phase terminates. The $\bm{\eta}, \bm{m},$ and $\bm{u}$ parameters are estimated based on all of the links identified, regardless of the order in which they are sampled. Crucially, there is no need to specify a maximum number of links per record, as this estimated through the model.
 
 %	\\
-%	&= \prod_{k = 1}^K \frac{1}{n_A - (k + 1)} \eta_k  w_{q_k, j} \\
+%	&= \prod_{k = 1}^K \frac{1}{n_A - (k - 1)} \eta_k  w_{q_k, j} \\
 %	&= p\left(Z_{j, k}^{(s+1)}  = q_k |\gamma, \bm{m}^{(s+1)}, \bm{u}^{(s+1)}, \pi^{(s+1)}, Z_{j, k-1} = q_{k-1} \right)
 
 
@@ -399,11 +423,11 @@ When $Z_{j, k} = q_k$ for some $q_k > 0$, we have
 To obtain the posterior, we multiply by the prior in (\ref{eqn:sequential_prior}). The posterior distribution this is given by
 \begin{align}\label{eqn:sequential-posterior-full}
 	p(Z_{j, k} = q_k|Z_{j, k-1}, \eta_k, \bm{m}, \bm{u}, \gamma) &=
-	\frac{\left(\frac{\eta_k}{n_A - (k + 1)}c_{Z_{j, -k}} w_{q_k, j}\right)^{I(q_k \in N_{j, k})} + \left(c_{Z_{j, -k}}(1 - \eta_k)\right)^{I(q_k = \emptyset)}}{\frac{\eta_k}{n_A - (k + 1)}c_{Z_{j, -k}} \sum_{i \notin Z_{j, -k}} w_{ij} + c_{Z_{j, -k}}(1 - \eta_k)} \\
+	\frac{\left(\frac{\eta_k}{n_A - (k - 1)}c_{Z_{j, -k}} w_{q_k, j}\right)^{I(q_k \in N_{j, k})} + \left(c_{Z_{j, -k}}(1 - \eta_k)\right)^{I(q_k = \emptyset)}}{\frac{\eta_k}{n_A - (k - 1)}c_{Z_{j, -k}} \sum_{i \notin Z_{j, -k}} w_{ij} + c_{Z_{j, -k}}(1 - \eta_k)} \\
 	&=
-	\frac{\left(\frac{\eta_k}{n_A - (k + 1)}w_{q_k, j}\right)^{I(q_k \in N_{j, k})} + (1 - \eta_k)^{I(q_k = \emptyset)}}{\frac{\eta_k}{n_A - (k + 1)}\sum_{i \notin Z_{j, -k}} w_{ij} +(1 - \eta_k)} \\
+	\frac{\left(\frac{\eta_k}{n_A - (k - 1)}w_{q_k, j}\right)^{I(q_k \in N_{j, k})} + (1 - \eta_k)^{I(q_k = \emptyset)}}{\frac{\eta_k}{n_A - (k - 1)}\sum_{i \notin Z_{j, -k}} w_{ij} +(1 - \eta_k)} \\
 	&\propto \begin{cases}
-		\frac{\eta_k}{n_A - (k + 1)} w_{q_k, j}, & q_k \in N_{j, k}, \\
+		\frac{\eta_k}{n_A - (k - 1)} w_{q_k, j}, & q_k \in N_{j, k}, \\
 		1 - \eta_k, & q_k= \emptyset.
 	\end{cases}
 \end{align}
