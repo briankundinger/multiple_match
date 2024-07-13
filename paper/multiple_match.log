@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  19 JUN 2024 11:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  13 JUL 2024 17:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -895,6 +895,10 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 104
 .
 
@@ -912,47 +916,67 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 (c:/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [1
+)
+
+Package amsmath Warning: Foreign command \atopwithdelims;
+(amsmath)                \frac or \genfrac should be used instead
+(amsmath)                 on input line 121.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 158.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 158.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 158.
+
+[1
 
 {c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: OT1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- (./multiple_match.bbl)
-[4]
-Overfull \hbox (33.90634pt too wide) detected at line 422
+[4] [5] [6]
+<../Rplots.pdf, id=165, 505.89pt x 505.89pt>
+File: ../Rplots.pdf Graphic file (type pdf)
+<use ../Rplots.pdf>
+Package pdftex.def Info: ../Rplots.pdf  used on input line 269.
+(pdftex.def)             Requested size: 369.8174pt x 369.82153pt.
+ [7 <../Rplots.pdf>] [8] [9] (./multiple_match.bbl) [10]
+Overfull \hbox (33.90634pt too wide) detected at line 459
 []
  []
 
-[5] (./multiple_match.aux)
+[11] [12] (./multiple_match.aux)
 Package rerunfilecheck Info: File `multiple_match.out' has not changed.
-(rerunfilecheck)             Checksum: D6E90AF7AEB0E194DA7C2631452ADCEA;799.
+(rerunfilecheck)             Checksum: 0B064646DE3511411009FCDD7AC0C23B;1710.
  ) 
 Here is how much of TeX's memory you used:
- 26439 strings out of 478276
- 513570 string characters out of 5850489
- 849522 words of memory out of 5000000
- 44027 multiletter control sequences out of 15000+600000
- 481204 words of font info for 108 fonts, out of 8000000 for 9000
+ 26570 strings out of 478276
+ 515511 string characters out of 5850489
+ 850140 words of memory out of 5000000
+ 44100 multiletter control sequences out of 15000+600000
+ 486777 words of font info for 140 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,20n,89p,1364b,355s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,20n,89p,1364b,354s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmmib10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8
-.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/
-texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/20
-21/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2021/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on multiple_match.pdf (5 pages, 164311 bytes).
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmib10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/
+texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2
+021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2021/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2021/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmtt12.pfb>
+Output written on multiple_match.pdf (12 pages, 211982 bytes).
 PDF statistics:
- 194 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
- 25237 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 290 PDF objects out of 1000 (max. 8388607)
+ 227 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
+ 33482 words of extra memory for PDF output out of 35830 (max. 10000000)
 

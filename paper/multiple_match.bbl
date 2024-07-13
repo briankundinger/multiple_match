@@ -1,10 +1,21 @@
 \begin{thebibliography}{xx}
 
+\harvarditem{Christen}{2014}{christen_preparation_2014}
+Christen, P.  \harvardyearleft 2014\harvardyearright , Preparation of a real
+  temporal voter data set for record linkage and duplicate detection research,
+  Technical report, Australian National University.
+\newline\harvardurl{http://users.cecs.anu.edu.au/~christen/publications/ncvoter-report-29june2014.pdf}
+
 \harvarditem[Kundinger et~al.]{Kundinger, Reiter \harvardand\
   Steorts}{2024}{kundinger_2023}
 Kundinger, B., Reiter, J. \harvardand\ Steorts, R.~C.  \harvardyearleft
   2024\harvardyearright , `{Efficient and Scalable Bipartite Matching with Fast
   Beta Linkage (fabl)}', {\em Bayesian Analysis (Accepted)} .
+
+\harvarditem{Sadinle}{2017}{sadinle_bayesian_2017}
+Sadinle, M.  \harvardyearleft 2017\harvardyearright , `Bayesian {Estimation} of
+  {Bipartite} {Matchings} for {Record} {Linkage}', {\em Journal of the American
+  Statistical Association} {\bf 112}(518),~600--612.
 
 \harvarditem{Wortman}{2019}{wortman2019}
 Wortman, J. P.~H.  \harvardyearleft 2019\harvardyearright , Record linkage
