@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  13 JUL 2024 17:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  14 JUL 2024 14:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -941,10 +941,10 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 <../Rplots.pdf, id=165, 505.89pt x 505.89pt>
 File: ../Rplots.pdf Graphic file (type pdf)
 <use ../Rplots.pdf>
-Package pdftex.def Info: ../Rplots.pdf  used on input line 269.
+Package pdftex.def Info: ../Rplots.pdf  used on input line 273.
 (pdftex.def)             Requested size: 369.8174pt x 369.82153pt.
- [7 <../Rplots.pdf>] [8] [9] (./multiple_match.bbl) [10]
-Overfull \hbox (33.90634pt too wide) detected at line 459
+ [7] [8 <../Rplots.pdf>] [9] (./multiple_match.bbl) [10]
+Overfull \hbox (33.90634pt too wide) detected at line 463
 []
  []
 
@@ -953,11 +953,11 @@ Package rerunfilecheck Info: File `multiple_match.out' has not changed.
 (rerunfilecheck)             Checksum: 0B064646DE3511411009FCDD7AC0C23B;1710.
  ) 
 Here is how much of TeX's memory you used:
- 26570 strings out of 478276
- 515511 string characters out of 5850489
+ 26572 strings out of 478276
+ 515527 string characters out of 5850489
  850140 words of memory out of 5000000
  44100 multiletter control sequences out of 15000+600000
- 486777 words of font info for 140 fonts, out of 8000000 for 9000
+ 486826 words of font info for 141 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,20n,89p,1364b,354s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
@@ -973,7 +973,7 @@ texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2
 dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2021/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmtt12.pfb>
-Output written on multiple_match.pdf (12 pages, 211982 bytes).
+Output written on multiple_match.pdf (12 pages, 212263 bytes).
 PDF statistics:
  290 PDF objects out of 1000 (max. 8388607)
  227 compressed objects within 3 object streams
