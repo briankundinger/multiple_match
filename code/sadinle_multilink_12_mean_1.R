@@ -93,7 +93,7 @@ prior <- multilink::specify_prior(cd_multilink, mus = NA,
                                   nus = NA, flat = 0, alphas = NA,
                                   dup_upper_bound = c(2, 1),
                                   dup_count_prior_family = NA,
-                                  dup_count_prior_pars = list(2, 1),
+                                  dup_count_prior_pars = NA,
                                   n_prior_family = NA,
                                   n_prior_pars = NA)
 
@@ -134,5 +134,5 @@ result_final$overlap <- overlap_vec
 
 
 
-saveRDS(result_final, file = paste0("out/sadinle_sim_ml_12/sim_",
+saveRDS(result_final, file = paste0("out/sadinle_sim_ml_12_mean_1/sim_",
                                  str_pad(i, 3, pad = "0")))
