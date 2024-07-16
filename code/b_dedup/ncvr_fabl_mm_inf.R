@@ -45,11 +45,11 @@ seconds <- proc.time() - ptm
 print(2)
 results <- estimate_links_mm(chain, hash, resolve = T)
 print(3)
-saveRDS(results$Z_hat, "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/Z_hat/fabl_mm_inf")
+saveRDS(results$Z_hat[, 1:2], "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/Z_hat/fabl_mm_inf")
 saveRDS(results$prob, "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/prob/fabl_mm_inf")
 #Z_hat <- make_Zhat_pairs(results$Z_hat)
 
-eval <- evaluate_links(results$Z_hat, Z_true_pairs, n1, "pairs")
+eval <- evaluate_links(results$Z_hat[, 1:2], Z_true_pairs, n1, "pairs")
 print(4)
 df <- data.frame(n1 = n1,
                  n2 = n2,

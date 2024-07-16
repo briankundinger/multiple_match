@@ -7,6 +7,10 @@ Z_hat_files <- list.files("out/ncvr_dedup/Z_hat/", full.names = T)
 prob_files <- list.files("out/ncvr_dedup/prob/", full.names = T)
 Z_true_pairs <- readRDS("data/ncvr_Z_true_b_dedup")
 
+#saveRDS(prob, "out/ncvr_dedup/prob/fabl")
+#drl_Z_hat <- Z_hat[, 1:2]
+#saveRDS(drl_Z_hat, "out/ncvr_dedup/Z_hat/fabl")
+
 eval_files <- list.files("out/ncvr_dedup/eval/", full.names = T)
 eval <- lapply(eval_files, readRDS) %>%
   do.call(rbind, .) %>%
@@ -18,9 +22,9 @@ n1 <- eval$n1[1]
 temp <- lapply(seq_along(methods), function(i){
   Z_hat <- readRDS(Z_hat_files[i])
   prob <- readRDS(prob_files[i])
-  if(i < 3){
-  prob <- prob[Z_hat[, 2]]
-  }
+  # if(i == 1){
+  # prob <- prob[Z_hat[, 2]]
+  # }
   data.frame(Z_hat, prob)
 })
 

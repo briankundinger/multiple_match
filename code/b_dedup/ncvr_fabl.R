@@ -47,7 +47,7 @@ results <- estimate_links(chain, hash, resolve = T)
 Z_hat <- make_Zhat_pairs(results$Z_hat)
 print(3)
 saveRDS(Z_hat, "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/Z_hat/fabl")
-saveRDS(results$prob, "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/prob/fabl")
+saveRDS(results$prob[Z_hat[, 2]], "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/prob/fabl")
 #Z_hat <- make_Zhat_pairs(results$Z_hat)
 
 eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
