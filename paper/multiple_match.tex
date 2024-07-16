@@ -254,27 +254,48 @@ We demonstrate the accuracy of the \texttt{DRL} approach at various levels of ov
 
 For each simulation, we construct two data files $A$ and $B$ such that there are in which there are 25, 125, or 225 records in $B$ that have matching records in $A$. The matching record in $A$ exhibits 1, 2, or 3 errors across the five fields used for linkage. Then, every record in $A$ that has a matching record in $B$ is duplicated, such that each simulation has 50, 250, or 450 matching record pairs in total. We use uniform priors for the $\bm{m}$ and $\bm{u}$, with $\alpha_{fl} = \beta_{fl} = 1$ for all $f$ and $l$. We use uniform priors for $\pi$ for standard \texttt{fabl}, and also uniform priors for each $\eta_k$ in sequential sampler for \texttt{DRL}. We run the Gibbs sampler for 1000 iterations, and discard the first 100 as burn-in.
 
-We run \texttt{multilink} under two different parameter settings. We first use the default setting, where the prior distribution for the number of records in $A$ that can match a single record in $B$ is a Poisson distribution with mean 1. Second, we use a prior that is closer to the truth, and use a Poisson distribution with mean 2, and the maximum number of matching records also set to 2. 
+We run \texttt{multilink} under two different parameter settings. We first use the default setting (referred to as "mutlink\_1" in the figures below), where the prior distribution for the number of records in $A$ that can match a single record in $B$ is a Poisson distribution with mean 1. Second, we use a prior closer to the data generating process for this simulation (referred to as "mutlink\_2" in the figures below), and use a Poisson distribution with mean 2, and the maximum number of matching records also set to 2. 
 
-In these simulations, standard \texttt{fabl} drastically underperforms, so much so that results are omitted from the graph. For each record in $B$ with matching records in $A$, the posterior match probability is split between the two matching records. Due to the randomness of the Gibbs sampler, one of the records occassionally has a posterior probability over 0.5 and is thus identified through the Bayes estimate, but often, both records have posterior probability below 0.5. Under \texttt{vabl}, the posterior probability of the two records is cut precisely in half, and thus \texttt{vabl} did not identify any matching record pairs in any of the simulations. Again, these results are omitted.
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{../Rplots.pdf}
+%	\caption{Sadinle Simulation}
+%	\label{fig:sadinle}
+%\end{figure}
 
-We see that \texttt{fastLink} generally has poorer performance than the more complex models at mid to high overlap. In particular, without a post-processing step tailors the scenario where one record in $B$ can match to multiple records in $A$, \texttt{fastLink} tends to produce a large number of false positives, hindering precision. 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../figures/sadinle_recall.png}
+	\caption{Recall for simulations in Section~\ref{sec:simulations}.}
+	\label{fig:sadinle-recall}
+\end{figure}
 
-The performance of \texttt{multilink} is more varied. When there is a moderate or high amount of matching records, \texttt{multilink} performs comparably with multiple match. However, when the number of matching records pairs, \texttt{multilink} underperforms. This may be because the model being fit is more complex, and so it is more difficult to learn the parameters from such few observations. Notably however, the performance of \texttt{multilink} is highly sensitive to prior specification. In FIGURE (to be added), we show accuracy suffers under various forms of mispecification.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{../figures/sadinle_precision.png}
+	\caption{Precision for simulations in Section~\ref{sec:simulations}.}
+	\label{fig:sadinle-precision}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{../figures/sadinle_fmeasure.png}
+	\caption{F-Measure for simulations in Section~\ref{sec:simulations}.}
+	\label{fig:sadinle-fmeasure}
+\end{figure}
+
+
+In these simulations, standard \texttt{fabl} drastically underperforms, so much so we omit results from the figures below. For each record in $B$ with matching records in $A$, the posterior match probability is split between the two matching records. Due to the randomness of the Gibbs sampler, one of the records occasionally has a posterior probability over 0.5 and is thus identified through the Bayes estimate, but often, both records have posterior probability below 0.5. Under \texttt{vabl}, the posterior probability of the two records is cut precisely in half, and thus \texttt{vabl} did not identify any matching record pairs in any of the simulations. Again, these results are omitted.
+
+We see that \texttt{fastLink} generally has poorer performance than the more complex models at mid to high overlap. In particular, without a post-processing step tailors the scenario where one record in $B$ can match to multiple records in $A$, \texttt{fastLink} tends to produce a large number of false positives, hindering precision, as shown in Figure \ref{fig:sadinle-precision}.
+
+The performance of \texttt{multilink} is more varied. When using substantive prior information, \texttt{multilink} outperforms \texttt{DRL} in terms of overall F-measure in the medium and high overlap settings. However, when the number of matching records pairs is low, \texttt{multilink} underperforms. This may be because the model being fit is more complex, and so it is more difficult to learn the parameters from such few observations. Notably however, the performance of \texttt{multilink} is highly sensitive to prior specification. When using default settings, \texttt{multilink} showed considerably lower recall and precision at all levels of error and overlap.
 
 
 
 %The "fabl swap" approach here is also strong. It generally has higher recall, but lower precision. This makes sense, because it doesn't need to consecutive matching algorithim in order to find the "multiple matches", but it also doesn't employ any post processing to clean up erroneous matches. In all simulations, multiple match and fabl swap have similar f-measure. (Not sure exactly how I want to analyze that. In NCVR, there is more of a difference.) 
 
-We see that \texttt{DRL} is a strong alternative to \texttt{multilink} and \texttt{fastLink} in this setting. \texttt{DRL} maintains strong performance even in the low overlap scenario where \texttt{multilink} fails, and outperforms \texttt{fastLink} at all levels of error and overlap. \texttt{multilink}... In particular, the average computation time for 1000 iterations of the Gibbs sampler for multiple match was around 30 seconds, while it was around 1000 seconds for \texttt{multilink}. 
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../Rplots.pdf}
-	\caption{Sadinle Simulation}
-	\label{fig:sadinle}
-\end{figure}
-
+We see that \texttt{DRL} is a strong alternative to \texttt{multilink} and \texttt{fastLink} in this setting. \texttt{DRL} maintains strong performance even in the low overlap scenario where \texttt{multilink} fails, and outperforms \texttt{fastLink} in terms of F-measure at all levels of error and overlap. We accomplish this through default, uniform priors for the sequence of $\eta_k$ parameters, without needing the informative priors required for \texttt{multilink}. Additionally, the average computation time for 1000 iterations of the Gibbs sampler for \texttt{DRL} was around 30 seconds, while it was around 1000 seconds for \texttt{multilink}. 
 
 \section{Case Study}\label{sec:case-study}
 
@@ -287,7 +308,6 @@ I compare four approaches: standard \texttt{fabl}, our proposed \texttt{DRL} met
 \begin{table}[t]
 	\centering
 	\begin{tabular}{l|rrr}
-		
 		method & recall & precision & f\_measure\\
 		\hline
 		\texttt{DRL} & 0.9891623 & 0.9735309 & 0.9812843\\
@@ -304,7 +324,15 @@ I compare four approaches: standard \texttt{fabl}, our proposed \texttt{DRL} met
 	\label{table:ncvr_results}
 \end{table}
 
-We see that \texttt{DRL} has the highest f-measure, followed by \text{fabl}. When we use \texttt{fastLink} with no post-processing, we end up with an undesirable amount of false positives. Since the posterior match probability of each record pair is computed independently, we expect such behavior on large linkage tasks such as this. When we use the Jaro post-processing to achieve a one-to-one matching, we get considerably better results. However, we lose the possibility of identifying cases where one record in $B$ matches to two records in $A$, and we still have worse recall and precision than attained under standard \texttt{fabl}.
+We see that \texttt{fastLink} without the one-to-one post-processing results in the highest recall, but leads to an undesirable amount of false positives. Since the posterior match probability of each record pair is computed independently, we expect such behavior on large linkage tasks such as this. When we use the Jaro post-processing to achieve a one-to-one matching, we get considerably better results. However, we lose the possibility of identifying cases where one record in $B$ matches to two records in $A$, and we still have worse recall and precision than attained under standard \texttt{fabl}. 
+
+In Figure~\ref{fig:ncvr_thresholds}, we show the show the precision, recall, and F-measure under various choices of match probability thresholds. We see that \texttt{fabl} and \texttt{DRL} produce more refined match probability estimates, allowing the accuracy metrics to vary smoothly across the different thresholds. In contrast, all record pairs of the same agreement pattern under \texttt{fastLink} have the same posterior probability, leading to much a much coarser posterior distribution, leading to more erratic curves. Overall, we see that \texttt{DRL} has the highest F-measure under all probability thresholds considered, followed by \texttt{fabl}, and then by \texttt{fastLink}.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../figures/ncvr_thresholds}
+	\caption{Accuracy metrics for NCVR data at various match probability thresholds. We see that \texttt{DRL} maintains the strongest F-measure for all thresholds considered.}
+	\label{fig:ncvr_thresholds}
+\end{figure}
 
 
 \section{Conclusion}

@@ -44,20 +44,31 @@ rownames(df) <- NULL
 df %>%
   kable("latex")
 
+ncvr_a <- readRDS("data/ncvr_a")
+ncvr_b <- readRDS("data/ncvr_b_dedup")
+Z_hat <- readRDS("out/ncvr_results/Z_hat/fabl_mm_2")
+Z_true <- readRDS("data/ncvr_Z_true_b_dedup")
+
+Z_hat_pair <- Z_hat %>%
+  data.frame() %>%
+  tidyr::unite("pair")
+
+Z_true_pair <- Z_true %>%
+  data.frame() %>%
+  tidyr::unite("pair")
+
+setdiff(Z_hat_pair[1:100, ], Z_true_pair[1:100])
 
 
-#
-#
-# n_links <- dim(Z_hat)[1]
-# n_matches <- dim(Z_true)[1]
-# Z_hat_pair <- Z_hat %>%
-#   data.frame() %>%
-#   tidyr::unite("pair")
-#
-# Z_true_pair <- Z_true %>%
-#   data.frame() %>%
-#   tidyr::unite("pair")
-#
-# n_correct_links <- intersect(Z_hat_pair$pair, Z_true_pair$pair) %>%
-#   #pull() %>%
-#   length()
+letters_a <- ncvr_a$middle_name[Z_hat$target_id] %>%
+  sapply(., nchar)
+
+initial_a <- letters_a == 1
+
+letters_b <- ncvr_b$middle_name[Z_hat$base_id] %>%
+  sapply(., nchar)
+
+initial_b <- letters_b == 1
+
+one_initial <- initial_a | initial_b
+

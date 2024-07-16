@@ -1,7 +1,7 @@
 library(vabldev)
 
 ncvr_a <- readRDS("data/ncvr_a")
-ncvr_b <- readRDS("data/ncvr_b")
+ncvr_b <- readRDS("data/ncvr_b_dedup")
 S <- 100
 burn <- ceiling(S * .1)
 tmax = 1000
@@ -23,13 +23,15 @@ df2 <- ncvr_b %>%
 n1 <- nrow(df1)
 n2 <- nrow(df2)
 
-joined <- right_join(df1, df2, by = "voter_id", copy = T, keep = T,
-                     relationship = "many-to-many") %>%
-  arrange(voter_id.y)
+Z_true_pairs <- readRDS("data/ncvr_Z_true_b_dedup")
 
-Z_true_pairs <- joined %>%
-  filter(!is.na(voter_id.x)) %>%
-  select(rn.x, rn.y)
+# joined <- right_join(df1, df2, by = "voter_id", copy = T, keep = T,
+#                      relationship = "many-to-many") %>%
+#   arrange(voter_id.y)
+#
+# Z_true_pairs <- joined %>%
+#   filter(!is.na(voter_id.x)) %>%
+#   select(rn.x, rn.y)
 # joined$rn[is.na(joined$rn)] <- 0
 # Z_true <- joined$rn
 ptm <- proc.time()
@@ -44,9 +46,9 @@ seconds <- proc.time() - ptm
 Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
                     id_2 = fl_out$matches$inds.b)
 
-saveRDS(fl_out, "out/ncvr_results/chain/fastlink")
-saveRDS(Z_hat, "out/ncvr_results/Z_hat/fastlink")
-saveRDS(fl_out$posterior, "out/ncvr_results/prob/fastlink")
+#saveRDS(fl_out, "out/ncvr_dedup/chain/fastlink")
+saveRDS(Z_hat, "out/ncvr_dedup/Z_hat/fastlink")
+saveRDS(fl_out$posterior, "out/ncvr_dedup/prob/fastlink")
 
 eval <- evaluate_links(Z_hat, Z_true_pairs, n1, "pairs")
 df <- data.frame(n1 = n1,
@@ -58,7 +60,7 @@ df <- data.frame(n1 = n1,
                  time = seconds[3],
                  method = "fastlink",
                  data = "ncvr")
-saveRDS(df, "out/ncvr_results/eval/fastlink")
+saveRDS(df, "out/ncvr_dedup/eval/fastlink")
 
 
 
