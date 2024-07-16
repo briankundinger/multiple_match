@@ -22,9 +22,9 @@ n1 <- eval$n1[1]
 temp <- lapply(seq_along(methods), function(i){
   Z_hat <- readRDS(Z_hat_files[i])
   prob <- readRDS(prob_files[i])
-  # if(i == 1){
-  # prob <- prob[Z_hat[, 2]]
-  # }
+  if(i == 2){
+  Z_hat <- Z_hat[, 1:2]
+  }
   data.frame(Z_hat, prob)
 })
 
@@ -61,3 +61,38 @@ evals_df %>%
   scale_y_continuous()
 
 ggsave("figures/ncvr_thresholds.png")
+
+
+
+
+#############
+
+
+Z_hat_pair <- readRDS(Z_hat_files[2])%>%
+  data.frame() %>%
+  select(target_id, base_id) %>%
+  tidyr::unite("pair")
+
+Z_true_pair <- Z_true %>%
+  data.frame() %>%
+  tidyr::unite("pair")
+
+false_matches <- setdiff(Z_hat_pair, Z_true_pair)
+thing <- false_matches[1]
+
+index <- unlist(Z_hat_pair) %in% false_matches
+
+
+letters_a <- ncvr_a$middle_name[Z_hat$target_id] %>%
+  sapply(., nchar)
+
+initial_a <- letters_a == 1
+
+letters_b <- ncvr_b$middle_name[Z_hat$base_id] %>%
+  sapply(., nchar)
+
+initial_b <- letters_b == 1
+
+one_initial <- initial_a | initial_b
+
+

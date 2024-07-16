@@ -207,7 +207,7 @@ where $A_{j, k} = [n_A] \setminus Z_{j, -k}$ is the set of records in $A$ that a
 \end{align}
 as derived in Appendix \ref{app:sequential-sampler}.
 
-This sequential sampler produces an output $Z_j = q = (q_1, \ldots, q_k)$ when $Z_{j, c} = q_c$ for steps $c \in \{1, \ldots, k\}$, and the $k+1$ step produces $Z_{j, k+1} = \emptyset$. While this vector is neccesarily ordered, all reorderings of the same elements are equivalent for the purposes of record linkage.   That is, $Z_j = (i, i')$ and $Z_j = (i', i)$ both communicate that record $B_j$ is matched to records $A_i$ and $A_{i'}$. Let $\sigma(q)$ denote all possible orderings of the elements of $q$, and note that there are $|q|!$ such orderings. Observe that 
+This sequential sampler produces an output $Z_j = q = (q_1, \ldots, q_k)$ when $Z_{j, c} = q_c$ for steps $c \in \{1, \ldots, k\}$, and the $k+1$ step produces $Z_{j, k+1} = \emptyset$. While this vector is neccesarily ordered, all reorderings of the same elements are equivalent for the purposes of record linkage.   That is, $Z_j = (i, i')$ and $Z_j = (i', i)$ both communicate that record $B_j$ is matched to records $A_i$ and $A_{i'}$. Let $\sigma(q)$ denote all possible orderings of the elements of $q$, and note that there are $|q|!$ such orderings. Marginalizing over such orderings, we have
 \begin{align}
 	p(Z_{j, k+1} = \emptyset | \Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) &\sum_{q' \in \sigma(q)} \prod_{c = 1}^{k} p(Z_{j, c} = q'_c|\Gamma_{.j}, \bm{m}, \bm{u}, \bm{\eta}) \\
 	&\propto (1 - \eta_{k+1}) \sum_{q' \in \sigma(q)} \prod_{c = 1}^{k} \frac{\eta_{c} }{n_A - (c - 1)}  \prod_{c = 1}^{k} w_{q'_c, j} \\
@@ -326,7 +326,8 @@ I compare four approaches: standard \texttt{fabl}, our proposed \texttt{DRL} met
 
 We see that \texttt{fastLink} without the one-to-one post-processing results in the highest recall, but leads to an undesirable amount of false positives. Since the posterior match probability of each record pair is computed independently, we expect such behavior on large linkage tasks such as this. When we use the Jaro post-processing to achieve a one-to-one matching, we get considerably better results. However, we lose the possibility of identifying cases where one record in $B$ matches to two records in $A$, and we still have worse recall and precision than attained under standard \texttt{fabl}. 
 
-In Figure~\ref{fig:ncvr_thresholds}, we show the show the precision, recall, and F-measure under various choices of match probability thresholds. We see that \texttt{fabl} and \texttt{DRL} produce more refined match probability estimates, allowing the accuracy metrics to vary smoothly across the different thresholds. In contrast, all record pairs of the same agreement pattern under \texttt{fastLink} have the same posterior probability, leading to much a much coarser posterior distribution, leading to more erratic curves. Overall, we see that \texttt{DRL} has the highest F-measure under all probability thresholds considered, followed by \texttt{fabl}, and then by \texttt{fastLink}.
+In Figure~\ref{fig:ncvr_thresholds}, we show the show the precision, recall, and F-measure under various choices of match probability thresholds. We see that \texttt{fabl} and \texttt{DRL} produce more refined match probability estimates, allowing the accuracy metrics to vary smoothly across the different thresholds. In contrast, all record pairs of the same agreement pattern under \texttt{fastLink} have the same posterior probability, leading to much a much coarser posterior distribution, leading to more erratic curves. We see that \texttt{fabl} maintains the highest precision at all thresholds, but that \texttt{DRL} is able to identify enough more additional true matches that \texttt{DRL} maintains the highest overall F-measure.
+%Overall, we see that \texttt{DRL} has the highest F-measure under all probability thresholds considered, followed by \texttt{fabl}, and then by \texttt{fastLink}.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{../figures/ncvr_thresholds}
@@ -334,6 +335,7 @@ In Figure~\ref{fig:ncvr_thresholds}, we show the show the precision, recall, and
 	\label{fig:ncvr_thresholds}
 \end{figure}
 
+Lastly, we note a limitation in using preexisting software for record linkage tasks. In its currently implementation, \texttt{fastLink} allows users to define normalized Levenshtein distance thresholds for coding field comparisons into three discrete levels. In this data however, it is common for a record to contain a middle initial (like ``E"), rather than a full middle name (like ``Elizabeth"). Using Levenshtein distance thresholds, the comparison field for middle name for such a pair of records could coded as a full disagreement, when it should be more reasonably given its own agreement level. Likewise, when two records have a middle initial that happens to match, this is coded as a full agreement, even though it is possible these initials represent different names. In this analysis, 27.6\% of the false matches under \texttt{DRL} at the 0.5 probability threshold included at least one record containing a middle initial rather than middle name. A more careful construction of the comparison vectors is likely to improve results for all methods considered.
 
 \section{Conclusion}
 
