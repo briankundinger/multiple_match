@@ -16,55 +16,120 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\citation{wortman2019}
+\citation{Herzog_2007,christen_data_2012,Papadakis2021,binette2022almost}
+\citation{fellegi_theory_1969}
+\citation{tancredi2011hierarchical,steorts_bayesian_2016,marchant_distributed_2019,betancourt2022prior}
+\citation{sadinle_bayesian_2017}
+\citation{aleshin2023multifile}
+\citation{christen2019data}
+\citation{steorts_comparison_2014}
+\citation{murray2016probabilistic,mcveigh2019scaling}
+\citation{enamorado2019using}
 \citation{kundinger_2023}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Dirichlet Record Linkage}{1}{section.1}\protected@file@percent }
-\newlabel{eqn:fabl_prior}{{1a}{1}{Dirichlet Record Linkage}{equation.3}{}}
-\newlabel{eqn:pi_beta}{{1b}{1}{Dirichlet Record Linkage}{equation.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Prior Specification}{1}{subsection.5}\protected@file@percent }
-\newlabel{sec:prior-specification}{{1.1}{1}{Prior Specification}{subsection.5}{}}
-\newlabel{eqn:z}{{2}{1}{Prior Specification}{equation.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Full Conditional for $Z_j$}{2}{subsection.8}\protected@file@percent }
-\newlabel{sec:joint-distribution}{{1.2}{2}{Full Conditional for $Z_j$}{subsection.8}{}}
-\newlabel{eqn:joint_posterior}{{8c}{2}{Full Conditional for $Z_j$}{equation.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Sequential Sampler}{2}{subsection.17}\protected@file@percent }
-\newlabel{sec:sequential-sampler}{{1.3}{2}{Sequential Sampler}{subsection.17}{}}
-\newlabel{eqn:sequential_prior}{{10}{3}{Sequential Sampler}{equation.19}{}}
-\newlabel{eqn:sequential_posterior}{{11}{3}{Sequential Sampler}{equation.20}{}}
+\citation{kundinger_2024_vabl}
+\citation{sadinle_bayesian_2017}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
+\newlabel{sec:introduction}{{1}{2}{Introduction}{section.1}{}}
 \citation{kundinger_2023}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Efficient Sequential Sampling}{4}{subsection.27}\protected@file@percent }
-\newlabel{sec:efficient-sampling}{{1.4}{4}{Efficient Sequential Sampling}{subsection.27}{}}
+\citation{fellegi_theory_1969}
+\citation{fellegi_theory_1969}
+\citation{Winkler_1990,Bilenko_2003_adapt,elmagarmid_duplicate_2007}
+\citation{fellegi_theory_1969}
+\citation{sadinle_bayesian_2017}
+\citation{fellegi_theory_1969}
+\citation{winkler_state_1999,jaro1989,larsen_2001,enamorado2019using}
+\@writefile{toc}{\contentsline {section}{\numberline {2}The Fellegi-Sunter Framework for Record Linkage}{4}{section.2}\protected@file@percent }
+\newlabel{sec:prior-work}{{2}{4}{The Fellegi-Sunter Framework for Record Linkage}{section.2}{}}
+\citation{sadinle_bayesian_2017}
+\citation{aleshin2023multifile}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Models for Comparison Vector Based Record Linkage}{5}{subsection.5}\protected@file@percent }
+\newlabel{sec:model-review}{{2.1}{5}{Models for Comparison Vector Based Record Linkage}{subsection.5}{}}
+\newlabel{eqn:fs_model}{{3a}{5}{Models for Comparison Vector Based Record Linkage}{equation.7}{}}
+\newlabel{eqn:m_dist}{{3b}{5}{Models for Comparison Vector Based Record Linkage}{equation.8}{}}
+\newlabel{eqn:lambda_dist}{{3c}{5}{Models for Comparison Vector Based Record Linkage}{equation.9}{}}
+\newlabel{eq:brlprior}{{4}{5}{Models for Comparison Vector Based Record Linkage}{equation.10}{}}
+\citation{fellegi_theory_1969}
 \citation{kundinger_2023}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Fast Beta Linkage}{6}{subsubsection.17}\protected@file@percent }
+\newlabel{sec:fabl}{{2.1.1}{6}{Fast Beta Linkage}{subsubsection.17}{}}
+\citation{kundinger_2024_vabl}
+\citation{kundinger_2023}
+\citation{kundinger_2024_vabl}
+\newlabel{eqn:fabl}{{6}{7}{Fast Beta Linkage}{equation.18}{}}
+\newlabel{eqn:pi_beta}{{7}{7}{Fast Beta Linkage}{equation.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Dirichlet Record Linkage}{7}{section.20}\protected@file@percent }
+\newlabel{sec:drl}{{3}{7}{Dirichlet Record Linkage}{section.20}{}}
 \citation{sadinle_bayesian_2017}
 \citation{kundinger_2023}
-\newlabel{eqn:gibbs1}{{18}{5}{Efficient Sequential Sampling}{equation.28}{}}
-\newlabel{eqn:gibbs2}{{19}{5}{Efficient Sequential Sampling}{equation.29}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Simulations}{6}{section.30}\protected@file@percent }
-\newlabel{sec:simulations}{{2}{6}{Simulations}{section.30}{}}
+\newlabel{eqn:pi-dirichlet-process}{{8}{8}{Dirichlet Record Linkage}{equation.21}{}}
+\newlabel{eqn:pi-stick-breaking}{{9}{8}{Dirichlet Record Linkage}{equation.22}{}}
+\newlabel{eqn:z_drl}{{10}{8}{Dirichlet Record Linkage}{equation.23}{}}
+\newlabel{eqn:joint_posterior}{{11}{8}{Dirichlet Record Linkage}{equation.24}{}}
+\newlabel{eqn:fs_weight}{{12}{8}{Dirichlet Record Linkage}{equation.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Sequential Sampler}{9}{subsection.26}\protected@file@percent }
+\newlabel{sec:sequential-sampler}{{3.1}{9}{Sequential Sampler}{subsection.26}{}}
+\newlabel{eqn:sequential_prior}{{13}{9}{Sequential Sampler}{equation.27}{}}
+\newlabel{eqn:sequential_posterior}{{14}{10}{Sequential Sampler}{equation.28}{}}
+\citation{kundinger_2023}
+\citation{kundinger_2023}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Efficient Sequential Sampling}{11}{subsection.35}\protected@file@percent }
+\newlabel{sec:efficient-sampling}{{3.2}{11}{Efficient Sequential Sampling}{subsection.35}{}}
+\newlabel{eqn:gibbs1}{{21}{11}{Efficient Sequential Sampling}{equation.36}{}}
+\newlabel{eqn:gibbs2}{{22}{11}{Efficient Sequential Sampling}{equation.37}{}}
+\citation{sadinle_bayesian_2017}
+\citation{kundinger_2023}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Simulations}{12}{section.38}\protected@file@percent }
+\newlabel{sec:simulations}{{4}{12}{Simulations}{section.38}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Recall for simulations in Section\nobreakspace  {}\ref  {sec:simulations}.}}{13}{figure.40}\protected@file@percent }
+\newlabel{fig:sadinle-recall}{{1}{13}{Recall for simulations in Section~\ref {sec:simulations}}{figure.40}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Precision for simulations in Section\nobreakspace  {}\ref  {sec:simulations}.}}{14}{figure.42}\protected@file@percent }
+\newlabel{fig:sadinle-precision}{{2}{14}{Precision for simulations in Section~\ref {sec:simulations}}{figure.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces F-Measure for simulations in Section\nobreakspace  {}\ref  {sec:simulations}.}}{14}{figure.44}\protected@file@percent }
+\newlabel{fig:sadinle-fmeasure}{{3}{14}{F-Measure for simulations in Section~\ref {sec:simulations}}{figure.44}{}}
 \citation{christen_preparation_2014}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Recall for simulations in Section\nobreakspace  {}\ref  {sec:simulations}.}}{7}{figure.32}\protected@file@percent }
-\newlabel{fig:sadinle-recall}{{1}{7}{Recall for simulations in Section~\ref {sec:simulations}}{figure.32}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Precision for simulations in Section\nobreakspace  {}\ref  {sec:simulations}.}}{8}{figure.34}\protected@file@percent }
-\newlabel{fig:sadinle-precision}{{2}{8}{Precision for simulations in Section~\ref {sec:simulations}}{figure.34}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces F-Measure for simulations in Section\nobreakspace  {}\ref  {sec:simulations}.}}{8}{figure.36}\protected@file@percent }
-\newlabel{fig:sadinle-fmeasure}{{3}{8}{F-Measure for simulations in Section~\ref {sec:simulations}}{figure.36}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Accuracy results for \texttt  {NCVR}, showing the \texttt  {DRL} has the highest f-measure.}}{9}{table.39}\protected@file@percent }
-\newlabel{table:ncvr_results}{{1}{9}{Accuracy results for \texttt {NCVR}, showing the \texttt {DRL} has the highest f-measure}{table.39}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Case Study}{9}{section.37}\protected@file@percent }
-\newlabel{sec:case-study}{{3}{9}{Case Study}{section.37}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Accuracy metrics for NCVR data at various match probability thresholds. We see that \texttt  {DRL} maintains the strongest F-measure for all thresholds considered.}}{10}{figure.41}\protected@file@percent }
-\newlabel{fig:ncvr_thresholds}{{4}{10}{Accuracy metrics for NCVR data at various match probability thresholds. We see that \texttt {DRL} maintains the strongest F-measure for all thresholds considered}{figure.41}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{11}{section.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Case Study}{15}{section.45}\protected@file@percent }
+\newlabel{sec:case-study}{{5}{15}{Case Study}{section.45}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Accuracy results for \texttt  {NCVR}, showing the \texttt  {DRL} has the highest f-measure.}}{16}{table.47}\protected@file@percent }
+\newlabel{table:ncvr_results}{{1}{16}{Accuracy results for \texttt {NCVR}, showing the \texttt {DRL} has the highest f-measure}{table.47}{}}
+\citation{kundinger_2024_vabl}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Accuracy metrics for NCVR data at various match probability thresholds. We see that \texttt  {DRL} maintains the strongest F-measure for all thresholds considered.}}{17}{figure.49}\protected@file@percent }
+\newlabel{fig:ncvr_thresholds}{{4}{17}{Accuracy metrics for NCVR data at various match probability thresholds. We see that \texttt {DRL} maintains the strongest F-measure for all thresholds considered}{figure.49}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{17}{section.50}\protected@file@percent }
+\newlabel{sec:conclusion}{{6}{17}{Conclusion}{section.50}{}}
 \bibstyle{agsm}
 \bibdata{biblio}
-\bibcite{christen_preparation_2014}{{1}{2014}{{Christen}}{{}}}
-\bibcite{kundinger_2023}{{2}{2024}{{Kundinger et~al.}}{{Kundinger, Reiter \&\ Steorts}}}
-\bibcite{sadinle_bayesian_2017}{{3}{2017}{{Sadinle}}{{}}}
-\bibcite{wortman2019}{{4}{2019}{{Wortman}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Appendix}{13}{section.44}\protected@file@percent }
-\newlabel{sec:appendix}{{5}{13}{Appendix}{section.44}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Derivation of Sequential Sampler}{13}{subsection.45}\protected@file@percent }
-\newlabel{app:sequential-sampler}{{5.1}{13}{Derivation of Sequential Sampler}{subsection.45}{}}
-\newlabel{eqn:sequential-posterior-full}{{24}{13}{Derivation of Sequential Sampler}{equation.50}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Efficient Sequential Sampling Details}{14}{subsection.53}\protected@file@percent }
-\gdef \@abspage@last{14}
+\bibcite{aleshin2023multifile}{{1}{2023}{{Aleshin-Guendel \&\ Sadinle}}{{}}}
+\bibcite{betancourt2022prior}{{2}{2022}{{Betancourt et~al.}}{{Betancourt, Sosa \&\ Rodr{\'\i }guez}}}
+\bibcite{Bilenko_2003_adapt}{{3}{2003}{{Bilenko et~al.}}{{Bilenko, Mooney, Cohen, Ravikumar \&\ Fienberg}}}
+\bibcite{christen_preparation_2014}{{4}{2014}{{Christen}}{{}}}
+\bibcite{christen2019data}{{5}{2019}{{Christen}}{{}}}
+\bibcite{elmagarmid_duplicate_2007}{{6}{2007}{{Elmagarmid et~al.}}{{Elmagarmid, Ipeirotis \&\ Verykios}}}
+\bibcite{enamorado2019using}{{7}{2019}{{Enamorado et~al.}}{{Enamorado, Fifield \&\ Imai}}}
+\bibcite{fellegi_theory_1969}{{8}{1969}{{Fellegi \&\ Sunter}}{{}}}
+\bibcite{jaro1989}{{9}{1989}{{Jaro}}{{}}}
+\bibcite{kundinger_2024_vabl}{{10}{2024}{{Kundinger, Aleshin-Guendel \&\ Steorts}}{{}}}
+\bibcite{kundinger_2023}{{11}{2024}{{Kundinger, Reiter \&\ Steorts}}{{}}}
+\bibcite{larsen_2001}{{12}{2001}{{Larsen \&\ Rubin}}{{}}}
+\bibcite{marchant_distributed_2019}{{13}{2021}{{Marchant et~al.}}{{Marchant, Kaplan, Elazar, Rubinstein \&\ Steorts}}}
+\bibcite{mcveigh2019scaling}{{14}{2019}{{McVeigh et~al.}}{{McVeigh, Spahn \&\ Murray}}}
+\bibcite{murray2016probabilistic}{{15}{2016}{{Murray}}{{}}}
+\bibcite{sadinle_bayesian_2017}{{16}{2017}{{Sadinle}}{{}}}
+\bibcite{steorts_bayesian_2016}{{17}{2016}{{Steorts et~al.}}{{Steorts, Hall \&\ Fienberg}}}
+\bibcite{steorts_comparison_2014}{{18}{2014}{{Steorts et~al.}}{{Steorts, Ventura, Sadinle \&\ Fienberg}}}
+\bibcite{tancredi2011hierarchical}{{19}{2011}{{Tancredi et~al.}}{{Tancredi, Liseo et~al.}}}
+\bibcite{Winkler_1990}{{20}{1990}{{Winkler}}{{}}}
+\bibcite{winkler_state_1999}{{21}{1999}{{Winkler}}{{}}}
+\bibcite{wortman2019}{{22}{2019}{{Wortman}}{{}}}
+\citation{wortman2019}
+\citation{kundinger_2023}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Appendix}{22}{section.52}\protected@file@percent }
+\newlabel{sec:appendix}{{7}{22}{Appendix}{section.52}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Full Conditional for $Z_j$}{22}{subsection.53}\protected@file@percent }
+\newlabel{app:joint-distribution}{{7.1}{22}{Full Conditional for $Z_j$}{subsection.53}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Derivation of Sequential Sampler}{22}{subsection.62}\protected@file@percent }
+\newlabel{app:sequential-sampler}{{7.2}{22}{Derivation of Sequential Sampler}{subsection.62}{}}
+\newlabel{eqn:sequential-posterior-full}{{32}{23}{Derivation of Sequential Sampler}{equation.67}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Efficient Sequential Sampling Details}{23}{subsection.70}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Bayes Estimate}{23}{subsection.71}\protected@file@percent }
+\newlabel{app:bayes-estimate}{{7.4}{23}{Bayes Estimate}{subsection.71}{}}
+\gdef \@abspage@last{23}

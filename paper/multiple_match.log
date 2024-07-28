@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  16 JUL 2024 17:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  25 JUL 2024 12:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -813,25 +813,25 @@ File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 (./multiple_match.aux)
 \openout1 = `multiple_match.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-Package hyperref Info: Link coloring OFF on input line 62.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+Package hyperref Info: Link coloring OFF on input line 64.
 
 (c:/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -844,9 +844,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count326
 )
-LaTeX Info: Redefining \ref on input line 62.
-LaTeX Info: Redefining \pageref on input line 62.
-LaTeX Info: Redefining \nameref on input line 62.
+LaTeX Info: Redefining \ref on input line 64.
+LaTeX Info: Redefining \pageref on input line 64.
+LaTeX Info: Redefining \nameref on input line 64.
 
 (./multiple_match.out) (./multiple_match.out)
 \@outlinefile=\write4
@@ -875,18 +875,18 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \microtypecontext on input line 62.
-Package microtype Info: Applying patch `item' on input line 62.
-Package microtype Info: Applying patch `toc' on input line 62.
-Package microtype Info: Applying patch `eqnum' on input line 62.
-Package microtype Info: Applying patch `footnote' on input line 62.
+LaTeX Info: Redefining \microtypecontext on input line 64.
+Package microtype Info: Applying patch `item' on input line 64.
+Package microtype Info: Applying patch `toc' on input line 64.
+Package microtype Info: Applying patch `eqnum' on input line 64.
+Package microtype Info: Applying patch `footnote' on input line 64.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 62.
+LaTeX Info: Redefining \showhyphens on input line 64.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -895,12 +895,8 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: OT1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 104
-.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 65.
+
 
 (c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -908,8 +904,8 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (c:/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 104
-.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 65.
+
 
 (c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -917,87 +913,128 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (c:/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [1
+
+{c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+Package natbib Warning: Citation `Herzog_2007' on page 2 undefined on input lin
+e 115.
+
+
+Package natbib Warning: Citation `christen_data_2012' on page 2 undefined on in
+put line 115.
+
+
+Package natbib Warning: Citation `Papadakis2021' on page 2 undefined on input l
+ine 115.
+
+
+Package natbib Warning: Citation `binette2022almost' on page 2 undefined on inp
+ut line 115.
+
+[2] [3] [4] [5] [6] [7]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 121.
+(amsmath)                 on input line 242.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 158.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 158.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 158.
-
-[1
-
-{c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-[4] [5]
-<../figures/sadinle_recall.png, id=159, 301.6068pt x 175.1343pt>
+[8] [9] [10] [11]
+<../figures/sadinle_recall.png, id=313, 301.6068pt x 175.1343pt>
 File: ../figures/sadinle_recall.png Graphic file (type png)
 <use ../figures/sadinle_recall.png>
-Package pdftex.def Info: ../figures/sadinle_recall.png  used on input line 268.
+Package pdftex.def Info: ../figures/sadinle_recall.png  used on input line 343.
 
 (pdftex.def)             Requested size: 369.8174pt x 214.74849pt.
-<../figures/sadinle_precision.png, id=161, 301.6068pt x 175.1343pt>
+<../figures/sadinle_precision.png, id=315, 301.6068pt x 175.1343pt>
 File: ../figures/sadinle_precision.png Graphic file (type png)
 <use ../figures/sadinle_precision.png>
-Package pdftex.def Info: ../figures/sadinle_precision.png  used on input line 2
-75.
+Package pdftex.def Info: ../figures/sadinle_precision.png  used on input line 3
+50.
 (pdftex.def)             Requested size: 369.8174pt x 214.74849pt.
-<../figures/sadinle_fmeasure.png, id=163, 301.6068pt x 175.1343pt>
+<../figures/sadinle_fmeasure.png, id=317, 301.6068pt x 175.1343pt>
 File: ../figures/sadinle_fmeasure.png Graphic file (type png)
 <use ../figures/sadinle_fmeasure.png>
-Package pdftex.def Info: ../figures/sadinle_fmeasure.png  used on input line 28
-2.
+Package pdftex.def Info: ../figures/sadinle_fmeasure.png  used on input line 35
+7.
 (pdftex.def)             Requested size: 369.8174pt x 214.74849pt.
- [6] [7 <../figures/sadinle_recall.png>] [8 <../figures/sadinle_precision.png> 
-<../figures/sadinle_fmeasure.png>] [9]
-<../figures/ncvr_thresholds.png, id=198, 336.0555pt x 154.8987pt>
+ [12] [13 <../figures/sadinle_recall.png>] [14 <../figures/sadinle_precision.pn
+g> <../figures/sadinle_fmeasure.png>] [15]
+<../figures/ncvr_thresholds.png, id=348, 336.0555pt x 154.8987pt>
 File: ../figures/ncvr_thresholds.png Graphic file (type png)
 <use ../figures/ncvr_thresholds.png>
-Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 333
+Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 408
 .
 (pdftex.def)             Requested size: 416.04016pt x 191.7793pt.
- [10 <../figures/ncvr_thresholds.png>] [11] (./multiple_match.bbl) [12]
-Overfull \hbox (33.90634pt too wide) detected at line 493
+ [16] [17 <../figures/ncvr_thresholds.png>] [18] (./multiple_match.bbl [19] [20
+]) [21]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 491.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 491.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 491.
+
+
+LaTeX Warning: Reference `eqn:z' on page 22 undefined on input line 507.
+
+
+LaTeX Warning: Reference `sec:joint-distribution' on page 22 undefined on input
+ line 517.
+
+[22]
+Overfull \hbox (33.90634pt too wide) detected at line 527
 []
  []
 
-[13] [14] (./multiple_match.aux)
+
+Package natbib Warning: There were undefined citations.
+
+[23] (./multiple_match.aux)
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `multiple_match.out' has not changed.
-(rerunfilecheck)             Checksum: 14030966DDED93E5BBA5DA325DC48438;1710.
+(rerunfilecheck)             Checksum: 85F75B19DD8EADC50D9C2241EE2D7824;2563.
  ) 
 Here is how much of TeX's memory you used:
- 26617 strings out of 478276
- 516665 string characters out of 5850489
- 850508 words of memory out of 5000000
- 44125 multiletter control sequences out of 15000+600000
- 487022 words of font info for 145 fonts, out of 8000000 for 9000
+ 26786 strings out of 478276
+ 519552 string characters out of 5850489
+ 852190 words of memory out of 5000000
+ 44210 multiletter control sequences out of 15000+600000
+ 488962 words of font info for 167 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,20n,89p,1364b,354s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
-live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmib10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/
-texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2
-021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2021/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2021/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmtt12.pfb>
-Output written on multiple_match.pdf (14 pages, 456951 bytes).
+ 84i,20n,89p,1364b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
+live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+b10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c
+:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
+2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2021/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:
+/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/
+2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texm
+f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on multiple_match.pdf (23 pages, 557575 bytes).
 PDF statistics:
- 309 PDF objects out of 1000 (max. 8388607)
- 242 compressed objects within 3 object streams
- 71 named destinations out of 1000 (max. 500000)
- 33497 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 522 PDF objects out of 1000 (max. 8388607)
+ 432 compressed objects within 5 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 38137 words of extra memory for PDF output out of 42996 (max. 10000000)
 

@@ -16,3 +16,6 @@ out/sadinle_double_dupes/
 out/xtmp/
 logs/
 figures/
+simulate_data/
+simulate_data_original/
+out/poisson/

@@ -77,22 +77,33 @@ Z_true_pair <- Z_true %>%
   data.frame() %>%
   tidyr::unite("pair")
 
-false_matches <- setdiff(Z_hat_pair, Z_true_pair)
-thing <- false_matches[1]
+false_matches <- setdiff(Z_hat_pair, Z_true_pair) %>%
+  unlist()
+df <- sapply(false_matches, function(x){
+  stringr::str_split(x, "_")
+}) %>%
+  lapply(., as.numeric) %>%
+  do.call(rbind, .) %>%
+  data.frame()
+colnames(df) <- c("target_id", "base_id")
 
-index <- unlist(Z_hat_pair) %in% false_matches
-
-
-letters_a <- ncvr_a$middle_name[Z_hat$target_id] %>%
+letters_a <- ncvr_a$middle_name[df$target_id] %>%
   sapply(., nchar)
 
 initial_a <- letters_a == 1
 
-letters_b <- ncvr_b$middle_name[Z_hat$base_id] %>%
+letters_b <- ncvr_b$middle_name[df$base_id] %>%
   sapply(., nchar)
 
 initial_b <- letters_b == 1
 
-one_initial <- initial_a | initial_b
+thing <- cbind(initial_a, initial_b) %>%
+  rowSums()
 
+sum(thing > 0) / length(thing)
+
+one_initial <-
+sum(one_initial)
+
+evals_df
 

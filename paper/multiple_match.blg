@@ -3,49 +3,53 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: multiple_match.aux
 The style file: agsm.bst
 Database file #1: biblio.bib
-"{" immediately follows a field part---line 513 of file biblio.bib
+"{" immediately follows a field part---line 507 of file biblio.bib
  :   howpublished= \url
  :                     {http://www.cs.utexas.edu/users/ml/riddle/}
 I'm skipping whatever remains of this entry
-You've used 4 entries,
+Warning--I didn't find a database entry for "Herzog_2007"
+Warning--I didn't find a database entry for "christen_data_2012"
+Warning--I didn't find a database entry for "Papadakis2021"
+Warning--I didn't find a database entry for "binette2022almost"
+You've used 22 entries,
             2909 wiz_defined-function locations,
-            662 strings with 5495 characters,
-and the built_in function-call counts, 11586 in all, are:
-= -- 1853
-> -- 142
+            791 strings with 8931 characters,
+and the built_in function-call counts, 95837 in all, are:
+= -- 15655
+> -- 1222
 < -- 0
-+ -- 850
-- -- 42
-* -- 950
-:= -- 2449
-add.period$ -- 4
-call.type$ -- 4
-change.case$ -- 56
-chr.to.int$ -- 4
-cite$ -- 4
-duplicate$ -- 53
-empty$ -- 105
-format.name$ -- 51
-if$ -- 2047
++ -- 7469
+- -- 371
+* -- 8314
+:= -- 19188
+add.period$ -- 23
+call.type$ -- 22
+change.case$ -- 309
+chr.to.int$ -- 22
+cite$ -- 22
+duplicate$ -- 351
+empty$ -- 729
+format.name$ -- 434
+if$ -- 17197
 int.to.chr$ -- 5
 int.to.str$ -- 0
-missing$ -- 2
-newline$ -- 16
-num.names$ -- 41
-pop$ -- 15
+missing$ -- 19
+newline$ -- 72
+num.names$ -- 231
+pop$ -- 71
 preamble$ -- 1
-purify$ -- 60
+purify$ -- 330
 quote$ -- 0
-skip$ -- 48
+skip$ -- 309
 stack$ -- 0
-substring$ -- 2566
-swap$ -- 5
-text.length$ -- 56
+substring$ -- 22219
+swap$ -- 66
+text.length$ -- 308
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
+type$ -- 88
 warning$ -- 0
-while$ -- 86
+while$ -- 494
 width$ -- 0
-write$ -- 55
+write$ -- 296
 (There was 1 error message)

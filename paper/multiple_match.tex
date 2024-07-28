@@ -46,6 +46,8 @@
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}{Lemma}
 \def \brian#1{{\color{red} (#1)}}
+\def \serge#1{{\color{blue} (#1)}}
+\def \beka#1{{\color{green} (#1)}}
 
 % DON'T change margins - should be 1 inch all around.
 \addtolength{\oddsidemargin}{-.5in}%
@@ -56,25 +58,24 @@
 
 \sectionfont{\large\nohang\centering\MakeUppercase}
 
-\title{Bayesian Matching for Possible Internal Duplications through Dirichlet Record Linkage}
+\title{Bayesian Matching with Relaxed Duplication Assumptions through Dirchlet Record Linkage}
 \author{Brian Kundinger}
 
 \begin{document}
-%\maketitle
+\maketitle
 %
 %\bigskip
-%\begin{abstract}
-%Abstract
-%\end{abstract}
+\begin{abstract}
+	Probabilistic record linkage is the use of statistical methods to identify unique entities within and across databases. Bayesian methods can adopt different prior distributions for various assumptions on the nature of record duplications in the linkage task, but become computationally expensive as the size of the linkage task grows. In this paper, we propose Dirichlet Record Linkage (\texttt{DRL}),	a method for linking duplicate-free reference file to target file that may have internal duplications. We use a Dirichlet prior for the parameter governing the number of matches a record in the reference file has in the target file. We decompose this parameter into a sequence of conditional probabilities, and use these parameters in a computationally efficient Gibbs sampler to conduct the linkage task. We demonstrate the speed and accuracy of our method relative to other recent Bayesian methods through simulations and case studies. In particular, we show that \texttt{DRL} exhibits strong performance using default, noninformative hyperparameters.  
+\end{abstract} 
+
 %
 %\newpage
 \spacingset{1.5}
 
 %\section{Introduction}
 
-%There have been several other attempts to estimate more flexible linkage structures within the comparison vector framework, but each has significant drawbacks in practice. First, the original \cite{fellegi_theory_1969} method that models the linkage status of each record pair as independent typically results in one record in one file being matched with multiple records in the other file. This initial estimate of the linkage structure is usually refined through post-processing to create a bipartite matching \cite{jaro1989}. As of yet, this post-processing has not been adapted to estimate more general linkage structures, and the initial estimate without any post-processing is known to have poor precision. \cite{aleshinguendel2021multifile} allowed for multiple matches within and across datafiles, but requires that the modeller explicitly set a maximum linkage cluster size, and models the dependency between records in such a way that limits scalability. \cite{zanella_flexible_2016} used nonparametric priors for the number of unique entities in a record linkage task, and showed that this doesn't work. TODO.
 
-%In contrast, we propose a nonparametric distribution for the number of matches that each record in one datafile has in the other datafile. In SECTION, we introduce this approach as an extension  of \texttt{fabl} method, and in SECTION, show how it can be adopted within the \texttt{vabl} framework as well. We demonstrate the effectiveness of this method through several simulations and case studies. 
 %\section{Review of fabl}
 %
 %The full model for fabl is given by:
@@ -97,100 +98,174 @@
 %
 %We have shown in previous work that the fast Beta linkage framework tends to outperform standard Fellegi Sunter when each record in $B$ has at most one match in $A$. However, significant problems arise when a record in $B$ has multiple matching records in $A$. In particular, since matching probability is normalized among all records in $A$, matching probability is split among multiple records such that none of the matches achieves high enough posterior probability to be identified through the Bayes estimate. This amounts to a paradox: the more matches that record $B_j$ has in $A$, the less likely the algorithm is to find a match. 
 %
-%We attempt to resolve this paradox by extending the fabl framework to handle these internal duplications. We introduce a modified Dirichlet process prior that allows each record in $B$ to match to potentially multiple records in $B$. We emphasize that we are not interested in deduplication within either dataset for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. For this reason, we do not enforce transitive closure throughout the Gibbs sampler as done in \cite{marchant_distributed_2019} and \cite{aleshinguendel2021multifile}, but rather assume it, and create a coherent set of linkages through post-processing. This allows for a record linkage model that is robust to internal duplications while maintaining the computational advantages of the original \texttt{fabl} model. 
+%We attempt to resolve this paradox by extending the fabl framework to handle these internal duplications. We introduce a modified Dirichlet process prior that allows each record in $B$ to match to potentially multiple records in $B$. We emphasize that we are not interested in deduplication within either dataset for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. For this reason, we do not enforce transitive closure throughout the Gibbs sampler as done in \cite{marchant_distributed_2019} and \cite{aleshinguendel2021multifile}, but rather assume it, and create a coherent set of linkages through post-processing. This allows for a record linkage model that is robust to internal duplications while maintaining the computational advantages of the original \texttt{fabl} model.
 
-\section{Dirichlet Record Linkage}
 
-Recall that for \texttt{fabl}, we used the following prior for the linkage structure $Z$ and the rate of matching parameter $\pi$:
+\newpage
+
+\section{Introduction}\label{sec:introduction}
+
+%We have shown in previous work that the fast Beta linkage framework tends to outperform standard Fellegi Sunter when each record in $B$ has at most one match in $A$. However, significant problems arise when a record in $B$ has multiple matching records in $A$. In particular, since matching probability is normalized among all records in $A$, matching probability is split among multiple records such that none of the matches achieves high enough posterior probability to be identified through the Bayes estimate. This amounts to a paradox: the more matches that record $B_j$ has in $A$, the less likely the algorithm is to find a match. 
+
+%We attempt to resolve this paradox by extending the fabl framework to handle these internal duplications. We introduce a modified Dirichlet process prior that allows each record in $B$ to match to potentially multiple records in $A$. We emphasize that we are not interested in deduplication within $A$ for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. Therefore, duplications within files that have no duplications across files will go undetected; we believe this acceptable for many practical applications. 
+
+ %For this reason, we do not enforce transitive closure throughout the Gibbs sampler as done in \cite{marchant_distributed_2019} and \cite{aleshinguendel2021multifile}, but rather assume it, and create a coherent set of linkages through post-processing. This allows for a record linkage model that is robust to internal duplications while maintaining the computational advantages of the original \texttt{fabl} model.
+
+%There have been several other attempts to estimate more flexible linkage structures within the comparison vector framework, but each has significant drawbacks in practice. First, the original \cite{fellegi_theory_1969} method that models the linkage status of each record pair as independent typically results in one record in one file being matched with multiple records in the other file. This initial estimate of the linkage structure is usually refined through post-processing to create a bipartite matching \cite{jaro1989}. As of yet, this post-processing has not been adapted to estimate more general linkage structures, and the initial estimate without any post-processing is known to have poor precision. \cite{aleshin2023multifile} allowed for multiple matches within and across datafiles, but requires that the modeller explicitly set a maximum linkage cluster size, and models the dependency between records in such a way that limits scalability. 
+Probabilistic record linkage is the use of statistical methods to identify unique entities within and across databases, generally without the use of unique identifiers. This is an increasingly important task in ``data cleaning,'' either for its own sake, or as a preliminary step before conducting subsequent analysis. These techniques are used in government, non-profit organizations, healthcare, industry, and their use continues to grow. \citep[e.g.,][]{Herzog_2007, christen_data_2012, Papadakis2021, binette2022almost}. In this paper, we propose a method for conducting record linkage between a duplicate free reference file and some other file that may have internal duplications. 
+
+%It is common for data collectors to have one list of records with a rigorous sampling mechanism trusted to have no internal duplications, or have to cleaned a list over time such 
+
+Many probabilistic record linkage methods are based on the foundational work of \cite{fellegi_theory_1969}. In these Fellegi-Sunter (FS) methods, the data analyst first creates comparison vectors for each pair of records in the data files. These vectors indicate how similar the records are on a set of variables measured in both files, known as the linkage variables.  Using these comparison vectors, the analyst classifies each pair as a match or nonmatch using a likelihood ratio test. An alternative paradigm is to model the linkage variables directly \citep[e.g.,][]{tancredi2011hierarchical, steorts_bayesian_2016, marchant_distributed_2019, betancourt2022prior}. In this article, we build on the contributions to the comparison vector approach.
+
+In the original FS formulation, record pairs are independently classified as matches or nonmatches, but through a  Bayesian framework, practitioners can formalize different assumptions on the type of matchings between files through different prior distributions on the linkage structure. For example, \cite{sadinle_bayesian_2017} proposed prior distribution on one-to-one matchings between two files, and \cite{aleshin2023multifile} proposed a prior on the partitions of records corresponding to unique entities found in arbitrarily many files. These more tailored record linkage methods have the advantage of producing coherent sets of matches that respect transitivity without the need for post-processing, but have limited scalability. 
+
+Much work has been done to expand the the scalability of FS methods. One approach is to reduce the number of comparisons vectors needed for analysis through ``blocking'', using some feature in the data to allocate records into smaller partitions (or blocks), and running linkage algorithms independently on each block \citep{christen2019data}. Of note, blocking on an unreliable field can lead to missed matches, making this form of blocking often undesirable \citep{steorts_comparison_2014}. Others use ``filtering'', which uses some deterministic or probabilistic criteria to set the match probability for certain comparison vectors to zero after they have been created \citep{murray2016probabilistic, mcveigh2019scaling}. In the creation of the \texttt{fastLink} method, \cite{enamorado2019using} formalized the use of a lower dimensional representation of the set of comparison vectors that allowed for much faster parameter estimation of the standard FS model; \cite{kundinger_2023} and \cite{kundinger_2024_vabl} then adopted this approach for a faster implementation of the bipartite model of \cite{sadinle_bayesian_2017}.
+ 
+In this work, we continue this work of proposing new record linkage methods tailored for important practical scenarios, and the computational methods to implement them in an efficient and scalable manner. We introduce Dirichlet Record Linkage (\texttt{DRL}, pronounced ``drill"), an extension of the comparison vector record linkage framework for the scenario of linking one duplicate-free reference file to another file with unknown amounts of internal duplications. To do so, we model the parameter governing the amount of matches between files as Dirichlet process. Since the resulting set of possible matches for each record is extremely high dimensional, we propose an innovative Gibbs sampler utilizing the stick-breaking represenation of the Dirichlet process for tractable posterior inference. We adopt the dimension reduction techniques of \cite{kundinger_2023} for additional gains in speed and scalability. 
+
+In what follows, Section~\ref{sec:prior-work} reviews the work of \cite{fellegi_theory_1969} and a selection of Bayesian extensions to contextualize our intervention. Section~\ref{sec:drl} introduces \texttt{DRL}, and describes our approach for efficient posterior sampling. Sections~\ref{sec:simulations} and \ref{sec:case-study} demonstrate the speed and accuracy of our method in relation to several other comparison vector techniques in a series of simulations a case study of voter registration records in North Carolina. Finally, Section~\ref{sec:conclusion} summarizes our work and discusses areas for further research.
+
+%Crucially, these decisions are made independently for each pair. The \cite{fellegi_theory_1969} approach has been extended for a wide variety of applications \citep[e.g.,][]{Winkler1990, fair2004generalized, wagner2014person, gill2003english, enamorado2019using, aleshinguendel2021multifile}. 
+
+
+%First, the original \cite{fellegi_theory_1969} method that models the linkage status of each record pair as independent typically results in one record in one file being matched with multiple records in the other file. This initial estimate of the linkage structure is usually refined through post-processing to create a bipartite matching \cite{jaro1989}. As of yet, this post-processing has not been adapted to estimate more general linkage structures, and the initial estimate without any post-processing is known to have poor precision.
+
+%\cite{aleshin2023multifile} allowed for multiple matches within and across datafiles, but requires that the modeller explicitly set a maximum linkage cluster size, and models the dependency between records in such a way that limits scalability. 
+
+
+
+\section{The Fellegi-Sunter Framework for Record Linkage}\label{sec:prior-work}
+
+Consider two data files $A$ and $B$ comprising $n_A$ and $n_B$ records, respectively, and including $F$ linkage variables measured in both files. For $i=1, \dots, n_A$, let record $i$ be given by $A_i = (A_{i1}, \dots, A_{iF})$, so that $A = (A_i : i = 1, \dots, n_A)$.  Similarly, for $j=1, \dots, n_B$, let record $j$ be given by $B_j = (B_{j1}, \dots, B_{jF})$, so that $B = (B_j : j = 1, \dots, n_B)$. 
+
+In record linkage tasks, records that refer to the same entity should be similar, and records that refer to different entities should be dissimilar. To represent this, \cite{fellegi_theory_1969} proposed using the comparison vector $\gamma_{ij} = (\gamma_{ij}^1, \ldots, \gamma_{ij}^F),$ where $\gamma_{ij}^f$ is a comparison for field $f$ between records $A_i$ and $B_j$. Binary comparisons are commonly used due to their simplicity; partial agreement or more complicated comparisons can be used through similarity metrics or distance functions \citep{Winkler_1990, Bilenko_2003_adapt, elmagarmid_duplicate_2007}. We assume that each field's comparison is discretized , and we let $L_f$ denote the number of categories for field $f$. We collect all of the comparison vectors as $\gamma=\{\gamma_{ij}\}_{i=1,j=1}^{n_A,n_B}$.
+
+Consider records from $A$ and $B$ as disjoint set of nodes. We have an edge between two records if they are coreferent (or matching). Our parameter of interest is the collection of edges representing coreferent records. This parameter can be expressed in various ways depending on the model assumptions for a particular approach to record linkage. For example, \cite{fellegi_theory_1969} used a coreferent matrix $\Delta \in \{0, 1\}^{n_A \times n_B}$, where
+\begin{align}
+	\Delta_{ij} =
+	\begin{cases}
+		1, & \text{if records}\;  A_i \; \text{and}\; B_j \; \text{refer to the same entity}; \\
+		0, & \text{otherwise}.\\
+	\end{cases}
+\end{align}
+This sparse matrix representation can become cumbersome for large linkage tasks. In the setting where each record in $B$ can match to at most one record in $A$, \cite{sadinle_bayesian_2017} proposed using the more compact vector $\bm{Z} = (Z_1, \ldots, Z_{n_B})$ for the records in $B$ such that
+\begin{align}
+	Z_{j} =
+	\begin{cases}
+		i, & \text{if records}\;  A_i \; \text{and}\; B_j  \; \text{refer to the same entity}; \\
+		n_A + j, & \text{if record}\;  B_j \; \text{does not have a match in}\; A. \\
+	\end{cases}
+\end{align}
+
+\subsection{Models for Comparison Vector Based Record Linkage}\label{sec:model-review}
+
+For modeling the collection of $n_An_B$ random variables $\Gamma_{ij}$, \cite{fellegi_theory_1969} employ two independence assumptions: first, that comparison vectors are independent given the matching status of the record pair, and second, that the matching status of each record pair is independent of the matching status of other pairs. Using these independence assumptions, one specifies a mixture model for each $\Gamma_{ij}$ \citep[e.g., as in ][]{winkler_state_1999,jaro1989,larsen_2001,enamorado2019using}.  We have
 \begin{subequations}
 	\begin{align}
-		p(Z_j = q| \pi)  &=
-		\begin{cases} 
-			\frac{1}{n_A}\pi,  & q > 0; \\
-			1-\pi, &  q  = 0; \\
-		\end{cases} \label{eqn:fabl_prior}\\
-		\pi &\sim \text{Beta}(\alpha_{\pi}, \beta_{\pi})\label{eqn:pi_beta}.
+		&\Gamma_{ij} \mid \Delta_{ij} = 1 \stackrel{iid}{\sim} \mathcal{M}(\bm{m}), \label{eqn:fs_model} \\
+		&\Gamma_{ij} \mid \Delta_{ij} = 0  \stackrel{iid}{\sim} \mathcal{U}(\bm{u}), \label{eqn:m_dist}\\
+		&\Delta_{ij}   \stackrel{iid}{\sim} \text{Bernoulli}(\lambda). \label{eqn:lambda_dist}
 	\end{align}
 \end{subequations}
-This prior says that a record $B$ has some match in $A$ with probability $\pi$, and that each record in $A$ is equally likely to be that match. We now generalize these prior distributions to allow the records in $B$ to match with multiple records in $A$. 
+Here, $\mathcal{M}$ and $\mathcal{U}$ are the distributions for matching and nonmatching record pairs, $\bm{m}$ and $\bm{u}$ are their respective sets of parameters, and $\lambda$ is the marginal probability that a record pair is a match. When using comparison vectors with discrete agreement levels, $\mathcal{M}$ and $\mathcal{U}$ are collections of independent multinomial distributions for each linkage feature. Accordingly, $\bm{m} = (\bm{m}_1, \ldots, \bm{m}_F)$, where $\bm{m}_f = (m_{f1}, \ldots, m_{fL_f})$ and $m_{fl} = p(\Gamma_{ij}^f = l|\Delta_{ij} = 1)$ for all fields $f$ and agreement levels $l$. The $\bm{u}$ parameters are defined similarly, with $u_{fl} = p(\Gamma_{ij}^f = l|\Delta_{ij} = 0)$.
 
-\subsection{Prior Specification}\label{sec:prior-specification}
-
-We provide updated notation to allow us to describe one record in $B$ having multiple matches in $A$. Let $Z_j$ be a set containing the indices for all of the records in $A$ that are a match with record $B_j$, and let $Z = \{Z_j | j = 1, \ldots, n_B\}$ denote the collection of such sets for all records in $B$. Let $|Z_j| = \sum_{k=1}^{\infty} I(Z_{j, k} > 0)$ denote the number of records in $A$ that are linked to $B_j$. We use $Z_j = \emptyset$ to denote when $B_j$ has no match in $A$.
-
-We modify the \texttt{fabl} model to allow each record in $B$ to match to multiple records in $A$. Define a vector of probabilities $\bm{\pi} = (\pi_0, \ldots, \pi_{n_A})$ where $\pi_k$ is the probability that some record in $B$ has exactly $k$ matches in $A$. Conditional on $B_j$ having $k$ matches, we construct a prior specification on $Z$ such that each matching $Z_j$ of length $|Z_j|$ is equally likely. Since there are ${n_a \choose |q|} = \frac{n_A!}{(n_A - |q|)! |q|!}$ ways to select $|q|$ matching records out of all $n_A$ possible records, we replace (\ref{eqn:fabl_prior}) with
-\begin{align}\label{eqn:z}
-	p(Z_j = q| \bm{\pi}) = \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}.
-\end{align}
-Since $\pi$ is multivariate, we replace (\ref{eqn:pi_beta}) with
+One advantage of Bayesian methods is the ability to use prior distributions tailored to specific model assumptions, which tends to produce better results than post-processing after using more general methods. Under the assumption that there are no duplicates within files, \cite{sadinle_bayesian_2017} proposed the ``beta distribution for bipartite matching,'' given by
 \begin{align}
-	\bm{\pi}\sim \text{Dirichlet}(\alpha_{\pi}).
+	\mathbb{P}(Z\mid \pi) &=\dfrac{[n_1-n_{12}(Z)]!}{n_1!} %\times
+	\pi^{n_{12}(Z)}(1-\pi)^{n_2-n_{12}(Z)},  	\label{eq:brlprior}\\
+	\pi &\sim \text{Beta}(\alpha_{\pi}, \beta_{\pi}).
 \end{align}
-%Similar to fabl, we adopt a prior specification on $Z$ so that each matching $Z_j$ of length $|Z_j| = k$ is equally likely. Since there are $n_a \choose |q| = \frac{n_A!}{(n_A - |q|)! |q|!}$ ways to select $|q|$ matching records out of all $n_A$ possible records, we use
-%\begin{align}\label{eqn:z}
-%	p(Z_j = q| \bm{\pi}) = \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}.
-%\end{align}
+This prior induces a Gibbs sampler that strictly enforces one-to-one matching, and has has been shown to outperform the base FS method when model assumptions are satisfied. However, maintaining the dependencies between records has limited this method to small to moderate linkage tasks.
 
-%where the additional $|q|!$ accounts for the multiple orderings of $q$. Though the representation in (\ref{eqn:z_equivalence}) is more natural in the record linkage settings, the representation in (\ref{eqn:z}) will provide more clear derivations in the sections that follow. 
-%Similar to fabl, we adopt a prior specification on $Z$ so that each matching $Z_j$ of length $|Z_j| = k$ is equally likely. Formally, we have
-%
+More recently, \cite{aleshin2023multifile} extended the FS framework for the setting of arbitrary amount of duplications within and across an arbitrary number of files. To do so, they presented a generative process for multifile partitions, and parameterized each step of this generative process. This leads to a structured prior for multifile partitions consisting of
+\begin{enumerate}
+	\item A prior for the number of unique entities exhibited in the linkage task. By default, this is taken to be uniform over total number of records in the linkage task.
+	\item Given the total number of unique entities, a prior for the \emph{overlap table}, or the number of unique entities exhibited in each file. This prior is given by a multinomial-Dirichlet distribution.
+	\item Given the number of unique entities exhibited in each file, a prior for the number of records in each file associated with each unique entity. By default, this is taken to be a Poisson distribution truncated between 1 and the number of records in each file.
+	\item Given the number of records in each file associated with each unique entity, a prior for the within-file partitions of records to entities. This is taken to be uniform over the number of such assignments.
+	\item Given the overlap table and within-file partitions, a prior for the matching between files. This is taken to be uniform over all possible such matchings. 
+\end{enumerate}
+To our knowledge, this is as of yet the only comparison vector method that can identify duplicates within files with out employing the full record pair independence from the original \cite{fellegi_theory_1969}. This structured prior induces a Gibbs sampler on the partition of records corresponding to the unique entities in the record linkage task. Similarly the beta prior for bipartite matching however, this Gibbs sampler becomes infeasible for larger linkage tasks. 
+
+\subsubsection{Fast Beta Linkage}\label{sec:fabl}
+
+\cite{kundinger_2023} proposed to model each element of $Z$ independently, relaxing the assumption that there are no duplicates within each database. Under this relaxation, they introduced the fast beta linkage (\texttt{fabl}) prior:
+\begin{align}
+	\mathbb{P}(Z_j = i \mid \pi) 
+	&=
+	\begin{cases}
+		\pi/n_1,  &  \text{if}  \; i\leq n_1,\\
+		1- \pi, &   \text{if}  \;  i= n_1 + j,
+	\end{cases}\label{eqn:fabl} \\
+	\pi &\sim \text{Beta}(\alpha_{\pi}, \beta_{\pi}) \label{eqn:pi_beta},
+\end{align}
+where $\alpha_{\pi}, \beta_{\pi}$ are fixed and known. This prior says that a record $B$ has some match in $A$ with probability $\pi$, and that each record in $A$ is equally likely to be that match. The \texttt{fabl} prior closely mimics the beta prior for bipartite matchings in \eqref{eq:brlprior}, without enforcing the bipartite matching restriction within the Gibbs sampler. This prior was originally proposed for an efficient Gibbs sampler, but was recently shown to be estimable through variational inference for substantial computational gains \citep{kundinger_2024_vabl}. If desired, a bipartite matching can be acquired through a simple post-processing step after computing the Bayes estimate. 
+
+
+
+\section{Dirichlet Record Linkage}\label{sec:drl}
+
+We showed in \cite{kundinger_2023} and \cite{kundinger_2024_vabl} that the \texttt{fabl} framework tends to outperform standard FS when each record in $B$ has at most one match in $A$. However, significant problems arise when a record in $B$ has multiple matching records in $A$. In particular, since matching probability is normalized among all records in $A$, matching probability is split among multiple records such that none of the matches achieves high enough posterior probability to be identified through the Bayes estimate. This amounts to a paradox: the more matches that record $B_j$ has in $A$, the less likely the algorithm is to find a match. Here, we attempt to resolve this paradox by extending the \texttt{fabl} framework to handle these internal duplications in $A$. We emphasize that we are not interested in deduplication within $A$ for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. Therefore, duplications within files that have no duplications across files will go undetected; we believe this acceptable for many practical applications. 
+
+We provide updated notation to allow us to describe matching in this setting. Let $Z_j = (Z_{j, 1}, \ldots)$ be a set containing the indices for all of the records in $A$ that are a match with record $B_j$, and let $Z = \{Z_j | j = 1, \ldots, n_B\}$ denote the collection of such sets for all records in $B$. Let $|Z_j|$ denote the number of records in $A$ that are linked to $B_j$. We use $Z_j = \emptyset$ to denote when $B_j$ has no match in $A$. 
+
+%Recall that for \texttt{fabl}, we used the following prior for the linkage structure $Z$ and the rate of matching parameter $\pi$:
 %\begin{subequations}
 %	\begin{align}
-%		\mathcal{L}(Z, \bm{m}, \bm{u} \mid \gamma) &= \prod_{i=1}^{n_A}  \prod_{j=1}^{n_B}\prod_{f=1}^{F}\prod_{l=1}^{L_f}\left[  m_{fl}^{I(i \in Z_j)}u_{fl}^{I(i \notin Z_j)}\right]^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}, \label{eqn:likelihood}\\
-%		\bm{m}_f &\sim \text{Dirichlet}(\alpha_{f1}, \ldots, \alpha_{f L_f}), \forall f = 1, \ldots, F, \label{eqn:m} \\
-%		\bm{u}_f &\sim \text{Dirichlet}(\beta_{f1}, \ldots, \beta_{f L_f}),\forall f = 1, \ldots, F,  \label{eqn:u}\\
-%%		p(Z_j = q| \bm{\pi})  &=
-%%		\begin{cases} 
-%%			\frac{(n_A - k)! k!}{n_A!} \pi_k,  & q \neq 0, \\
-%%			\pi_0, &  q  = 0; \\
-%%		\end{cases} \\
-%		p(Z_j = q| \bm{\pi}) &= \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}
-% \\
-%		\pi_k &= (1 - \eta_{k+1}) \prod_{c=1}^{k} \eta_c,  \\
-%		\eta_k &\sim \text{Beta}(\alpha_{\eta}, \beta_{\eta})\label{eqn:pi}.
-%	\end{align}
+	%		p(Z_j = q| \pi)  &=
+	%		\begin{cases} 
+		%			\frac{1}{n_A}\pi,  & q > 0; \\
+		%			1-\pi, &  q  = 0; \\
+		%		\end{cases} \label{eqn:fabl_prior}\\
+	%		\pi &\sim \text{Beta}(\alpha_{\pi}, \beta_{\pi})\label{eqn:pi_beta}.
+	%	\end{align}
 %\end{subequations}
+% We now generalize these prior distributions to allow the records in $B$ to match with multiple records in $A$. 
+
+%In this section, we relax the assumption of no duplicates within either file, and allow for duplicates within one file. We adapt the ideas behind \texttt{fabl} to propose an efficient and scalable method for this setting. In particular, we generalize the prior distribution provided in \eqref{eqn:fabl} and \eqref{eqn:pi_beta} to allow the records in $B$ to match with multiple records in $A$. 
+
+%We introduce a Dirichlet process prior that allows each record in $B$ to match to potentially multiple records in $A$. We emphasize that we are not interested in deduplication within $A$ for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. Therefore, duplications within files that have no duplications across files will go undetected; we believe this acceptable for many practical applications. 
 
 
-%Below, we explain how this prior is implemented in the MCMC and variational inference frameworks, and the computational considerations relevant to each. 
-%MAKE MORE FORMAL.
 
-\subsection{Full Conditional for $Z_j$}\label{sec:joint-distribution}
-
-Following the observation of \cite{wortman2019} and elaborated by \cite{kundinger_2023}, when $B_j$ does not link to any record in $A$ (such that $|Z_j| = 0$) the contribution to the likelihood is simply a product of $u$ parameters, which we will call $c_j$:
-\begin{align}
-	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi, Z_j = \emptyset) = \prod_{i=1}^{n_A}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} = c_j.
+Define a vector of probabilities $\bm{\pi} = (\pi_0, \ldots)$ where $\pi_k$ is the probability that some record $B_j$ has exactly $k$ matches in $A$. To avoid setting a maximum number of matches for any $B_j$, we assign $\bm{\pi}$ a Dirichlet process prior. That is, 
+\begin{align}\label{eqn:pi-dirichlet-process}
+	f(\bm{\pi}) = \sum_{k=0}^{\infty} \pi_k \delta_{\pi_k}(\bm{\pi}),
 \end{align}
-When $Z_j = q =  (q_1, \ldots, q_k)$ for some $|q| > 0$, we have
-\begin{align}
-	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi,  Z_j = q) =\prod_{i \in q}\prod_{f=1}^{F}\prod_{l=1}^{L_f} m_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}  \prod_{i \notin q}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}.
+where $\delta_{\pi_k}$ is the indicator function which evaluates to zero everywhere, except for $\delta_{\pi_k}(\pi_k) = 1$. We model each $\pi_k$ as a product of conditional probabilities: let $\eta_k$ be the probability that some record in $B$ has at least $k$ matches, given that it has at least $k-1$ matches. This gives us the stick breaking representation
+\begin{align}\label{eqn:pi-stick-breaking}
+	\pi_k = (1 - \eta_{k+1}) \prod_{c=1}^{k} \eta_c, 
 \end{align}
-We multiply and divide by the $u$ parameters for the matching record pairs to obtain
+where $\eta_k$ are independent random variables from a $\text{Beta}(1, \beta_{\eta})$ distribution.
+
+Conditional on $B_j$ having $k$ matches, we construct a prior specification on $Z$ such that each matching $Z_j$ of length $|Z_j|$ is equally likely. Since there are ${n_A \choose |q|} = \frac{n_A!}{(n_A - |q|)! |q|!}$ ways to select $|q|$ matching records out of all $n_A$ possible records, we use
 \begin{align}
-	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi, Z_j = q) &= \prod_{i \in q}\prod_{f=1}^{F}\prod_{l=1}^{L_f} \left(\frac{m_{fl}}{u_{fl}}\right)^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}  \prod_{i = 1}^{n_A}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} \\
-	&= c_j \prod_{i \in q} w_{ij} .
+	p(Z_j = q| \bm{\pi}) = \frac{(n_A - |q|)! |q|!}{n_A!} \pi_{|q|}. \label{eqn:z_drl}
+	%\bm{\pi} \sim \text{Dirichlet}(\alpha_{\pi}) \label{eqn:pi_drl}.
+\end{align}
+In Appendix~\ref{app:joint-distribution}, we show that the full conditional for $Z_j$ in this setting is given by
+\begin{align}
+		p\left(Z_j  = q|\gamma, \bm{m}, \bm{u}, \pi \right) \propto \frac{(n_A - |q|)!|q|!}{n_A!} \pi_{|q|} \prod_{i \in q} w_{ij}, \label{eqn:joint_posterior}
+\end{align}
+where for all $i \in \{1, \ldots, n_A\}$ and $j \in \{1, \ldots, n_B\}$, 
+\begin{align}
+	w_{ij} = \prod_{f=1}^{F}\prod_{l = 1}^{L_f} \left(\frac{m_{fl}}{u_{fl}}\right)^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} \label{eqn:fs_weight}.
 \end{align}
 
-Lastly, we multiply the likelihood by the prior in (\ref{eqn:z}) to obtain the posterior distribution. For $Z_j = q$ where $|q| = k$, we have
-\begin{subequations}
-	\begin{align}
-		p\left(Z_j  = q|\gamma, \bm{m}, \bm{u}, \pi \right) &= \frac{\frac{(n_A - k)!|k|!}{n_A!} \pi_{k} c_j \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)!|h|!}{n_A!} \pi_{|h|} c_j \prod_{i \in h} w_{ij}} \\
-		&= \frac{\frac{(n_A - k)!|k|!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)!|h|!}{n_A!} \pi_{|h|} \prod_{i \in h} w_{ij}} \\
-		&\propto \frac{(n_A - k)!|k|!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}. \label{eqn:joint_posterior}
-	\end{align}
-\end{subequations}
+Finally, to obtain an estimate $\hat{\bm{Z}}$ of the linkage structure, we use the loss functions and Bayes estimate from \cite{sadinle_bayesian_2017} and adapted by \cite{kundinger_2023}. Since (\ref{eqn:z_drl}) does not strictly enforce the requirement that there are no duplicates in $B$, it is possible for this Bayes estimate to link multiple records in $B$ to the same record in $A$. To obtain a Bayes estimate that corresponds to our model assumptions, we minimize the expected loss subject to the constraint that $\hat{Z}_{j, k} \neq \hat{Z}_{j', k}$ for all $j \neq j'$ and all $k$. See Supplement \ref{app:bayes-estimate} for details regarding this initial Bayes estimate and this post-processing procedure.
 
 \subsection{Sequential Sampler}\label{sec:sequential-sampler} 
 
 Sampling the full conditional in (\ref{eqn:joint_posterior}) is infeasible for almost any record linkage task. In particular, there are $2^{n_A}$ possible matchings for each $B_j$, meaning that computational complexity for the sampler would be $O\left(n_B 2^{n_A}\right)$. One could reduce this computational burden by setting a maximum number of matches, $K$, per record in $B$, but this would still require $\sum_{k = 1}^K \frac{n_A!}{(n_A - k)!k!}$ possible options for the set $Z_j$, and would be prohibitive for most values of $n_A$ seen in record linkage problems. Through Gibbs sampling however, we can break this joint distribution into a sequence of more simple conditional univariate distributions. This allows for a more computationally efficient sampler, and allows us to learn $K$ from the data, rather than setting it ahead of time. 
 
-We model each $\pi_k$ as a product of conditional probabilities: let $\eta_k$ be the probability that some record in $B$ has at least $k$ matches, given that it has at least $k-1$ matches. This gives us the stick breaking representation
-\begin{align}
-	\pi_k = (1 - \eta_{k+1}) \prod_{c=1}^{k} \eta_c, 
-\end{align}
-where $\eta_k$ are independent random variables from a $\text{Beta}(\alpha_{\eta}, \beta_{\eta})$ distribution.
+%We model each $\pi_k$ as a product of conditional probabilities: let $\eta_k$ be the probability that some record in $B$ has at least $k$ matches, given that it has at least $k-1$ matches. This gives us the stick breaking representation
+%\begin{align}
+%	\pi_k = (1 - \eta_{k+1}) \prod_{c=1}^{k} \eta_c, 
+%\end{align}
+%where $\eta_k$ are independent random variables from a $\text{Beta}(\alpha_{\eta}, \beta_{\eta})$ distribution.
 
-We generalize the fast beta prior in (\ref{eqn:fabl_prior}) to a sequence of priors that allows for multiple matchings. When $B_j$ has been linked to $k-1$ records, we say that the probability that $B_j$ has a $k^{th}$ match is $\eta_k$, and that all remaining records in $A$ are equally likely to be linked. Let $Z_{j, -k} = (Z_{j, 1}, \ldots, Z_{j, k-1})$ be the set of records linked to $B_j$ before the $k^{th}$ matching phase. We use
+We use the stick breaking representation in \eqref{eqn:pi-stick-breaking} to generalize the fast beta prior in (\ref{eqn:fabl}), producing a sequence of priors that allows for multiple matchings. When $B_j$ has been linked to $k-1$ records, we say that the probability that $B_j$ has a $k^{th}$ match is $\eta_k$, and that all remaining records in $A$ are equally likely to be linked. Let $Z_{j, -k} = (Z_{j, 1}, \ldots, Z_{j, k-1})$ be the set of records linked to $B_j$ before the $k^{th}$ matching phase. We use
 \begin{align} \label{eqn:sequential_prior}
 	p(Z_{j, k} = q_k|\eta_k) &= \begin{cases}
 		\frac{\eta_k}{n_A - (k - 1)}, &  q_k \notin A_{j, k}, \\
@@ -301,7 +376,7 @@ We see that \texttt{DRL} is a strong alternative to \texttt{multilink} and \text
 
 We demonstrate our method on the North Carolina Voter Registration (\texttt{NCVR}) database taken two months apart ~\citep{christen_preparation_2014}. The snapshots are filtered to include only those voters whose details changed over the two-month period, so there are matching records with full agreement on all fields. We use first name, middle name, last name, as string fields, and street address and age as categorical fields. Unique voter registration numbers are provided, however they are known to contain some errors. The \texttt{NCVR} dataset is not publicly available due to sensitive information. However, we have permission to utilize it for publication by its owner.
 
-Using the voter registration numbers, we can see that each file has internal duplication rates of about 1\%. In this analysis, we deduplicate file $B$, and left $A$ with duplicates. In practice, such low amount of internal duplication may not warrant the use of Dirichlet Beta Linkage since \texttt{vabl} is considerably faster. However, we demonstrate here that even with such few internal duplications, \texttt{DBL} is effective at identifying this multiple matches and does not declare too many false matches. 
+Using the voter registration numbers, we can see that each file has internal duplication rates of about 1\%. In this analysis, we deduplicate file $B$, and left $A$ with duplicates. In practice, such low amount of internal duplication may not warrant the use of Dirichlet Beta Linkage since \texttt{vabl} is considerably faster. However, we demonstrate here that even with such few internal duplications, \texttt{DRL} is effective at identifying this multiple matches and does not declare too many false matches. 
 
 I compare four approaches: standard \texttt{fabl}, our proposed \texttt{DRL} method, \texttt{fastLink}, and \texttt{fastLink} with the Jaro correction. This task is too large for running \texttt{multilink} in its current implementation in \texttt{R}, and is thus omitted. For \texttt{fastLink}, we use the threshold of 0.5 to declare matches, and for \texttt{fabl} and \texttt{DRL}, we use losses that are equivalent to a threshold of 0.5. Results are in Table \ref{table:ncvr_results}.
 
@@ -337,46 +412,10 @@ In Figure~\ref{fig:ncvr_thresholds}, we show the show the precision, recall, and
 
 Lastly, we note a limitation in using preexisting software for record linkage tasks. In its currently implementation, \texttt{fastLink} allows users to define normalized Levenshtein distance thresholds for coding field comparisons into three discrete levels. In this data however, it is common for a record to contain a middle initial (like ``E"), rather than a full middle name (like ``Elizabeth"). Using Levenshtein distance thresholds, the comparison field for middle name for such a pair of records could coded as a full disagreement, when it should be more reasonably given its own agreement level. Likewise, when two records have a middle initial that happens to match, this is coded as a full agreement, even though it is possible these initials represent different names. In this analysis, 27.6\% of the false matches under \texttt{DRL} at the 0.5 probability threshold included at least one record containing a middle initial rather than middle name. A more careful construction of the comparison vectors is likely to improve results for all methods considered.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
-%	\\
-%	&= \prod_{k = 1}^K \frac{1}{n_A - (k - 1)} \eta_k  w_{q_k, j} \\
-%	&= p\left(Z_{j, k}^{(s+1)}  = q_k |\gamma, \bm{m}^{(s+1)}, \bm{u}^{(s+1)}, \pi^{(s+1)}, Z_{j, k-1} = q_{k-1} \right)
-
-
-%\subsection{Gibbs Sampler}
-%Through MCMC, we are able to sequentially sample the components $Z_{j, k}$ of the matching set $Z_j$. The first match for $B_j$ is made through the same sampler as was used in \cite{kundinger_2023}.
-%
-%\begin{align}
-%	p(Z_{j, 1}|\eta_k) &= \begin{cases}
-%		\frac{\eta_k}{n_1}, &  z_{j, 1} \in [n_1], \\
-%		1 - \eta_k, & z_{j, 1} = 0;
-%	\end{cases} \\
-%	\eta_k &\sim \text{Beta}(\alpha_{\eta}, \beta_{\eta})
-%\end{align}
-%
-%In this context, we use the sequence of priors
-%\begin{align}
-%	p(Z_{j, k}|\eta_k) &= \begin{cases}
-%		\frac{\eta_k}{n_{j, k}}, &  z_{j, k} \in N_{j, k}, \\
-%		1 - \eta_k, & z_{j, k} = \emptyset;
-%		\end{cases} \\
-%	\eta_k &\sim \text{Beta}(\alpha_{\eta}, \beta_{\eta})
-%\end{align}
-%where $N_{j, k}$ is the set of records in $A$ that are available to be matched with $B_j$, and $n_{j, k} = |N_{j, k}| = n_A - (k - 1)$ is the number of such records. 
-%
-%This sequence of priors leads to the sequence of posteriors
-%\begin{align}
-%	p(Z_{j, k}|Z_j^{k-1}, \eta_k, \bm{m}, \bm{u}, \gamma) &= \begin{cases}
-%		w_{ij}, & z_{j, k} \in N_{j, k}, \\
-%		n_{j, k} \frac{1 - \eta_k}{\eta_k}, & z_j = 0;
-%	\end{cases} \\
-%	\eta_k &\sim \text{Beta}(\alpha_{\eta} + n_k(Z), \beta_{\eta} + n_{k-1}(Z) - n_k(Z))
-%\end{align}
-%where $n_k(Z) = \sum_{j=1}^{n_B} I( |Z_j| \geq k)$ is the number of records in $B$ that have at least $k$ matches in $A$. Note that $n_0(Z) = n_B$, and that for each $k$, we can view $n_{k-1}{(Z)}$ as a number of trials, and $n_{k}{(Z)}$ as a number of successes. 
-%
-%This specification induces an extension of \texttt{fabl} with an iterative matching phase. In each iteration of the Gibbs sampler, we sample an initial set of links using $\eta_1$. For each record in $B$ that was found to have a link, we remove the linked record in $A$ from consideration, and then sample another potential link with $\eta_2$. We continue, using $\eta_k$ in the $k^{th}$ matching step, until no new links are found, at which we point the matching phase terminates. The $\bm{\eta}, \bm{m},$ and $\bm{u}$ parameters are estimated based on all of the links identified. Crucially, there is no need to specify a maximum number of links per record, as this estimated through the model.
-
+In \cite{kundinger_2024_vabl}, we showed how the \texttt{fabl} model could be fit through variational inference, resulting in variational beta linkage, or \texttt{vabl}. As variational inference is much faster than MCMC methods, we showed that \texttt{vabl} was 50-250 times faster than \texttt{fabl} in a number of simulations and case studies. Unfortunately, it is infeasible to fit the \texttt{DRL} model directly through variational inference, since the joint distribution of all possible combinations of records in $A$ is far too high dimensional to estimate without the use of the sequential sampler. However, if we set a limit for the number of matches for each record in $B$, and use stringent blocking criteria to reduce the set of possible combinations of matches, variational inference may be of use in this scenario as well. 
+\brian{I think this is probably too specific. Just typing it out as  brainstorm for what to put here.}
 %\section{Loss Function}
 %
 %If we assume there are no duplicates in the base file.
@@ -407,14 +446,6 @@ Lastly, we note a limitation in using preexisting software for record linkage ta
 %\end{itemize}
 %In cases where we know at least one file is duplicate free, we can safely use \texttt{vabl}. However, if we want to be cautious about the potential for duplicates, the multiple match prior under \texttt{fabl} is a good option. 
 
-%\subsection{Comparison to Base Fellegi-Sunter}
-%\begin{itemize}
-%	\item At the point at which we allow for duplication within and across datasets, one might ask why we don't just use the independent record pair assumption of base Fellegi Sunter
-%	\item We have found that standard FS (and its implementation in fastlink) tends to overmatch. Its performance generally improves once you use the Jaro post-processing algorithm to obtain a one-to-one matching
-%	\item In this setting, we do not want a one-to-one matching, so we need to take the raw output of FS
-%	\item Conceptually, one could modify the Jaro algorithm to allow for one-to-$K$ matchings. However, this would take some work, and it would have the downside of having to prespecify $K$. 
-%\end{itemize}
-
 %\subsection{Computational Considerations}
 %We can set the maximum number of linkages per record, $K$, or let it be estimated by the model. Setting it ahead of time gives a minor (I would say, negligible) computational advantage over leaving it unrestricted. 
 %
@@ -422,28 +453,6 @@ Lastly, we note a limitation in using preexisting software for record linkage ta
 %
 %When $X_1$ is free of duplicates, the multiple match algorithm makes a second attempt at matching, which has complexity $ \left(P L_1 \right)$. This is a minor addition of computation time, but gives the added security of identifying duplicates. It may be a nice option just to use when you're not sure!
 
-%\section{Preliminary Findings}
-%The comparisons are not quite striaghtforward, so I'll have to be creative with the best way to present the findings. Here's an overview:
-%\begin{itemize}
-%	\item \texttt{multilink} allows the user to set the maximum number of records in each dataset that can form part of a cluster of matching records. If this number is mispecified, results are poor.
-%	\item When there are sufficiently many matches to properly estimate the $m$ parameters, fabl with multiple match outperforms base FS. 
-%	\item When there are few matches in the data set, fabl drastically overmatch. Basically, the algorithm just keeps identifying matches, muddying up the $m$ distribution, and everything deteriorates from there. 
-%	\item This behavior can be ameliorated by preventing the algorithm from overmatching. Two options:
-%	\begin{itemize}
-%		\item Set $K$, a maximum number of matches per record. This works well, and is more robust to misspecification than the maximum cluster size in multilink.
-%		\item Use informative priors on each $\eta_k \sim \text{Beta}(\alpha_{\eta}, \beta_{\eta_k})$. I have had good results with $\beta_{\eta_k} = k^2$ and $\beta_{\eta_k} = k^3$. Note that if this penalty prior takes the general form $\beta_{\eta_k} = k^{\tau}$, we attain fabl at $\tau = \infty$, and conceptually, $\tau$ can be estimated from the data or optimized through cross validation. 
-%	\end{itemize}
-%\end{itemize}
-%
-%\section{Simulations}
-%
-%We demonstrate the accuracy of the multiple match approach at various levels of overlap between files and errors between matching records through an adaptation of the simulation study from \cite{sadinle_bayesian_2017} and \cite{kundinger_2023}. 
-%
-%For each simulation, we construct two data files $A$ and $B$ such that there are in which there are 25, 125, or 225 records in $B$ that have matching records in $A$. The matching record in $A$ exhibits 1, 2, or 3 errors accross the five fields used for linkage. Then, every record in $A$ that has a matching record in $B$ is duplicated, such that each simulation has 50, 250, or 450 matching record pairs in total. We use uniform priors for the $\bm{m}$ and $\bm{u}$, with $\alpha_{fl} = \beta_{fl} = 1$ for all $f$ and $l$. We use uniform priors for $\pi$ for standard \texttt{fabl}, and also uniform priors for each $\eta_k$ for multiple match. \brian{We correctly specify the prior for multilink. (Need to write provide more description of model to make this succinct)} We run the Gibbs sampler for 1000 iterations, and discard the first 100 as burn-in.
-%
-%In these simulations, standard \texttt{fabl} drastically under performs, so much so that results are omitted from the graph. For each record in $B$ with matching records in $A$, the posterior match probability is split between the two matching records. Due to the randomness of the Gibbs sampler, one of the records occassionally has a posterior probability over 0.5 and is thus identified through the Bayes estimate, but often, both records have posterior probability below 0.5. In through \texttt{vabl}, the posterior probability of the two records is cut precisely in half, and thus \texttt{vabl} did not identify any matching record pairs in any of the simulations.
-%
-%The performance of \texttt{multilink} is more varied. When there is a moderate or high amount of matching records, \texttt{multilink} performs comparably with multiple match. However, in the setting where the number of matching records is low, \texttt{multilink} under performs. This may be because the model being fit is more complex, and so it is difficult to learn the parameters from such few observations. Noteably however, the performance of \texttt{multilink} is highly sensitive to prior specification. In FIGURE (to be added), we show accuracy suffers under various forms of mispecification.
 %
 %The "fabl swap" approach here is also strong. It generally has higher recall, but lower precision. This makes sense, because it doesn't need to consecutive matching algorithim in order to find the "multiple matches", but it also doesn't employ any post processing to clean up erroneous matches. In all simulations, multiple match and fabl swap have similar f-measure. (Not sure exactly how I want to analyze that. In NCVR, there is more of a difference.) 
 %
@@ -478,6 +487,31 @@ Lastly, we note a limitation in using preexisting software for record linkage ta
 
 \section{Appendix}
 \label{sec:appendix}
+
+\subsection{Full Conditional for $Z_j$}\label{app:joint-distribution}
+
+Following the observation of \cite{wortman2019} and elaborated by \cite{kundinger_2023}, when $B_j$ does not link to any record in $A$ (such that $|Z_j| = 0$) the contribution to the likelihood is simply a product of $u$ parameters, which we will call $c_j$:
+\begin{align}
+	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi, Z_j = \emptyset) = \prod_{i=1}^{n_A}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} = c_j.
+\end{align}
+When $Z_j = q =  (q_1, \ldots, q_k)$ for some $|q| > 0$, we have
+\begin{align}
+	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi,  Z_j = q) =\prod_{i \in q}\prod_{f=1}^{F}\prod_{l=1}^{L_f} m_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}  \prod_{i \notin q}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}.
+\end{align}
+We multiply and divide by the $u$ parameters for the matching record pairs to obtain
+\begin{align}
+	p(\Gamma_{.j}| \bm{m}, \bm{u}, \pi, Z_j = q) &= \prod_{i \in q}\prod_{f=1}^{F}\prod_{l=1}^{L_f} \left(\frac{m_{fl}}{u_{fl}}\right)^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)}  \prod_{i = 1}^{n_A}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} \\
+	&= c_j \prod_{i \in q} w_{ij} .
+\end{align}
+
+Lastly, we multiply the likelihood by the prior in (\ref{eqn:z}) to obtain the posterior distribution. For $Z_j = q$ where $|q| = k$, we have
+\begin{subequations}
+	\begin{align}
+		p\left(Z_j  = q|\gamma, \bm{m}, \bm{u}, \pi \right) &= \frac{\frac{(n_A - k)!|k|!}{n_A!} \pi_{k} c_j \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)!|h|!}{n_A!} \pi_{|h|} c_j \prod_{i \in h} w_{ij}} \\
+		&= \frac{\frac{(n_A - k)!|k|!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}}{\sum_{h \in \mathcal{Z}} \frac{(n_A - |h|)!|h|!}{n_A!} \pi_{|h|} \prod_{i \in h} w_{ij}} \\
+		&\propto \frac{(n_A - k)!|k|!}{n_A!} \pi_{k} \prod_{i \in q} w_{ij}.
+	\end{align}
+\end{subequations}
 
 \subsection{Derivation of Sequential Sampler}\label{app:sequential-sampler}
 We now provide the derivation of the sequential sampler, following the argument presented in Section \ref{sec:joint-distribution}. Suppose $B_j$ has been linked to $k$ records in $A$. Let $Z_{j, -k} = (Z_{j, 1}, \ldots, Z_{j, k-1})$ denote the vector of records already linked to $B_j$. When $B_j$ has no additional link in $A$, the contribution to the likelihood is a product of the $u$ parameters for all remaining records. That is, 
@@ -550,4 +584,6 @@ Importantly, the constant $c_{Z_{j, -k}}$ is not found in the final expression b
 %	\label{eq:likelihoodhash}
 %	\mathcal{L}(Z, m,u\mid\tilde{\Gamma})=\prod_{j=1}^{n_2}\prod_{p=1}^{P}\prod_{i\in r_{p_j}}m_p^{I(Z_j=i)}u_{p}^{I(Z_j\neq i)}.
 %\end{equation} 
+\subsection{Bayes Estimate}\label{app:bayes-estimate}
+
 \end{document}
