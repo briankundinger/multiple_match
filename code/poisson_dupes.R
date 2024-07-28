@@ -17,11 +17,11 @@ methods <- c("vabl", "DRL")
 df_list <- vector("list", length = length(dupe_rate))
 
 for(d in seq_along(folder_names)){
-  file_A <- read.csv(paste0("simulate_data_original/generated_data/poisson_files/",
+  file_A <- read.csv(paste0("data/poisson_sims/",
                             folder_names[d],
                             "/sim_", stringr::str_pad(j, 3, "left", "0"),
                             "/file_A.csv"))
-  file_B <- read.csv(paste0("simulate_data_original/generated_data/poisson_files/",
+  file_B <- read.csv(paste0("data/poisson_sims/",
                             folder_names[d],
                             "/sim_", stringr::str_pad(j, 3, "left", "0"),
                             "/file_B.csv"))
