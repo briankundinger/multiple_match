@@ -5,7 +5,7 @@ library(readr)
 
 
 taskID <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
-i = taskID
+j = taskID
 set.seed(41)
 S = 1000
 burn = S * .1
