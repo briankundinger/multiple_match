@@ -12,6 +12,8 @@ burn = S * .1
 
 dupe_rate <- c("low", "mid", "high")
 folder_names <- list.files("data/poisson_sims/", full.names = F)
+methods <- c("vabl", "DRL", "fastLink")
+
 df_list <- vector("list", length = length(dupe_rate))
 
 for(d in seq_along(folder_names)){
@@ -61,6 +63,11 @@ for(d in seq_along(folder_names)){
                                                     duplicates = c(0, 1),
                                                     verbose = T)
 
+  keep <- (cd_multilink$comparisons[, "gname_DL_2"] != T) &
+    (cd_multilink$comparisons[, "fname_DL_2"] != T)
+  new_cd <- multilink::reduce_comparison_data(cd_multilink, keep, cc = 1)
+  pairs_kept <- cd_multilink$record_pairs[keep, ]
+
   prior <- multilink::specify_prior(new_cd, mus = NA,
                                     nus = NA, flat = 0, alphas = NA,
                                     dup_upper_bound = c(1, 5),
@@ -70,37 +77,40 @@ for(d in seq_along(folder_names)){
                                     n_prior_pars = NA)
 
   start <- proc.time()[3]
-  chain_multilink <- multilink::gibbs_sampler(cd_multilink, prior, n_iter = S)
+  chain_multilink <- multilink::gibbs_sampler(new_cd, prior, n_iter = S)
   time <- proc.time()[3] - start
   result_ML <- multilink::find_bayes_estimate(chain_multilink$partitions, burn)
 
-  cluster_labels <- unique(result_ML)
+  thing <- multilink::relabel_bayes_estimate(new_cd, result_ML)
 
-  df_1_clusters <- result_ML[1:500]
-  df_2_clusters <- result_ML[501:1000]
-
-  Z_list <- list()
+  clusters <- data.frame(rec.id = c(1:500, 1:500), thing)
+  clusters_B <- clusters[1:500, ]
+  clusters_A <- clusters[501:1000, ]
+  cluster_labels <- clusters %>%
+    group_by(link_id) %>%
+    count() %>%
+    filter(n > 1) %>%
+    select(link_id) %>%
+    pull()
 
   for(x in cluster_labels){
-    match1 <- which(df_1_clusters == x)
-    match2 <- which(df_2_clusters == x)
+    rec_B <- clusters_B$rec.id[which(clusters_B$link_id == x)]
+    rec_A <- clusters_A$rec.id[which(clusters_A$link_id == x)]
 
-    if(length(match1) == 0 ||length(match2) == 0){
+    if(length(rec_B) == 0 ||length(rec_A) == 0){
       next
     }
-    Z_list[[x]] <- data.frame(id_1 = match1,
-                              id_2 = match2)
+    Z_list[[x]] <- data.frame(target_id = rec_A,
+                              base_id = rec_B)
   }
 
   Z_hat <- do.call(rbind, Z_list)
-  Z_hat <- Z_hat[, c(2, 1)]
-
   multilink_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time, d)
 
-  df_list[[d]] <- df
+  df_list[[d]] <- multilink_result
 }
 
 final <- df_list %>%
   do.call(rbind, .)
 
-saveRDS(final, paste0("out/poisson_ml/sim_", stringr::str_pad(j, 3, "left", "0")))
+saveRDS(final, paste0("out/poisson_ml_filter/sim_", stringr::str_pad(j, 3, "left", "0")))
