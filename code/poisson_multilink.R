@@ -61,7 +61,7 @@ for(d in seq_along(folder_names)){
                                                     duplicates = c(0, 1),
                                                     verbose = T)
 
-  prior <- multilink::specify_prior(new_cd, mus = NA,
+  prior <- multilink::specify_prior(cd_multilink, mus = NA,
                                     nus = NA, flat = 0, alphas = NA,
                                     dup_upper_bound = c(1, 5),
                                     dup_count_prior_family = NA,
