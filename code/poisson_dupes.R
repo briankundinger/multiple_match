@@ -43,7 +43,7 @@ for(d in seq_along(folder_names)){
   Z_true <- data.frame(target_id = matched_A,
                        base_id = matched_B)
 
-  cd <- compare_records(file_A, file_B, c(4, 5, 6, 7, 8),
+  cd <- compare_records(file_A, file_B, c(4, 5, 7, 8, 9),
                               types = c("lv", "lv", "bi", "bi", "bi"),
                               breaks = c(0, 0.25))
 

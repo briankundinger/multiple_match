@@ -13,7 +13,7 @@ df <- results %>%
   mutate(duplication = factor(duplication,
                          c("low", "mid", "high"))) %>%
   mutate(method = factor(method,
-                              c("vabl", "DRL"))) %>%
+                              c("vabl", "fastLink", "DRL"))) %>%
   group_by(method, metric, duplication) %>%
   summarize(median = quantile(value, .5, na.rm = T),
             lower = quantile(value, .025, na.rm = T),
@@ -24,7 +24,7 @@ df %>%
   aes(x = method, y = median, min = lower, max = upper) +
   geom_pointrange(position = position_dodge2(width = .5),
                   size = .4) +
-  facet_grid(metric ~ duplication, scales = "free_y") +
+  facet_grid(metric ~ duplication, scales = "free") +
   labs(x = NULL, y = NULL) +
   theme_bw(base_size = 9)
 
