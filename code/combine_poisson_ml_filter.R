@@ -2,7 +2,12 @@ library(dplyr)
 
 files <- list.files("out/poisson_ml_filter/", full.names = T)
 results <- lapply(files, readRDS) %>%
-  do.call(rbind, .) %>%
-  mutate(method = "multilink_filter")
+  do.call(rbind, .)
 
-saveRDS(results, "out/poisson_ml_all_filter")
+dupe_rate <- c("low", "mid", "high")
+
+results$duplication <- dupe_rate[results$duplication]
+results$method <- "multilink"
+
+
+saveRDS(results, "out/poisson_ml_filter_all")
