@@ -2,7 +2,8 @@ library(dplyr)
 
 files <- list.files("out/poisson_ml/", full.names = T)
 results <- lapply(files, readRDS) %>%
-  do.call(rbind, .)
+  do.call(rbind, .) %>%
+  data.frame()
 
 dupe_rate <- c("low", "mid", "high")
 
