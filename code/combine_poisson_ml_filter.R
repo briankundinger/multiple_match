@@ -8,7 +8,7 @@ results <- lapply(files, readRDS) %>%
 dupe_rate <- c("low", "mid", "high")
 
 results$duplication <- dupe_rate[results$V5]
-results$method <- "multilink"
+results$method <- "multilink_filter"
 
 results <- results %>%
   select(-V5)
