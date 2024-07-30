@@ -10,7 +10,7 @@ dupe_rate <- c("low", "mid", "high")
 results$duplication <- dupe_rate[results$V5]
 results$method <- "multilink"
 
-results %>%
+results <- results %>%
   select(-V5)
 
 
