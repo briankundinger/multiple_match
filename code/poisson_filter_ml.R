@@ -93,6 +93,8 @@ for(d in seq_along(folder_names)){
     select(link_id) %>%
     pull()
 
+  Z_list <- list()
+
   for(x in cluster_labels){
     rec_B <- clusters_B$rec.id[which(clusters_B$link_id == x)]
     rec_A <- clusters_A$rec.id[which(clusters_A$link_id == x)]
