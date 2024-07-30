@@ -7,8 +7,12 @@ results <- lapply(files, readRDS) %>%
 
 dupe_rate <- c("low", "mid", "high")
 
-results$duplication <- dupe_rate[results$duplication]
+results$duplication <- dupe_rate[results$V5]
 results$method <- "multilink"
 
+results %>%
+  select(-V5)
 
-saveRDS(results, "out/poisson_ml_filter_all")
+
+saveRDS(results, "out/poisson_ml_filter_all") %>%
+  as.data.frame()
