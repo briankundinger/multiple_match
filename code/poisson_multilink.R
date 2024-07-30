@@ -8,7 +8,7 @@ taskID <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 j = taskID
 set.seed(41)
 S = 1000
-burn = S * .1
+burn = ceiling(S * .1)
 
 dupe_rate <- c("low", "mid", "high")
 folder_names <- list.files("data/poisson_sims/", full.names = F)
@@ -97,7 +97,7 @@ for(d in seq_along(folder_names)){
 
   multilink_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time, d)
 
-  df_list[[d]] <- df
+  df_list[[d]] <- multilink_result
 }
 
 final <- df_list %>%
