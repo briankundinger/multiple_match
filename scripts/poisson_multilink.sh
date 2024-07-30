@@ -7,6 +7,6 @@
 #SBATCH --error=logs/%x_%a.err
 #SBATCH --job-name=poisson_multilink
 #SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=64G
+#SBATCH --mem-per-cpu=16G
 
 Rscript code/poisson_multilink.R
