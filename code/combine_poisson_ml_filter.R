@@ -1,6 +1,6 @@
 library(dplyr)
 
-files <- list.files("out/poisson_ml_filter/", full.names = T)
+files <- list.files("out/poisson_2_ml_filter/", full.names = T)
 results <- lapply(files, readRDS) %>%
   do.call(rbind, .) %>%
   data.frame()
@@ -14,5 +14,5 @@ results <- results %>%
   select(-V5)
 
 
-saveRDS(results, "out/poisson_ml_filter_all") %>%
+saveRDS(results, "out/poisson_2_ml_filter_all") %>%
   as.data.frame()

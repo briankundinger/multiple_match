@@ -1,6 +1,6 @@
 library(dplyr)
 
-files <- list.files("out/poisson_ml/", full.names = T)
+files <- list.files("out/poisson_2_ml/", full.names = T)
 results <- lapply(files, readRDS) %>%
   do.call(rbind, .) %>%
   data.frame()
@@ -13,4 +13,4 @@ results$method <- "multilink"
 results <- results %>%
   select(-V5)
 
-saveRDS(results, "out/poisson_ml_all")
+saveRDS(results, "out/poisson_2_ml_all")
