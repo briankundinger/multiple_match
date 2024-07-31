@@ -21,3 +21,6 @@ simulate_data_original/
 out/poisson/
 out/poisson_ml_filter/
 out/poisson_ml/
+out/poisson_2/
+out/poisson_2_ml_filter/
+out/poisson_2_ml/

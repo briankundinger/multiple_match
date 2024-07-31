@@ -17,18 +17,28 @@ methods <- c("vabl", "DRL", "fastLink")
 df_list <- vector("list", length = length(dupe_rate))
 
 for(d in seq_along(folder_names)){
-  file_A <- read.csv(paste0("data/poisson_sims/",
+  file_A <- read.csv(paste0("data/poisson_sims_2/",
                             folder_names[d],
                             "/sim_", stringr::str_pad(j, 3, "left", "0"),
                             "/file_A.csv"))
-  file_B <- read.csv(paste0("data/poisson_sims/",
+  file_B <- read.csv(paste0("data/poisson_sims_2/",
                             folder_names[d],
                             "/sim_", stringr::str_pad(j, 3, "left", "0"),
                             "/file_B.csv"))
 
+  # file_A <- read.csv(paste0("data/poisson_sims/",
+  #                           folder_names[d],
+  #                           "/sim_", stringr::str_pad(j, 3, "left", "0"),
+  #                           "/file_A.csv"))
+  # file_B <- read.csv(paste0("data/poisson_sims/",
+  #                           folder_names[d],
+  #                           "/sim_", stringr::str_pad(j, 3, "left", "0"),
+  #                           "/file_B.csv"))
+
   n_B <- nrow(file_B)
   n2 <- n_B
-  with_matches <- n_B * .1
+  #with_matches <- n_B * .1
+  with_matches <- n_B * .3
   dupes_A <- file_A %>%
     filter(rec.id <= with_matches) %>%
     select(rec.id) %>%
@@ -89,4 +99,5 @@ for(d in seq_along(folder_names)){
 final <- df_list %>%
   do.call(rbind, .)
 
-saveRDS(final, paste0("out/poisson/sim_", stringr::str_pad(j, 3, "left", "0")))
+#saveRDS(final, paste0("out/poisson/sim_", stringr::str_pad(j, 3, "left", "0")))
+saveRDS(final, paste0("out/poisson_2/sim_", stringr::str_pad(j, 3, "left", "0")))

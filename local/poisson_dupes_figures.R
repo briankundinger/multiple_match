@@ -7,7 +7,6 @@ results_ml <- readRDS("out/poisson_ml_all")
 results_filter <- readRDS("out/poisson_ml_filter_all")
 results <- rbind(results, results_ml, results_filter)
 
-#results[is.na(results)] <- 0
 df <- results %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric,
@@ -31,7 +30,30 @@ df %>%
   labs(x = NULL, y = NULL) +
   theme_bw(base_size = 9)
 
-ggsave("figures/poisson_sims.png")
+df %>%
+  filter(method %in% c("vabl", "DRL", "fastLink")) %>%
+  ggplot() +
+  aes(x = method, y = median, min = lower, max = upper) +
+  geom_pointrange(position = position_dodge2(width = .5),
+                  size = .4) +
+  facet_grid(metric ~ duplication, scales = "free") +
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 9)
+
+ggsave("figures/poisson_fig1.png")
+
+
+df %>%
+  filter(method %in% c("multilink", "multilink_filter", "DRL")) %>%
+  ggplot() +
+  aes(x = method, y = median, min = lower, max = upper) +
+  geom_pointrange(position = position_dodge2(width = .5),
+                  size = .4) +
+  facet_grid(metric ~ duplication, scales = "free") +
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 9)
+
+ggsave("figures/poisson_fig2.png")
 
 
 
