@@ -1,55 +1,57 @@
 This is BibTeX, Version 0.99d (TeX Live 2021/W32TeX)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: multiple_match.aux
+Case mismatch error between cite keys Tancredi_2011 and tancredi_2011
+---line 87 of file multiple_match.aux
+ : \citation{Tancredi_2011
+ :                        }
+I'm skipping whatever remains of this command
+Case mismatch error between cite keys Tancredi_2011 and tancredi_2011
+---line 91 of file multiple_match.aux
+ : \citation{Tancredi_2011
+ :                        }
+I'm skipping whatever remains of this command
 The style file: agsm.bst
-Database file #1: biblio.bib
-"{" immediately follows a field part---line 507 of file biblio.bib
- :   howpublished= \url
- :                     {http://www.cs.utexas.edu/users/ml/riddle/}
-I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "Herzog_2007"
-Warning--I didn't find a database entry for "christen_data_2012"
-Warning--I didn't find a database entry for "Papadakis2021"
-Warning--I didn't find a database entry for "binette2022almost"
-You've used 22 entries,
+Database file #1: vabl.bib
+You've used 26 entries,
             2909 wiz_defined-function locations,
-            791 strings with 8931 characters,
-and the built_in function-call counts, 95837 in all, are:
-= -- 15655
-> -- 1222
+            814 strings with 9882 characters,
+and the built_in function-call counts, 121944 in all, are:
+= -- 19981
+> -- 1580
 < -- 0
-+ -- 7469
-- -- 371
-* -- 8314
-:= -- 19188
-add.period$ -- 23
-call.type$ -- 22
-change.case$ -- 309
-chr.to.int$ -- 22
-cite$ -- 22
-duplicate$ -- 351
-empty$ -- 729
-format.name$ -- 434
-if$ -- 17197
++ -- 9586
+- -- 482
+* -- 10636
+:= -- 24246
+add.period$ -- 26
+call.type$ -- 26
+change.case$ -- 361
+chr.to.int$ -- 26
+cite$ -- 26
+duplicate$ -- 443
+empty$ -- 877
+format.name$ -- 567
+if$ -- 21938
 int.to.chr$ -- 5
 int.to.str$ -- 0
-missing$ -- 19
-newline$ -- 72
-num.names$ -- 231
-pop$ -- 71
+missing$ -- 27
+newline$ -- 83
+num.names$ -- 271
+pop$ -- 96
 preamble$ -- 1
-purify$ -- 330
+purify$ -- 390
 quote$ -- 0
-skip$ -- 309
+skip$ -- 387
 stack$ -- 0
-substring$ -- 22219
-swap$ -- 66
-text.length$ -- 308
+substring$ -- 28394
+swap$ -- 95
+text.length$ -- 364
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 88
+type$ -- 98
 warning$ -- 0
-while$ -- 494
+while$ -- 580
 width$ -- 0
-write$ -- 296
-(There was 1 error message)
+write$ -- 352
+(There were 2 error messages)

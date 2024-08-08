@@ -7,6 +7,11 @@ results_ml <- readRDS("out/poisson_ml_all")
 results_filter <- readRDS("out/poisson_ml_filter_all")
 results <- rbind(results, results_ml, results_filter)
 
+# results <- readRDS("out/poisson_2_all")
+# results_ml <- readRDS("out/poisson_2_ml_all")
+# results_filter <- readRDS("out/poisson_2_ml_filter_all")
+# results <- rbind(results, results_ml, results_filter)
+
 df <- results %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric,
@@ -41,6 +46,7 @@ df %>%
   theme_bw(base_size = 9)
 
 ggsave("figures/poisson_fig1.png")
+#ggsave("figures/poisson_fig1_app.png")
 
 
 df %>%
@@ -54,6 +60,7 @@ df %>%
   theme_bw(base_size = 9)
 
 ggsave("figures/poisson_fig2.png")
+#ggsave("figures/poisson_fig2_app.png")
 
 
 

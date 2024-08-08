@@ -70,6 +70,7 @@ for(d in seq_along(folder_names)){
   new_cd <- multilink::reduce_comparison_data(cd_multilink, keep, cc = 1)
   pairs_kept <- cd_multilink$record_pairs[keep, ]
 
+
   thing <- pairs_kept[pairs_kept[, 1] < 50, ]
 
   prior <- multilink::specify_prior(new_cd, mus = NA,
@@ -121,3 +122,18 @@ final <- df_list %>%
 
 #saveRDS(final, paste0("out/poisson_ml_filter/sim_", stringr::str_pad(j, 3, "left", "0")))
 saveRDS(final, paste0("out/poisson_2_ml_filter/sim_", stringr::str_pad(j, 3, "left", "0")))
+
+
+#look at what gets filtered out
+# post_filter <- pairs_kept[, c(2, 1)] %>%
+#   data.frame() %>%
+#   #mutate(j = j - 500) %>%
+#   tidyr::unite("pair")
+#
+# Z_true_pair <- Z_true %>%
+#   data.frame() %>%
+#   mutate(target_id = target_id + 500) %>%
+#   tidyr::unite("pair")
+# n_correct_links <- setdiff(Z_true_pair$pair, post_filter$pair) %>%
+#   length()
+# lost_to_filtering <- (nrow(Z_true_pair) - n_correct_links) / nrow(Z_true_pair)
