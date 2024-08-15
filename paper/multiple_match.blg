@@ -1,21 +1,11 @@
 This is BibTeX, Version 0.99d (TeX Live 2021/W32TeX)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: multiple_match.aux
-Case mismatch error between cite keys Tancredi_2011 and tancredi_2011
----line 87 of file multiple_match.aux
- : \citation{Tancredi_2011
- :                        }
-I'm skipping whatever remains of this command
-Case mismatch error between cite keys Tancredi_2011 and tancredi_2011
----line 91 of file multiple_match.aux
- : \citation{Tancredi_2011
- :                        }
-I'm skipping whatever remains of this command
 The style file: agsm.bst
 Database file #1: vabl.bib
 You've used 26 entries,
             2909 wiz_defined-function locations,
-            814 strings with 9882 characters,
+            815 strings with 9895 characters,
 and the built_in function-call counts, 121944 in all, are:
 = -- 19981
 > -- 1580
@@ -54,4 +44,3 @@ warning$ -- 0
 while$ -- 580
 width$ -- 0
 write$ -- 352
-(There were 2 error messages)

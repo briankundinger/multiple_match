@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  7 AUG 2024 22:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  7 AUG 2024 22:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -964,30 +964,20 @@ ler pro-gresses. Let $\OML/cmm/m/it/12 r[]\OT1/cmr/m/n/12 (-20) (\OML/cmm/m/it/
 cmm/m/it/12 Z[]; [] Z[]\OT1/cmr/m/n/12 (-20) )$
  []
 
-[13]
-
-Package natbib Warning: Citation `Tancredi_2011' on page 14 undefined on input 
-line 363.
-
-[14]
-
-Package natbib Warning: Citation `Tancredi_2011' on page 15 undefined on input 
-line 387.
-
-[15] [16]
-<../figures/poisson_fig1.png, id=391, 365.6862pt x 192.72pt>
+[13] [14] [15] [16]
+<../figures/poisson_fig1.png, id=395, 365.6862pt x 192.72pt>
 File: ../figures/poisson_fig1.png Graphic file (type png)
 <use ../figures/poisson_fig1.png>
 Package pdftex.def Info: ../figures/poisson_fig1.png  used on input line 428.
 (pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
-<../figures/poisson_fig2.png, id=396, 365.6862pt x 192.72pt>
+<../figures/poisson_fig2.png, id=400, 365.6862pt x 192.72pt>
 File: ../figures/poisson_fig2.png Graphic file (type png)
 <use ../figures/poisson_fig2.png>
 Package pdftex.def Info: ../figures/poisson_fig2.png  used on input line 435.
 (pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
  [17] [18 <../figures/poisson_fig1.png>] [19 <../figures/poisson_fig2.png>] [20
 ]
-<../figures/ncvr_thresholds.png, id=432, 336.0555pt x 154.8987pt>
+<../figures/ncvr_thresholds.png, id=436, 336.0555pt x 154.8987pt>
 File: ../figures/ncvr_thresholds.png Graphic file (type png)
 <use ../figures/ncvr_thresholds.png>
 Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 483
@@ -1025,33 +1015,29 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 615.
 
 [30]
-<../figures/poisson_fig1_app.png, id=519, 365.6862pt x 192.72pt>
+<../figures/poisson_fig1_app.png, id=523, 365.6862pt x 192.72pt>
 File: ../figures/poisson_fig1_app.png Graphic file (type png)
 <use ../figures/poisson_fig1_app.png>
 Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 64
 6.
 (pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
-<../figures/poisson_fig2_app.png, id=521, 365.6862pt x 192.72pt>
+<../figures/poisson_fig2_app.png, id=525, 365.6862pt x 192.72pt>
 File: ../figures/poisson_fig2_app.png Graphic file (type png)
 <use ../figures/poisson_fig2_app.png>
 Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 65
 3.
 (pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
-
-
-Package natbib Warning: There were undefined citations.
-
-[31] [32 <../figures/poisson_fig1_app.png> <../figures/poisson_fig2_app.png>]
+ [31] [32 <../figures/poisson_fig1_app.png> <../figures/poisson_fig2_app.png>] 
 (./multiple_match.aux)
 Package rerunfilecheck Info: File `multiple_match.out' has not changed.
 (rerunfilecheck)             Checksum: E8375C95BA9AB33979385A7CBCBB4F57;3453.
  ) 
 Here is how much of TeX's memory you used:
- 26870 strings out of 478276
- 521002 string characters out of 5850489
+ 26868 strings out of 478276
+ 520986 string characters out of 5850489
  856160 words of memory out of 5000000
  44250 multiletter control sequences out of 15000+600000
- 489061 words of font info for 168 fonts, out of 8000000 for 9000
+ 489002 words of font info for 167 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,20n,89p,1305b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
@@ -1075,10 +1061,10 @@ nts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 -dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2021/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on multiple_match.pdf (32 pages, 682888 bytes).
+Output written on multiple_match.pdf (32 pages, 682818 bytes).
 PDF statistics:
- 676 PDF objects out of 1000 (max. 8388607)
- 565 compressed objects within 6 object streams
+ 680 PDF objects out of 1000 (max. 8388607)
+ 569 compressed objects within 6 object streams
  157 named destinations out of 1000 (max. 500000)
  38174 words of extra memory for PDF output out of 42996 (max. 10000000)
 
