@@ -7,6 +7,11 @@ results_ml <- readRDS("out/poisson_ml_all")
 results_filter <- readRDS("out/poisson_ml_filter_all")
 results <- rbind(results, results_ml, results_filter)
 
+# results <- readRDS("out/poisson_2_all")
+# results_ml <- readRDS("out/poisson_2_ml_all")
+# results_filter <- readRDS("out/poisson_2_ml_filter_all")
+# results <- rbind(results, results_ml, results_filter)
+
 df <- results %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric,
@@ -25,7 +30,7 @@ df %>%
   ggplot() +
   aes(x = method, y = median, min = lower, max = upper) +
   geom_pointrange(position = position_dodge2(width = .5),
-                  size = .4) +
+                  size = .3) +
   facet_grid(metric ~ duplication, scales = "free") +
   labs(x = NULL, y = NULL) +
   theme_bw(base_size = 9)
@@ -35,12 +40,13 @@ df %>%
   ggplot() +
   aes(x = method, y = median, min = lower, max = upper) +
   geom_pointrange(position = position_dodge2(width = .5),
-                  size = .4) +
+                  size = .2) +
   facet_grid(metric ~ duplication, scales = "free") +
   labs(x = NULL, y = NULL) +
   theme_bw(base_size = 9)
 
 ggsave("figures/poisson_fig1.png")
+#ggsave("figures/poisson_fig1_app.png")
 
 
 df %>%
@@ -48,12 +54,14 @@ df %>%
   ggplot() +
   aes(x = method, y = median, min = lower, max = upper) +
   geom_pointrange(position = position_dodge2(width = .5),
-                  size = .4) +
+                  size = .2) +
   facet_grid(metric ~ duplication, scales = "free") +
   labs(x = NULL, y = NULL) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme_bw(base_size = 9)
 
 ggsave("figures/poisson_fig2.png")
+#ggsave("figures/poisson_fig2_app.png")
 
 
 

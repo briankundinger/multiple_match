@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  25 JUL 2024 12:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  7 AUG 2024 22:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -919,122 +919,152 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
  [1
 
-{c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-Package natbib Warning: Citation `Herzog_2007' on page 2 undefined on input lin
-e 115.
-
-
-Package natbib Warning: Citation `christen_data_2012' on page 2 undefined on in
-put line 115.
-
-
-Package natbib Warning: Citation `Papadakis2021' on page 2 undefined on input l
-ine 115.
-
-
-Package natbib Warning: Citation `binette2022almost' on page 2 undefined on inp
-ut line 115.
-
-[2] [3] [4] [5] [6] [7]
+{c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5]
+ [6] [7] [8]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 242.
+(amsmath)                 on input line 252.
 
-[8] [9] [10] [11]
-<../figures/sadinle_recall.png, id=313, 301.6068pt x 175.1343pt>
-File: ../figures/sadinle_recall.png Graphic file (type png)
-<use ../figures/sadinle_recall.png>
-Package pdftex.def Info: ../figures/sadinle_recall.png  used on input line 343.
-
-(pdftex.def)             Requested size: 369.8174pt x 214.74849pt.
-<../figures/sadinle_precision.png, id=315, 301.6068pt x 175.1343pt>
-File: ../figures/sadinle_precision.png Graphic file (type png)
-<use ../figures/sadinle_precision.png>
-Package pdftex.def Info: ../figures/sadinle_precision.png  used on input line 3
-50.
-(pdftex.def)             Requested size: 369.8174pt x 214.74849pt.
-<../figures/sadinle_fmeasure.png, id=317, 301.6068pt x 175.1343pt>
-File: ../figures/sadinle_fmeasure.png Graphic file (type png)
-<use ../figures/sadinle_fmeasure.png>
-Package pdftex.def Info: ../figures/sadinle_fmeasure.png  used on input line 35
-7.
-(pdftex.def)             Requested size: 369.8174pt x 214.74849pt.
- [12] [13 <../figures/sadinle_recall.png>] [14 <../figures/sadinle_precision.pn
-g> <../figures/sadinle_fmeasure.png>] [15]
-<../figures/ncvr_thresholds.png, id=348, 336.0555pt x 154.8987pt>
-File: ../figures/ncvr_thresholds.png Graphic file (type png)
-<use ../figures/ncvr_thresholds.png>
-Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 408
-.
-(pdftex.def)             Requested size: 416.04016pt x 191.7793pt.
- [16] [17 <../figures/ncvr_thresholds.png>] [18] (./multiple_match.bbl [19] [20
-]) [21]
+[9]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 491.
+(hyperref)                removing `math shift' on input line 274.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 491.
+(hyperref)                removing `subscript' on input line 274.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 491.
+(hyperref)                removing `math shift' on input line 274.
+
+[10]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 305.
 
 
-LaTeX Warning: Reference `eqn:z' on page 22 undefined on input line 507.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\eta' on input line 305.
 
 
-LaTeX Warning: Reference `sec:joint-distribution' on page 22 undefined on input
- line 517.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 305.
 
-[22]
-Overfull \hbox (33.90634pt too wide) detected at line 527
-[]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 305.
+
+[11] [12]
+Overfull \hbox (34.2352pt too wide) in paragraph at lines 338--339
+[]\OT1/cmr/m/n/12 (-20) We up-date these quan-ti-ties as the se-quen-tial sam-p
+ler pro-gresses. Let $\OML/cmm/m/it/12 r[]\OT1/cmr/m/n/12 (-20) (\OML/cmm/m/it/
+12 k\OT1/cmr/m/n/12 (-20) ) = \OML/cmm/m/it/12 r[] \OT1/cmr/m/n/12 (-20) (\OML/
+cmm/m/it/12 Z[]; [] Z[]\OT1/cmr/m/n/12 (-20) )$
  []
 
+[13] [14] [15] [16]
+<../figures/poisson_fig1.png, id=395, 365.6862pt x 192.72pt>
+File: ../figures/poisson_fig1.png Graphic file (type png)
+<use ../figures/poisson_fig1.png>
+Package pdftex.def Info: ../figures/poisson_fig1.png  used on input line 428.
+(pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
+<../figures/poisson_fig2.png, id=400, 365.6862pt x 192.72pt>
+File: ../figures/poisson_fig2.png Graphic file (type png)
+<use ../figures/poisson_fig2.png>
+Package pdftex.def Info: ../figures/poisson_fig2.png  used on input line 435.
+(pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
+ [17] [18 <../figures/poisson_fig1.png>] [19 <../figures/poisson_fig2.png>] [20
+]
+<../figures/ncvr_thresholds.png, id=436, 336.0555pt x 154.8987pt>
+File: ../figures/ncvr_thresholds.png Graphic file (type png)
+<use ../figures/ncvr_thresholds.png>
+Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 483
+.
+(pdftex.def)             Requested size: 416.04016pt x 191.7793pt.
+ [21 <../figures/ncvr_thresholds.png>] [22] [23]
+(./multiple_match.bbl [24] [25]) [26]
 
-Package natbib Warning: There were undefined citations.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 511.
 
-[23] (./multiple_match.aux)
 
-LaTeX Warning: There were undefined references.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 511.
 
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 511.
+
+[27] [28] [29]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 615.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 615.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 615.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 615.
+
+[30]
+<../figures/poisson_fig1_app.png, id=523, 365.6862pt x 192.72pt>
+File: ../figures/poisson_fig1_app.png Graphic file (type png)
+<use ../figures/poisson_fig1_app.png>
+Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 64
+6.
+(pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
+<../figures/poisson_fig2_app.png, id=525, 365.6862pt x 192.72pt>
+File: ../figures/poisson_fig2_app.png Graphic file (type png)
+<use ../figures/poisson_fig2_app.png>
+Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 65
+3.
+(pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
+ [31] [32 <../figures/poisson_fig1_app.png> <../figures/poisson_fig2_app.png>] 
+(./multiple_match.aux)
 Package rerunfilecheck Info: File `multiple_match.out' has not changed.
-(rerunfilecheck)             Checksum: 85F75B19DD8EADC50D9C2241EE2D7824;2563.
+(rerunfilecheck)             Checksum: E8375C95BA9AB33979385A7CBCBB4F57;3453.
  ) 
 Here is how much of TeX's memory you used:
- 26786 strings out of 478276
- 519552 string characters out of 5850489
- 852190 words of memory out of 5000000
- 44210 multiletter control sequences out of 15000+600000
- 488962 words of font info for 167 fonts, out of 8000000 for 9000
+ 26868 strings out of 478276
+ 520986 string characters out of 5850489
+ 856160 words of memory out of 5000000
+ 44250 multiletter control sequences out of 15000+600000
+ 489002 words of font info for 167 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,20n,89p,1364b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,20n,89p,1305b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-b10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c
-:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
-2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2021/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:
-/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/
-2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on multiple_match.pdf (23 pages, 557575 bytes).
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2021/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021/texmf-dist/fonts/t
+ype1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
+><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/tex
+live/2021/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive
+/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2021/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:
+/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2
+021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2021/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/
+public/amsfonts/symbols/msbm10.pfb>
+Output written on multiple_match.pdf (32 pages, 682818 bytes).
 PDF statistics:
- 522 PDF objects out of 1000 (max. 8388607)
- 432 compressed objects within 5 object streams
- 116 named destinations out of 1000 (max. 500000)
- 38137 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 680 PDF objects out of 1000 (max. 8388607)
+ 569 compressed objects within 6 object streams
+ 157 named destinations out of 1000 (max. 500000)
+ 38174 words of extra memory for PDF output out of 42996 (max. 10000000)
 
