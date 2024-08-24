@@ -80,7 +80,7 @@ for(d in seq_along(folder_names)){
                                partial.match = names(file_A)[c(4, 5)],
                                stringdist.method = "lv",
                                cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
-                               n.cores = 1, verbose = F, return.all = F, tol.em = 1e-07)
+                               n.cores = 1, verbose = F, return.all = F)
   time <- proc.time()[3] - start
 
   Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,

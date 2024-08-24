@@ -130,6 +130,18 @@ Sadinle, M.  \harvardyearleft 2017\harvardyearright , `Bayesian {Estimation} of
   {Bipartite} {Matchings} for {Record} {Linkage}', {\em Journal of the American
   Statistical Association} {\bf 112}(518),~600--612.
 
+\harvarditem{Sadinle}{2020}{BRL}
+Sadinle, M.  \harvardyearleft 2020\harvardyearright , {\em BRL: Beta Record
+  Linkage}.
+\newblock R package version 0.1.0.
+\newline\harvardurl{https://CRAN.R-project.org/package=BRL}
+
+\harvarditem{Sariyar \harvardand\ Borg}{2010}{sariyar_2010}
+Sariyar, M. \harvardand\ Borg, A.  \harvardyearleft 2010\harvardyearright ,
+  `{The RecordLinkage Package: Detecting Errors in Data}', {\em {The R
+  Journal}} {\bf 2}(2),~61--67.
+\newline\harvardurl{https://doi.org/10.32614/RJ-2010-017}
+
 \harvarditem[Steorts et~al.]{Steorts, Hall \harvardand\
   Fienberg}{2016}{steorts_bayesian_2016}
 Steorts, R.~C., Hall, R. \harvardand\ Fienberg, S.~E.  \harvardyearleft

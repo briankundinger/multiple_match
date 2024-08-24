@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: multiple_match.aux
 The style file: agsm.bst
 Database file #1: vabl.bib
-You've used 26 entries,
+You've used 28 entries,
             2909 wiz_defined-function locations,
-            815 strings with 9895 characters,
-and the built_in function-call counts, 121944 in all, are:
-= -- 19981
-> -- 1580
+            829 strings with 10162 characters,
+and the built_in function-call counts, 127040 in all, are:
+= -- 20784
+> -- 1651
 < -- 0
-+ -- 9586
-- -- 482
-* -- 10636
-:= -- 24246
-add.period$ -- 26
-call.type$ -- 26
-change.case$ -- 361
-chr.to.int$ -- 26
-cite$ -- 26
-duplicate$ -- 443
-empty$ -- 877
-format.name$ -- 567
-if$ -- 21938
++ -- 9945
+- -- 503
+* -- 11056
+:= -- 25329
+add.period$ -- 29
+call.type$ -- 28
+change.case$ -- 388
+chr.to.int$ -- 28
+cite$ -- 28
+duplicate$ -- 472
+empty$ -- 933
+format.name$ -- 596
+if$ -- 22840
 int.to.chr$ -- 5
 int.to.str$ -- 0
-missing$ -- 27
-newline$ -- 83
-num.names$ -- 271
-pop$ -- 96
+missing$ -- 28
+newline$ -- 92
+num.names$ -- 291
+pop$ -- 104
 preamble$ -- 1
-purify$ -- 390
+purify$ -- 420
 quote$ -- 0
-skip$ -- 387
+skip$ -- 407
 stack$ -- 0
-substring$ -- 28394
-swap$ -- 95
-text.length$ -- 364
+substring$ -- 29482
+swap$ -- 99
+text.length$ -- 392
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 98
+type$ -- 106
 warning$ -- 0
-while$ -- 580
+while$ -- 624
 width$ -- 0
-write$ -- 352
+write$ -- 379
