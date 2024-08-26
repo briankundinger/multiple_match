@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  24 AUG 2024 11:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  26 AUG 2024 10:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1011,7 +1011,7 @@ File: ../figures/poisson_fig1_app.png Graphic file (type png)
 Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 59
 5.
 (pdftex.def)             Requested size: 369.8174pt x 194.91031pt.
-<../figures/poisson_fig2_app.png, id=535, 365.6862pt x 192.72pt>
+<../figures/poisson_fig2_app.png, id=536, 365.6862pt x 192.72pt>
 File: ../figures/poisson_fig2_app.png Graphic file (type png)
 <use ../figures/poisson_fig2_app.png>
 Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 60
@@ -1025,7 +1025,7 @@ Package rerunfilecheck Info: File `multiple_match.out' has not changed.
 Here is how much of TeX's memory you used:
  26866 strings out of 478276
  521015 string characters out of 5850489
- 856219 words of memory out of 5000000
+ 856416 words of memory out of 5000000
  44256 multiletter control sequences out of 15000+600000
  488951 words of font info for 166 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1051,9 +1051,9 @@ nts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 -dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2021/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on multiple_match.pdf (31 pages, 679027 bytes).
+Output written on multiple_match.pdf (31 pages, 679312 bytes).
 PDF statistics:
- 680 PDF objects out of 1000 (max. 8388607)
+ 682 PDF objects out of 1000 (max. 8388607)
  571 compressed objects within 6 object streams
  151 named destinations out of 1000 (max. 500000)
  38174 words of extra memory for PDF output out of 42996 (max. 10000000)
