@@ -3,6 +3,10 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: multiple_match.aux
 The style file: agsm.bst
 Database file #1: vabl.bib
+"{" immediately follows a field part---line 5825 of file vabl.bib
+ :   howpublished= \url
+ :                     {http://www.cs.utexas.edu/users/ml/riddle/}
+I'm skipping whatever remains of this entry
 You've used 28 entries,
             2909 wiz_defined-function locations,
             829 strings with 10162 characters,
@@ -44,3 +48,4 @@ warning$ -- 0
 while$ -- 624
 width$ -- 0
 write$ -- 379
+(There was 1 error message)
