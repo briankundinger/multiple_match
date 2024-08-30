@@ -32,7 +32,8 @@ burn <- ceiling(S * .1)
 
 Z_true_pairs <- readRDS("data/ncvr_Z_true_b_dedup")
 
-hash <- readRDS("../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/combine/hash")
+#hash <- readRDS("../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/combine/hash")
+hash <- readRDS("out/ncvr_dedup/hash")
 
 n1 <- hash$n1
 n2 <- hash$n2

@@ -40,9 +40,10 @@ evals_df <- lapply(threshold_vec, function(threshold){
   do.call(rbind, .)
 
 evals_df$method[evals_df$method == "fabl_mm_2"] <- "DRL"
+evals_df$method[evals_df$method == "fabl"] <- "vabl"
 
 evals_df %>%
-  filter(method %in% c("fabl", "DRL", "fastlink", "fastlink_jaro")) %>%
+  filter(method %in% c("vabl", "DRL", "fastlink", "fastlink_jaro")) %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric, c("Recall", "Precision", "Fmeasure"))) %>%
   ggplot() +

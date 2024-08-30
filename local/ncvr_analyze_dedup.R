@@ -47,6 +47,7 @@ evals_df <- lapply(threshold_vec, function(threshold){
   do.call(rbind, .)
 
 evals_df$method[evals_df$method == "fabl_mm_inf"] <- "DRL"
+evals_df$method[evals_df$method == "fabl"] <- "vabl"
 
 evals_df %>%
   filter(method %in% c("fabl", "DRL", "fastlink", "fastlink_jaro")) %>%
