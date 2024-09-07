@@ -7,45 +7,45 @@ Database file #1: vabl.bib
  :   howpublished= \url
  :                     {http://www.cs.utexas.edu/users/ml/riddle/}
 I'm skipping whatever remains of this entry
-You've used 28 entries,
+You've used 42 entries,
             2909 wiz_defined-function locations,
-            829 strings with 10162 characters,
-and the built_in function-call counts, 127040 in all, are:
-= -- 20784
-> -- 1651
+            910 strings with 12716 characters,
+and the built_in function-call counts, 179241 in all, are:
+= -- 29097
+> -- 2481
 < -- 0
-+ -- 9945
-- -- 503
-* -- 11056
-:= -- 25329
-add.period$ -- 29
-call.type$ -- 28
-change.case$ -- 388
-chr.to.int$ -- 28
-cite$ -- 28
-duplicate$ -- 472
-empty$ -- 933
-format.name$ -- 596
-if$ -- 22840
++ -- 13870
+- -- 755
+* -- 15559
+:= -- 35918
+add.period$ -- 44
+call.type$ -- 42
+change.case$ -- 587
+chr.to.int$ -- 42
+cite$ -- 42
+duplicate$ -- 706
+empty$ -- 1413
+format.name$ -- 884
+if$ -- 32195
 int.to.chr$ -- 5
 int.to.str$ -- 0
-missing$ -- 28
-newline$ -- 92
-num.names$ -- 291
-pop$ -- 104
+missing$ -- 39
+newline$ -- 136
+num.names$ -- 439
+pop$ -- 145
 preamble$ -- 1
-purify$ -- 420
+purify$ -- 630
 quote$ -- 0
-skip$ -- 407
+skip$ -- 628
 stack$ -- 0
-substring$ -- 29482
-swap$ -- 99
-text.length$ -- 392
+substring$ -- 41165
+swap$ -- 155
+text.length$ -- 588
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 106
+type$ -- 164
 warning$ -- 0
-while$ -- 624
+while$ -- 944
 width$ -- 0
-write$ -- 379
+write$ -- 567
 (There was 1 error message)

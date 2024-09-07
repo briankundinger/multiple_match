@@ -20,11 +20,6 @@ Bilenko, M., Mooney, R.~J., Cohen, W.~W., Ravikumar, P. \harvardand\ Fienberg,
   Information Integration}', {\em IEEE Intelligent Systems} {\bf
   18}(5),~16--23.
 
-\harvarditem{Binette \harvardand\ Steorts}{2022}{binette2022almost}
-Binette, O. \harvardand\ Steorts, R.~C.  \harvardyearleft 2022\harvardyearright
-  , `{(Almost) all of entity resolution}', {\em Science Advances} {\bf
-  8}(12),~eabi8021.
-
 \harvarditem{Christen}{2012}{christen_data_2012}
 Christen, P.  \harvardyearleft 2012\harvardyearright , {\em Data {Matching}:
   {Concepts} and {Techniques} for {Record} {Linkage}, {Entity} {Resolution},
@@ -58,22 +53,51 @@ Enamorado, T., Fifield, B. \harvardand\ Imai, K.  \harvardyearleft
   {Merging} of {Large-Scale} {Administrative} {Records}', {\em American
   Political Science Review} {\bf 113}(2),~353–371.
 
+\harvarditem{Fair}{2004}{fair2004generalized}
+Fair, M.  \harvardyearleft 2004\harvardyearright , `Generalized record linkage
+  system--statistics canada’s record linkage software', {\em Austrian Journal
+  of Statistics} {\bf 33}(1\&2),~37--53.
+
 \harvarditem{Fellegi \harvardand\ Sunter}{1969}{fellegi_theory_1969}
 Fellegi, I.~P. \harvardand\ Sunter, A.~B.  \harvardyearleft
   1969\harvardyearright , `A {Theory} for {Record} {Linkage}', {\em Journal of
   the American Statistical Association} {\bf 64}(328),~1183--1210.
 
-\harvarditem[Herzog et~al.]{Herzog, Scheuren \harvardand\
-  Winkler}{2007}{Herzog_2007}
-Herzog, T., Scheuren, F. \harvardand\ Winkler, W.  \harvardyearleft
-  2007\harvardyearright , {\em Data Quality and Record Linkage Techniques},
-  Springer, New York.
+\harvarditem[Fortini et~al.]{Fortini, Liseo, Nuccitelli \harvardand\
+  Scanu}{2001}{Fortinietal01}
+Fortini, M., Liseo, B., Nuccitelli, A. \harvardand\ Scanu, M.  \harvardyearleft
+  2001\harvardyearright , `{On Bayesian Record Linkage}', {\em Research in
+  Official Statistics} {\bf 4}(1),~185--198.
+
+\harvarditem{Gill \harvardand\ Goldacre}{2003}{gill2003english}
+Gill, L. \harvardand\ Goldacre, M.  \harvardyearleft 2003\harvardyearright ,
+  `English national record linkage of hospital episode statistics and death
+  registration records', {\em Report to the Department of Health} .
+
+\harvarditem[Gutman et~al.]{Gutman, Afendulis \harvardand\
+  Zaslavsky}{2013}{gutman_bayesian_2013}
+Gutman, R., Afendulis, C.~C. \harvardand\ Zaslavsky, A.~M.  \harvardyearleft
+  2013\harvardyearright , `A {Bayesian} {Procedure} for {File} {Linking} to
+  {Analyze} {End}-of-{Life} {Medical} {Costs}', {\em Journal of the American
+  Statistical Association} {\bf 108}(501),~34--47.
+
+\harvarditem[Hof et~al.]{Hof, Ravelli \harvardand\
+  Zwinderman}{2017}{hof2017probabilistic}
+Hof, M.~H., Ravelli, A.~C. \harvardand\ Zwinderman, A.~H.  \harvardyearleft
+  2017\harvardyearright , `{A probabilistic record linkage model for survival
+  data}', {\em Journal of the American Statistical Association} {\bf
+  112}(520),~1504--1515.
 
 \harvarditem{Jaro}{1989}{jaro_1989}
 Jaro, M.~A.  \harvardyearleft 1989\harvardyearright , `Advances in
   record-linkage methodology as applied to matching the 1985 census of {T}ampa,
   {F}lorida', {\em Journal of the American Statistical Association} {\bf
   84}(406),~414--420.
+
+\harvarditem{Jaro}{1995}{Jaro1995}
+Jaro, M.~A.  \harvardyearleft 1995\harvardyearright , `Probabilistic linkage of
+  large public health data files', {\em Statistics in Medicine} {\bf
+  14}(5-7),~491--498.
 
 \harvarditem{Kundinger, Aleshin-Guendel \harvardand\
   Steorts}{2024}{kundinger_2024_vabl}
@@ -85,6 +109,13 @@ Kundinger, B., Aleshin-Guendel, S. \harvardand\ Steorts, R.~C.
 Kundinger, B., Reiter, J. \harvardand\ Steorts, R.~C.  \harvardyearleft
   2024\harvardyearright , `{Efficient and Scalable Bipartite Matching with Fast
   Beta Linkage (fabl)}', {\em Bayesian Analysis (Accepted)} .
+
+\harvarditem[Lai et~al.]{Lai, D’Amour, Yu, Sun, Torvik \harvardand\
+  Fleming}{2011}{lai_2011}
+Lai, R., D’Amour, A., Yu, A., Sun, Y., Torvik, V. \harvardand\ Fleming, L.
+  \harvardyearleft 2011\harvardyearright , `Disambiguation and co-authorship
+  networks of the us patent inventor database', {\em Harvard Institute for
+  Quantitative Social Science, Cambridge, MA} {\bf 2138}.
 
 \harvarditem[Linacre et~al.]{Linacre, Lindsay, Manassis, Slade, Hepworth,
   Kennedy \harvardand\
@@ -99,6 +130,12 @@ Linacre, R., Lindsay, S., Manassis, T., Slade, Z., Hepworth, T., Kennedy, R.
 Little, R. J.~A. \harvardand\ Rubin, D.~B.  \harvardyearleft
   2002\harvardyearright , {\em Statistical {Analysis} with {Missing} {Data}},
   Wiley.
+
+\harvarditem[Lum et~al.]{Lum, Price \harvardand\
+  Banks}{2013}{lum2013applications}
+Lum, K., Price, M.~E. \harvardand\ Banks, D.  \harvardyearleft
+  2013\harvardyearright , `Applications of multiple systems estimation in human
+  rights research', {\em The American Statistician} {\bf 67}(4),~191--200.
 
 \harvarditem[Marchant et~al.]{Marchant, Kaplan, Elazar, Rubinstein \harvardand\
   Steorts}{2021}{marchant_d-blink_2019}
@@ -119,22 +156,39 @@ Murray, J.~S.  \harvardyearleft 2016\harvardyearright , `Probabilistic record
   linkage and deduplication after indexing, blocking, and filtering', {\em
   Journal of Privacy and Confidentiality} {\bf 7}(1),~3--24.
 
-\harvarditem[Papadakis et~al.]{Papadakis, Ioannou, Thanos \harvardand\
-  Palpanas}{2021}{Papadakis2021}
-Papadakis, G., Ioannou, E., Thanos, E. \harvardand\ Palpanas, T.
-  \harvardyearleft 2021\harvardyearright , `{The Four Generations of Entity
-  Resolution}', {\em Synthesis Lectures on Data Management} {\bf 16},~1--170.
+\harvarditem[Price et~al.]{Price, Gohdes \harvardand\
+  Ball}{2015}{price2015documents}
+Price, M., Gohdes, A. \harvardand\ Ball, P.  \harvardyearleft
+  2015\harvardyearright , `Documents of war: Understanding the {S}yrian
+  conflict', {\em Significance} {\bf 12}(2),~14--19.
+
+\harvarditem{Sadinle}{2014}{sadinle_detecting_2014}
+Sadinle, M.  \harvardyearleft 2014\harvardyearright , `Detecting duplicates in
+  a homicide registry using a bayesian partitioning approach', {\em The Annals
+  of Applied Statistics} {\bf 8}(4),~2404--2434.
 
 \harvarditem{Sadinle}{2017}{sadinle_bayesian_2017}
 Sadinle, M.  \harvardyearleft 2017\harvardyearright , `Bayesian {Estimation} of
   {Bipartite} {Matchings} for {Record} {Linkage}', {\em Journal of the American
   Statistical Association} {\bf 112}(518),~600--612.
 
+\harvarditem{Sadinle}{2018}{sadinle_bayesian_2018}
+Sadinle, M.  \harvardyearleft 2018\harvardyearright , `Bayesian propagation of
+  record linkage uncertainty into population size estimation of human rights
+  violations', {\em The Annals of Applied Statistics} {\bf 12}(2),~1013--1038.
+
 \harvarditem{Sadinle}{2020}{BRL}
 Sadinle, M.  \harvardyearleft 2020\harvardyearright , {\em BRL: Beta Record
   Linkage}.
 \newblock R package version 0.1.0.
 \newline\harvardurl{https://CRAN.R-project.org/package=BRL}
+
+\harvarditem[Sadosky et~al.]{Sadosky, Shrivastava, Price \harvardand\
+  Steorts}{2015}{Sadosky2015}
+Sadosky, P., Shrivastava, A., Price, M. \harvardand\ Steorts, R.~C.
+  \harvardyearleft 2015\harvardyearright , `Blocking methods applied to
+  casualty records from the {S}yrian conflict', {\em arXiv e-prints} pp.~1--25.
+\newblock {arxiv:1510.07714}.
 
 \harvarditem{Sariyar \harvardand\ Borg}{2010}{sariyar_2010}
 Sariyar, M. \harvardand\ Borg, A.  \harvardyearleft 2010\harvardyearright ,
@@ -157,10 +211,29 @@ Steorts, R.~C., Ventura, S.~L., Sadinle, M. \harvardand\ Fienberg, S.~E.
   {Databases}', Lecture {Notes} in {Computer} {Science}, Springer, Cham,
   pp.~253--268.
 
+\harvarditem{Tai}{2018}{Tai2019}
+Tai, X.~H.  \harvardyearleft 2018\harvardyearright , `Record linkage and
+  matching problems in forensics', {\em IEEE International Conference on Data
+  Mining Workshops} pp.~510--517.
+
 \harvarditem{Tancredi \harvardand\ Liseo}{2011}{Tancredi_2011}
 Tancredi, A. \harvardand\ Liseo, B.  \harvardyearleft 2011\harvardyearright ,
   `{A Hierarchical Bayesian Approach to Record Linkage and Size Population
   Problems}', {\em The Annals of Applied Statistics} {\bf 5}(2B),~1553--1585.
+
+\harvarditem[Teh et~al.]{Teh, Jordan, Beal \harvardand\
+  Blei}{2006}{jordan_2006}
+Teh, Y.~W., Jordan, M.~I., Beal, M.~J. \harvardand\ Blei, D.~M.
+  \harvardyearleft 2006\harvardyearright , `Hierarchical dirichlet processes',
+  {\em Journal of the American Statistical Association} {\bf
+  101}(476),~1566--1581.
+\newline\harvardurl{http://www.jstor.org/stable/27639773}
+
+\harvarditem[Wagner et~al.]{Wagner, Lane et~al.}{2014}{wagner2014person}
+Wagner, D., Lane, M. et~al.  \harvardyearleft 2014\harvardyearright , The
+  person identification validation system (pvs): Applying the center for
+  administrative records research and applications’ (carra) record linkage
+  software, Technical report, Center for Economic Studies, U.S. Census Bureau.
 
 \harvarditem{Winkler}{1990}{Winkler_1990}
 Winkler, W.~E.  \harvardyearleft 1990\harvardyearright , {String Comparator
@@ -168,9 +241,22 @@ Winkler, W.~E.  \harvardyearleft 1990\harvardyearright , {String Comparator
   Linkage}, {\em in} `Proceedings of the Section on Survey Research Methods',
   American Statistical Association, pp.~354--359.
 
+\harvarditem{Winkler}{1999}{winkler_state_1999}
+Winkler, W.~E.  \harvardyearleft 1999\harvardyearright , The {State} of
+  {Record} {Linkage} and {Current} {Research} {Problems}, Technical report,
+  Statistical Research Division, U.S. Bureau of the Census.
+
 \harvarditem{Wortman}{2019}{wortman2019}
 Wortman, J. P.~H.  \harvardyearleft 2019\harvardyearright , Record linkage
   methods with applications to causal inference and election voting data, PhD
   thesis, Duke University.
+
+\harvarditem[Zhang et~al.]{Zhang, Zhang, Yao \harvardand\
+  Tang}{2018}{zhang2018name}
+Zhang, Y., Zhang, F., Yao, P. \harvardand\ Tang, J.  \harvardyearleft
+  2018\harvardyearright , `Name disambiguation in aminer: Clustering,
+  maintenance, and human in the loop.', {\em Proceedings of the 24th ACM SIGKDD
+  International Conference on Knowledge Discovery \& Data Mining}
+  pp.~1002--1011.
 
 \end{thebibliography}

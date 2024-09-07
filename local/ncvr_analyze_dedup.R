@@ -50,7 +50,8 @@ evals_df$method[evals_df$method == "fabl_mm_inf"] <- "DRL"
 evals_df$method[evals_df$method == "fabl"] <- "vabl"
 
 evals_df %>%
-  filter(method %in% c("fabl", "DRL", "fastlink", "fastlink_jaro")) %>%
+  filter(method %in% c("vabl", "DRL", "fastlink", "fastlink_jaro")) %>%
+  mutate(method = factor(method, c("DRL", "vabl", "fastlink", "fastlink_jaro"))) %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric, c("Recall", "Precision", "Fmeasure"))) %>%
   ggplot() +
@@ -74,9 +75,74 @@ Z_hat_pair <- readRDS(Z_hat_files[2])%>%
   select(target_id, base_id) %>%
   tidyr::unite("pair")
 
-Z_true_pair <- Z_true %>%
+
+readRDS(Z_hat_files[2])%>%
+  data.frame() %>%
+  select(target_id, base_id) %>%
+  filter(duplicated(base_id)) %>%
+  select(base_id) %>%
+  pull() %>%
+  length()
+
+Z_true_pair <- Z_true_pairs %>%
   data.frame() %>%
   tidyr::unite("pair")
+
+multiple_match_true <- Z_true_pairs %>%
+  filter(duplicated(base_id)) %>%
+  select(base_id) %>%
+  pull()
+
+multiple_match_declared <- readRDS(Z_hat_files[2]) %>%
+  data.frame() %>%
+  select(target_id, base_id) %>%
+  filter(duplicated(base_id)) %>%
+  select(base_id) %>%
+  pull()
+
+length(multiple_match_true)
+
+mm_hat <- readRDS(Z_hat_files[2])%>%
+  data.frame() %>%
+  select(target_id, base_id) %>%
+  filter(base_id %in% multiple_match_declared) %>%
+  tidyr::unite("pair")
+
+mm_true <- Z_true_pairs %>%
+  data.frame() %>%
+  filter(base_id %in% multiple_match_true) %>%
+  tidyr::unite("pair")
+
+Z_true_pairs %>%
+  data.frame() %>%
+  filter(base_id %in% multiple_match) %>%
+  group_by(base_id) %>%
+  count() %>%
+  group_by(n) %>%
+  count()
+
+readRDS(Z_hat_files[2])%>%
+  data.frame() %>%
+  select(target_id, base_id) %>%
+  data.frame() %>%
+  filter(base_id %in% multiple_match_true) %>%
+  group_by(base_id) %>%
+  count() %>%
+  group_by(n) %>%
+  count()
+
+false_doubles <- setdiff(mm_hat, mm_true) %>%
+  unlist()
+
+missed_doubles <- setdiff(mm_true, mm_hat) %>%
+  unlist()
+
+mm_recall <- (nrow(mm_true) - length(missed_doubles)) / nrow(mm_true)
+mm_precision <- (nrow(mm_hat) - length(false_doubles)) / nrow(mm_hat)
+
+
+
+
 
 false_matches <- setdiff(Z_hat_pair, Z_true_pair) %>%
   unlist()

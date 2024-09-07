@@ -2,20 +2,22 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-results <- readRDS("out/poisson_all")
-results_ml <- readRDS("out/poisson_ml_all")
-results_filter <- readRDS("out/poisson_ml_filter_all")
+# results <- readRDS("out/poisson_all")
+# results_ml <- readRDS("out/poisson_ml_all")
+# results_filter <- readRDS("out/poisson_ml_filter_all")
+# results <- rbind(results, results_ml, results_filter)
+
+results <- readRDS("out/poisson_2_all")
+results_ml <- readRDS("out/poisson_2_ml_all")
+results_filter <- readRDS("out/poisson_2_ml_filter_all")
 results <- rbind(results, results_ml, results_filter)
 
-# results <- readRDS("out/poisson_2_all")
-# results_ml <- readRDS("out/poisson_2_ml_all")
-# results_filter <- readRDS("out/poisson_2_ml_filter_all")
-# results <- rbind(results, results_ml, results_filter)
+names(results)[3] <- "F-measure"
 
 df <- results %>%
   pivot_longer(cols = 1:3, names_to = "metric") %>%
   mutate(metric = factor(metric,
-                         c("Recall", "Precision", "Fmeasure"))) %>%
+                         c("Recall", "Precision", "F-measure"))) %>%
   mutate(duplication = factor(duplication,
                          c("low", "mid", "high"))) %>%
   mutate(method = factor(method,
@@ -25,6 +27,8 @@ df <- results %>%
   summarize(median = quantile(value, .5, na.rm = T),
             lower = quantile(value, .025, na.rm = T),
             upper = quantile(value, .975, na.rm = T))
+
+
 
 df %>%
   ggplot() +
@@ -45,8 +49,8 @@ df %>%
   labs(x = NULL, y = NULL) +
   theme_bw(base_size = 9)
 
-ggsave("figures/poisson_fig1.png")
-#ggsave("figures/poisson_fig1_app.png")
+#ggsave("figures/poisson_fig1.png")
+ggsave("figures/poisson_fig1_app.png")
 
 
 df %>%
@@ -60,8 +64,8 @@ df %>%
   scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme_bw(base_size = 9)
 
-ggsave("figures/poisson_fig2.png")
-#ggsave("figures/poisson_fig2_app.png")
+#ggsave("figures/poisson_fig2.png")
+ggsave("figures/poisson_fig2_app.png")
 
 
 
