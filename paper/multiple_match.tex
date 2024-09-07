@@ -68,7 +68,7 @@
 %
 %\bigskip
 \begin{abstract}
-	Probabilistic record linkage is the use of statistical methods to identify unique entities within and across databases. Bayesian methods can adopt different prior distributions for various assumptions on the nature of record duplications in the linkage task, but become computationally expensive as the size of the linkage task grows. In this paper, we propose Dirichlet Record Linkage (\texttt{DRL}), a method for linking a duplicate-free reference file to a target file that may have internal duplications. We use a Dirichlet process prior for the parameter governing the number of matches a record in the reference file has in the target file. We decompose this parameter into a sequence of conditional probabilities, and use these parameters in a computationally efficient Gibbs sampler to conduct the linkage task. We demonstrate the speed and accuracy of our approach relative to other recent Bayesian methods through simulations and case studies. In particular, we show that \texttt{DRL} exhibits strong performance using default, non-informative hyperparameters.  
+	Probabilistic record linkage is the use of statistical methods to identify unique entities within and across databases. Bayesian methods can adopt different prior distributions for various assumptions on the nature of record duplications in the linkage task, but become computationally expensive as the size of the linkage task grows. In this paper, we propose Dirichlet Record Linkage (\texttt{DRL}), a method for linking a duplicate-free reference file to a target file that may have internal duplications. We use a Dirichlet process prior for the parameter governing the number of matches a record in the reference file has in the target file. We use the sequence of parameters in stick breaking representation of the Dirichlet process to produce a computationally efficient Gibbs sampler to conduct the linkage task. We demonstrate the speed and accuracy of our approach relative to other recent Bayesian methods through simulations and case studies. In particular, we show that \texttt{DRL} exhibits strong performance using default, non-informative hyperparameters.  
 	
 	\brian{Beka commented that I should mention the loss function in the abstract and introduction. To me, the loss function is not innovative enough to really call attention to it; it is used implicitly in many classification tasks. Thoughts?}
 \end{abstract} 
@@ -193,6 +193,8 @@ This prior says that a record $B$ has some match in $A$ with probability $\pi$, 
 \section{Dirichlet Record Linkage}\label{sec:drl}
 
 %We showed in \cite{kundinger_2023} and \cite{kundinger_2024_vabl} that the \texttt{fabl} framework tends to outperform standard FS when each record in $B$ has at most one match in $A$. However, 
+
+\brian{I edited this a bit for clarity. Do you think this should at the beginning or the end of this section? I like it at the beginning, to motivate the new material.}
 
 Although the \texttt{fabl} framework is effective and efficient when $A$ has no internal duplications, significant problems arise when a record in $B$ has multiple matching records in $A$. In particular, posterior probability is normalized among all records in $A$, such that none of the matches achieves high enough posterior probability to be identified in the Bayes estimate. This amounts to a paradox: the more matches that record $B_j$ has in $A$, the less likely the algorithm is to find a match. Here, we attempt to resolve this paradox by extending the \texttt{fabl} framework to handle these internal duplications in $A$. We emphasize that we are not interested in deduplication within $A$ for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. Therefore, duplications within files that have no duplications across files will go undetected; we believe this acceptable for many practical applications. 
 
@@ -371,7 +373,7 @@ Since the \texttt{DRL} prior as specified in in \eqref{eqn:drl-prior} does not s
 
 \section{Simulations}\label{sec:simulations}
 
-We demonstrate the accuracy of \texttt{DRL} through an adaptation of the simulation study from \cite{aleshin2023multifile}. We compare the performance of \texttt{DRL} against models implemented in \texttt{fastLink}, \texttt{vabl}, and \texttt{multilink}. Results from \texttt{BRL} and \texttt{fabl} are similar to those of \texttt{vabl}, and are therefore omitted. 
+We demonstrate the accuracy of \texttt{DRL} through an adaptation of the simulation study from \cite{aleshin2023multifile}. We compare the performance of \texttt{DRL} against models implemented in \texttt{fastLink}, \texttt{vabl}, and \texttt{multilink}.  \texttt{BRL} and \texttt{fabl} provide similar accuracy to \texttt{vabl}, and are therefore omitted. 
 
 For each simulation, we construct two data files $A$ and $B$ of size $n_A = n_B = 500$. File $B$ is constructed to have no internal duplicates, and we designate 10\% of the records in $B$ (or 50 records) to have some number of matches in $A$. The number of matches these records have in $A$ is sampled from a Poisson distribution truncated to the interval [1, 5]. We use Poisson distributions with means 0.1, 1, and 2, and denote these settings as low, medium, and high duplication settings respectively. Each of these duplicate records has up to three altered fields relative to the original record in $A$. After accounting for the records in $A$ that have a match in $B$, the rest of the records in $A$ are comprised of unique entities. We follow the methodology of \cite{christen_vatsalan2013} to generate original records for the unique entities by simulating first name, last name, age, postal code, and occupation from frequency tables based on demographic information in Australia. Fields are then chosen for distortion uniformly at random. Names are subject to string insertions, deletions and substitutions, as well as common keyboard, phonetic, and optical recognition errors. Age and occupation are distorted through keyboard errors and missingness.
 
@@ -529,18 +531,17 @@ Importantly, the constant $c_j$ is not found in the final expression because the
 
 \subsection{Full Conditional for Component $Z_{j, k}$} \label{app:sequential-sampler}
 We now provide the derivation of the sequential sampler, following the argument presented in Section \ref{app:joint-distribution}. Suppose $B_j$ has been linked to $k$ records in $A$. Recall that $Z_{j, -k}^{(s)} = (Z_{j, 1}^{(s)}, \ldots, Z_{j, k-1}^{(s)})$ denotes the vector of records already linked to $B_j$ in Gibbs iteration $s$. When $B_j$ has no additional link in $A$, the contribution to the likelihood is a product of the $u$ parameters for all remaining records. That is, 
-\begin{align}
-	\mathbb{P}(\Gamma_{.j}| \bm{m}, \bm{u}, \pi, Z_{j, k}^{(s)} = \emptyset, Z_{j, -k}^{(s)} = q_{-k}) = \prod_{i \notin q_{-k}} \prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} = c_{Z_{j, -k}^{(s)}}.
-\end{align}
-
+\begin{align*}
+	\mathbb{P}(\Gamma_{.j}| \bm{m}, \bm{u}, \bm{\pi}, Z_{j, k}^{(s)} = \emptyset, Z_{j, -k}^{(s)} = q_{-k}) = \prod_{i \notin q_{-k}} \prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} = c_{Z_{j, -k}^{(s)}}.
+\end{align*}
 When $Z_{j, k}^{(s)} = q_k$ for some $q_k > 0$, we have
-\begin{align}
-	\mathbb{P}(\Gamma_{.j}| \bm{m}, \bm{u}, \pi,  Z_{j, k}^{(s)} = q_k, Z_{j, -k}^{(s)} = q_{-k}) &=\prod_{f=1}^{F}\prod_{l=1}^{L_f} m_{fl}^{I(\gamma_{q_k, j}^f = l)I_{obs}(\gamma_{q_k, j}^f)}  \prod_{i \notin (q_{-k}, q_k)}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} \\
+\begin{align*}
+	&\mathbb{P}(\Gamma_{.j}| \bm{m}, \bm{u}, \bm{\pi},  Z_{j, k}^{(s)} = q_k, Z_{j, -k}^{(s)} = q_{-k}) \\ &=\prod_{f=1}^{F}\prod_{l=1}^{L_f} m_{fl}^{I(\gamma_{q_k, j}^f = l)I_{obs}(\gamma_{q_k, j}^f)}  \prod_{i \notin (q_{-k}, q_k)}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} \\
 	&=\prod_{f=1}^{F}\prod_{l=1}^{L_f} \left(\frac{m_{fl}}{u_{fl}} \right)^{I(\gamma_{q_k, j}^f = l)I_{obs}(\gamma_{q_k, j}^f)}  \prod_{i \notin q_{-k}}\prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} \\
 	&= c_{Z_{j, -k}^{(s)}} w_{q_k, j}
-\end{align}
+\end{align*}
 To obtain the posterior, we multiply by the prior in (\ref{eqn:sequential_prior}). The posterior distribution this is given by
-\begin{align}\label{eqn:sequential-posterior-full}
+\begin{align*} %\label{eqn:sequential-posterior-full}
 	\mathbb{P}&(Z_{j, k}^{(s)} = q_k|Z_{j, k-1}^{(s)}, \eta_k, \bm{m}, \bm{u}, \gamma) \\
 	&= \frac{\left(\frac{\eta_k}{n_A - (k - 1)}c_{Z_{j, -k}^{(s)}} w_{q_k, j}\right)^{I(q_k \in [n_A] \setminus Z_{j, -k}^{(s)})} + \left(c_{Z_{j, -k}^{(s)}}(1 - \eta_k)\right)^{I(q_k = \emptyset)}}{\frac{\eta_k}{n_A - (k - 1)}c_{Z_{j, -k}^{(s)}} \sum_{i \notin Z_{j, -k}} w_{ij} + c_{Z_{j, -k}}(1 - \eta_k)} \\
 	&=
@@ -549,7 +550,7 @@ To obtain the posterior, we multiply by the prior in (\ref{eqn:sequential_prior}
 		\frac{\eta_k}{n_A - (k - 1)} w_{q_k, j}, & q_k \in [n_A] \setminus Z_{j, -k}^{(s)}, \\
 		1 - \eta_k, & q_k= \emptyset.
 	\end{cases}
-\end{align}
+\end{align*}
 Importantly, the constant $c_{Z_{j, -k}}^{(s)}$ is not found in the final expression because the probability mass associated with every potential value for $Z_{j, k}^{(s)}$ shares the same $c_{Z_{j, -k}}^{(s)}$. This does not occur due to proportionality. 
 
 
