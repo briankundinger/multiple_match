@@ -15,9 +15,9 @@ results <- rbind(results, results_ml, results_filter)
 names(results)[3] <- "F-measure"
 
 df <- results %>%
-  pivot_longer(cols = 1:3, names_to = "metric") %>%
+  pivot_longer(cols = 1:4, names_to = "metric") %>%
   mutate(metric = factor(metric,
-                         c("Recall", "Precision", "F-measure", "time"))) %>%
+                         c("Recall", "Precision", "F-measure", "elapsed"))) %>%
   mutate(duplication = factor(duplication,
                          c("low", "mid", "high"))) %>%
   mutate(method = factor(method,
@@ -41,7 +41,7 @@ df <- results %>%
 
 df %>%
   filter(method %in% c("vabl", "DRL", "fastLink")) %>%
-  filter(metric != "time") %>%
+  filter(metric != "elapsed") %>%
   ggplot() +
   aes(x = method, y = median, min = lower, max = upper) +
   geom_pointrange(position = position_dodge2(width = .5),
@@ -56,7 +56,7 @@ ggsave("figures/poisson_fig1.png")
 
 df %>%
   filter(method %in% c("multilink", "multilink_filter", "DRL")) %>%
-  filter(metric != "time") %>%
+  filter(metric != "elapsed") %>%
   ggplot() +
   aes(x = method, y = median, min = lower, max = upper) +
   geom_pointrange(position = position_dodge2(width = .5),
@@ -70,7 +70,16 @@ ggsave("figures/poisson_fig2.png")
 #ggsave("figures/poisson_fig2_app.png")
 
 df %>%
-  filter(method %in% c("vabl", "DRL", "fastLink")) %>%
-  filter(metric != "time")
+  filter(method %in% c("fabl", "DRL")) %>%
+  filter(metric == "elapsed") %>%
+  ggplot() +
+  aes(x = method, y = median, min = lower, max = upper) +
+  geom_pointrange(position = position_dodge2(width = .5),
+                  size = .2) +
+  facet_wrap(~duplication) +
+  labs(x = NULL, y = "Seconds elapsed") +
+  theme_bw(base_size = 9)
+
+ggsave("figures/poisson_time.png")
 
 

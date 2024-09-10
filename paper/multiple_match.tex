@@ -456,7 +456,23 @@ In contrast, \texttt{DRL} maintains strong performance at all duplication rates 
 
 We note that \texttt{vabl} is incredibly fast, reaching convergence in around 0.01 seconds on average. Due to the design of the \texttt{fastLink} package in \texttt{R}, we cannot directly measure the speed of the EM algorithm separately from the construction of the comparison vectors, but we assume that it is even faster than \texttt{vabl}. When we use filtering, \texttt{multilink} completes 1000 iterations of the Gibbs sampler in about 0.5 seconds. Without filtering however, it takes around 1000 seconds. Lastly, \texttt{DRL} completes the 1000 Gibbs iterations in about 15 seconds. 
 
+In Figure~\ref{fig:sim-time} we see that \texttt{fabl} completes in an average of 10 seconds at all duplications levels in the simulation. In contrast, computation time for \texttt{DRL} increases as the duplication level grows from an average of 10 seconds at the low level to 15 seconds at the highest level. We note that \texttt{vabl} is incredibly fast, reaching convergence in around 0.01 seconds on average. For this reason, we recommend \texttt{vabl} in cases where it is known that records in $B$ match to at most record in $A$, and recommend \texttt{DRL} when the duplications within $A$ makes \texttt{vabl} unreliable. 
+
+Due to the design of the \texttt{fastLink} package in \texttt{R}, we cannot directly measure the speed of the EM algorithm separately from the construction of the comparison vectors, but we assume that it is even faster than \texttt{vabl}.
+
+
+We note that this is only slightly slower than \texttt{fabl}, and clearly not approaching the upper bound on the complexity as shown in Lemma~\ref{lemma:complexity}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{../figures/poisson_time.png}
+	\caption{Computation time from simulation study of described in Section~\ref{sec:simulations} for \texttt{fabl} and \texttt{DRL}.}
+	\label{fig:sim-time}
+\end{figure}
+
 We conducted another simulation with 30\% of records in $B$ having matches in $A$, with all other settings held constant. Under these settings, \texttt{fastLink} and \texttt{multilink} perform better, but \texttt{DRL} still outperforms. We include these results in Appendix~\ref{app:simulation-2}.
+
+
 
 \section{Case Study}\label{sec:case-study}
 
@@ -746,6 +762,9 @@ where $n_p(\bm{Z}) = \sum_{i = 1}^{n_A}\sum_{j = 1}^{n_B} I(i \in Z_{j}) I\left(
 	\Return{$\{\bm{Z}^{(s)}, \bm{m}^{(s)}, \bm{u}^{(s)}, \bm{\eta}^{(s)}\}_{s=1}^S$}
 \end{algorithm}
 
+\subsection{Computational Complexity}
+
+In this Appendix, we prove the computation complexity for \texttt{DRL}. 
 
 \begin{lemma}\label{lemma:complexity}
 		Let $n_A$ and $n_B$ be the number of records in files $A$ and $B$, respectively. Let $F$ be the number of fields used for comparisons across records, and $P$ be the number of patterns that comparison vectors exhibit in $A \times B$. We assume $C$ cores available for parallelization and a Gibbs sampler with $T$ iterations. Then, the overall computational complexity of \texttt{fabl} with hashing is $O(F n_A n_B /C) + O(T P n_B^2/ C)$.
