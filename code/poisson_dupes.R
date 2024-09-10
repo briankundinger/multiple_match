@@ -12,7 +12,7 @@ burn = S * .1
 
 dupe_rate <- c("low", "mid", "high")
 folder_names <- list.files("data/poisson_sims/", full.names = F)
-methods <- c("vabl", "DRL", "fastLink")
+methods <- c("vabl", "fabl", "DRL", "fastLink")
 
 df_list <- vector("list", length = length(dupe_rate))
 
@@ -67,6 +67,13 @@ for(d in seq_along(folder_names)){
   vabl_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
 
   start <- proc.time()[3]
+  out_mm <- fabl(hash, S = S, burn = burn)
+  time <- proc.time()[3] - start
+  result_mm <- estimate_links(out_mm, hash, resolve = T)
+  Z_hat <- make_Zhat_pairs(result_mm$Z_hat)
+  fabl_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
+
+  start <- proc.time()[3]
   out_mm <- fabl_mm(hash, S = S, burn = burn)
   time <- proc.time()[3] - start
   result_mm <- estimate_links_mm(out_mm, hash, resolve = T, transitivity = F)
@@ -74,6 +81,7 @@ for(d in seq_along(folder_names)){
   #Z_hat <- make_Zhat_pairs(result_mm$Z_hat)
   drl_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
 
+  #saveRDS(out_mm, "out/poisson_sim_chain")
   start <- proc.time()[3]
   fl_out <- fastLink::fastLink(file_A, file_B, varnames = names(file_A)[c(4, 5, 6, 7, 8)],
                                stringdist.match = names(file_A)[c(4, 5, 6, 7, 8)],
@@ -88,7 +96,7 @@ for(d in seq_along(folder_names)){
   fastlink_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
 
 
-  df <- rbind(vabl_result, drl_result, fastlink_result) %>%
+  df <- rbind(vabl_result, fabl_result, drl_result, fastlink_result) %>%
     data.frame() %>%
     mutate(duplication = dupe_rate[d],
            method = methods)

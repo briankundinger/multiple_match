@@ -283,6 +283,35 @@ We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = 
 
 %\SetKwComment{Comment}{/* }{ */}
 %\RestyleAlgo{ruled}
+%\begin{algorithm}
+%	\caption{Gibbs Sampler for Dirichlet Record Linkage}\label{alg:gibbs-sampler}
+%	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+%	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+%	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{Initialize}{Initialize}
+%	\Input{Data $\bm{\Gamma}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\bm{\beta}_{\eta}$} 
+%	%\Output{$\hat{\Delta}, \hat{\bm{m}}, \hat{\bm{u}}, \hat{\bm{\eta}}$}
+%	\Initialize{$Z_j = \emptyset, \forall j \in [n_B]$}
+%	\For{$s \in [S]$}{
+%
+%		Sample $m_{fl}^{(s+1)} \sim \mathbb{P}(m_{fl} | \bm{\Gamma}, \bm{Z}^{(s)},  \bm{u}^{(s)}, \bm{\eta}^{(s)})$
+%		
+%		Sample $u_{fl}^{(s+1)} \sim \mathbb{P}(m_{fl} | \bm{\Gamma}, \bm{Z}^{(s)},  \bm{m}^{(s+1)}, \bm{\eta}^{(s)})$
+%		
+%		Set $k = 1$
+%		
+%		\While{$D_{k-1}^{(s+1)} \neq \emptyset$}{
+%			
+%		Sample $\eta_{k}^{(s+1)} \sim \mathbb{P}(\eta_k | \bm{\Gamma}, \bm{Z}^{(s)},  \bm{m}^{(s+1)}, \bm{u}^{(s +1)})$
+%		
+%		\For{$j \in D_{k-1}^{(s+1)}$}{
+%		Sample $Z_{j, k}^{(s+1)} \sim \mathbb{P}(Z_{j, k} | Z_{j, -k}^{(s+1)}, \eta_k^{(s+1)}, \bm{\Gamma},  \bm{m}^{(s+1)}, \bm{u}^{(s+1)})$
+%	}
+%	Set $k = k + 1$
+%	}
+%}
+%	\Return{$\{\bm{Z}^{(s)}, \bm{m}^{(s)}, \bm{u}^{(s)}, \bm{\eta}^{(s)}\}_{s=1}^S$}
+%\end{algorithm}
+
 \begin{algorithm}
 	\caption{Gibbs Sampler for Dirichlet Record Linkage}\label{alg:gibbs-sampler}
 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
@@ -292,39 +321,37 @@ We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = 
 	%\Output{$\hat{\Delta}, \hat{\bm{m}}, \hat{\bm{u}}, \hat{\bm{\eta}}$}
 	\Initialize{$Z_j = \emptyset, \forall j \in [n_B]$}
 	\For{$s \in [S]$}{
-
-		Sample $m_{fl}^{(s+1)} \sim \mathbb{P}(m_{fl} | \bm{\Gamma}, \bm{Z}^{(s)},  \bm{u}^{(s)}, \bm{\eta}^{(s)})$
-		
-		Sample $u_{fl}^{(s+1)} \sim \mathbb{P}(m_{fl} | \bm{\Gamma}, \bm{Z}^{(s)},  \bm{m}^{(s+1)}, \bm{\eta}^{(s)})$
+		\For{$f \in [F]$}{
+				Sample $\bm{m}_f^{(s+1)} \sim \text{Dirichlet}\left(\alpha_{f1}(\bm{Z}^{(s)}), \ldots, \alpha_{fL_f}(\bm{Z}^{(s)})\right)$, where 
+				
+				\hskip2.0em $\alpha_{fl}(\bm{Z}^{(s)}) = \alpha_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \in Z_j^{(s)})$
+				
+				Sample $\bm{u}_f^{(s+1)} \sim \text{Dirichlet}\left(\beta_{f1}(\bm{Z}^{(s)}), \ldots, \beta_{fL_f}(\bm{Z}^{(s)})\right)$
+				
+				\hskip2.0em $\beta_{fl}(\bm{Z}^{(s)}) = \beta_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \notin Z_j^{(s)})$
+				}
 		
 		Set $k = 1$
 		
 		\While{$D_{k-1}^{(s+1)} \neq \emptyset$}{
 			
-		Sample $\eta_{k}^{(s+1)} \sim \mathbb{P}(\eta_k | \bm{\Gamma}, \bm{Z}^{(s)},  \bm{m}^{(s+1)}, \bm{u}^{(s +1)})$
-		
-		\For{$j \in D_{k-1}^{(s+1)}$}{
-		Sample $Z_{j, k}^{(s+1)} \sim \mathbb{P}(Z_{j, k} | Z_{j, -k}^{(s+1)}, \eta_k^{(s+1)}, \bm{\Gamma},  \bm{m}^{(s+1)}, \bm{u}^{(s+1)})$
+			Sample $\eta_{k}^{(s+1)} \sim \text{Beta}\left(n_{k}^{(s)} + \alpha_{\eta}, n_{k-1}^{(s)} - n_{k}^{(s)} + \beta_{\eta} \right)$, where
+			
+			\hskip2.0em $n_k^{(s)} = \sum_{j=1}^{n_B} I(|Z_j^{(s)}| \geq k)$
+			
+			\For{$j \in D_{k-1}^{(s+1)}$}{
+				Sample $Z_{j, k}^{(s+1)} \propto \begin{cases}
+					\frac{\eta_k^{(s+1)}}{n_A - (k - 1)} w_{q_k, j}^{(s+1)}, & q_k \in [n_A] \setminus Z_{j, -k}^{(s+1)}, \\
+					1 - \eta_k^{(s+1)}, & q_k= \emptyset.
+				\end{cases}$
+			}
+			Set $k = k + 1$
+		}
 	}
-	Set $k = k + 1$
-	}
-}
-		
-%		\For{$j\in[n_2]$}{
-%			Set $q(Z_j)\propto\exp\{{-Z_j}[\log p(\Omega,\Gamma)] \}$
-%		}
-%		
-%		\For{$f\in[F]$}{
-%			Set $q(m_f)\propto\exp\{m_f\}[\log p(\Omega,\Gamma)] \}$
-%			
-%			Set $q(u_f)\propto\exp\{u_f\}[\log p(\Omega,\Gamma)] \}$
-%		}
-%		
-%		Set $q(\pi) \propto\exp\{E_{-\pi}[\log p(\Omega,\Gamma)] \}$
-%		
-%		Compute $\mathrm{ELBO}(q)$
 	\Return{$\{\bm{Z}^{(s)}, \bm{m}^{(s)}, \bm{u}^{(s)}, \bm{\eta}^{(s)}\}_{s=1}^S$}
 \end{algorithm}
+
+%\alpha_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \in Z_j)
 
 We take a moment to emphasize the computational advantages to this approach. Sampling from the full conditional shown in (\ref{eqn:joint_posterior}) has complexity $O(2^{n_A}n_B)$, and would be nearly impossible for any reasonable record linkage task. Using the sequential sampler shown in (\ref{eqn:sequential_posterior}) has complexity $O\left(n_A \sum_{k=1}^{n_A} n_{k-1}^{(s)}\right)$, where $n_k^{(s)} = |D_{k}^{(s)}| = \sum_{j=1}^{n_B} I\left(|Z_j^{(s)}| \geq k\right)$ is the number of records in $B$ linked to at least $k$ records in $A$ in Gibbs iteration $s$. 
 
@@ -644,7 +671,7 @@ Define $n_k = \sum_{j=1}^{n_B} I\left(|Z_j| \geq k\right)$ to be the number of r
 \end{align*}
 Thus we have
 \begin{align*}
-	\eta_k |\bm{Z}, \bm{m}, \bm{u}, \bm{\Gamma} \sim \text{Beta}\left[n_{k} + \alpha_{\eta}, n_{k-1} - n_{k} + \beta_{\eta} \right].
+	\eta_k |\bm{Z}, \bm{m}, \bm{u}, \bm{\Gamma} \sim \text{Beta}\left(n_{k} + \alpha_{\eta}, n_{k-1} - n_{k} + \beta_{\eta} \right).
 \end{align*}
 
 \subsubsection{Full Conditional for $m$ and $u$}\label{app:derive-m-u}
@@ -672,6 +699,65 @@ Using the hashing techniques provided in Appendix~\ref{app:hashing} and likeliho
 %\end{subequations}
 where $n_p(\bm{Z}) = \sum_{i = 1}^{n_A}\sum_{j = 1}^{n_B} I(i \in Z_{j}) I\left(\gamma_{ij} = h_p \right)$ is the number of matching record pairs with agreement pattern $h_p$. Specifically, the $l + \sum_{k=1}^{f-1} L_k$ components of (\ref{efficient_alpha}) and (\ref{efficient_beta}) provide the posterior updates for level $l$ and field $f$ in (\ref{eqn:alpha_update}) and (\ref{eqn:beta_update}). These vectorized summations can be computed more efficiently than summing over $n_A n_B$ record pairs for each field and agreement level.
 
+\subsection{Summary of Efficient Gibbs Sampler with Hashing} \label{app:efficient-algorithm}
+
+\begin{algorithm}
+	\caption{Efficient Gibbs Sampler for Dirichlet Record Linkage}\label{alg:gibbs-sampler-efficient}
+	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{Initialize}{Initialize}
+	\Input{Data $\tilde{\bm{\Gamma}}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\bm{\beta}_{\eta}$} 
+	%\Output{$\hat{\Delta}, \hat{\bm{m}}, \hat{\bm{u}}, \hat{\bm{\eta}}$}
+	\Initialize{$Z_j = \emptyset, \forall j \in [n_B]$}
+	\For{$s \in [S]$}{
+		\For{$f \in [F]$}{
+			Sample $\bm{m}_f^{(s+1)} \sim \text{Dirichlet}\left(\alpha_{f1}(\bm{Z}^{(s)}), \ldots, \alpha_{fL_f}(\bm{Z}^{(s)})\right)$, where 
+			
+			\hskip1.0em $\alpha_{fl}(\bm{Z}^{(s)})$ is component $l + \sum_{k=1}^{f-1} L_k$ of the sum $\alpha_{fl} +  \sum_{p=1}^P n_p\left(\bm{Z}^{(s)} \right) \times e(h_p)$
+			
+			Sample $\bm{u}_f^{(s+1)} \sim \text{Dirichlet}\left(\beta_{f1}(\bm{Z}^{(s)}), \ldots, \beta_{fL_f}(\bm{Z}^{(s)})\right)$, where
+			
+			\hskip1.0em $\beta_{fl}(\bm{Z}^{(s)})$ is component $l + \sum_{k=1}^{f-1} L_k$ of the sum $\beta_{fl} +  \sum_{p=1}^P \left(N_p - n_p\left(\bm{Z}^{(s)} \right)\right) \times e(h_p)$
+		}
+		
+		Set $k = 1$
+		
+		\While{$D_{k-1}^{(s+1)} \neq \emptyset$}{
+			
+			Sample $\eta_{k}^{(s+1)} \sim \text{Beta}\left(n_{k}^{(s)} + \alpha_{\eta}, n_{k-1}^{(s)} - n_{k}^{(s)} + \beta_{\eta} \right)$, where
+			
+			\hskip2.0em $n_k^{(s)} = \sum_{j=1}^{n_B} I(|Z_j^{(s)}| \geq k)$
+			
+			\For{$j \in D_{k-1}^{(s+1)}$}{
+				Sample $r^{(s+1)} \propto \begin{cases} 
+					\frac{\eta_k^{(s+1)} N_{p_j}{(s+1)}(k)}{n_A - (k - 1)}  w_{p}^{(s+1)},  & r^{(s+1)} = r_{p_j}^{(s+1)}(k); \\
+					1- \eta_k^{(s+1)} , &  r^{(s+1)} = \emptyset. \\
+				\end{cases}$
+			
+				Sample $Z_{j, k}^{(s+1)} \propto \begin{cases} 
+					\frac{1}{N_{p_j}^{(s+1)}(k)}, & r^{(s+1)} = r_{p_j}^{(s+1)}(k) \text{ and } q \in r^{(s+1)}; \\
+					1, & r^{(s+1)} = \emptyset \text{ and } q = \emptyset. \\
+				\end{cases}$
+			}
+		
+			Set $k = k + 1$
+		}
+	}
+	\Return{$\{\bm{Z}^{(s)}, \bm{m}^{(s)}, \bm{u}^{(s)}, \bm{\eta}^{(s)}\}_{s=1}^S$}
+\end{algorithm}
+
+
+\begin{lemma}\label{lemma:complexity}
+		Let $n_A$ and $n_B$ be the number of records in files $A$ and $B$, respectively. Let $F$ be the number of fields used for comparisons across records, and $P$ be the number of patterns that comparison vectors exhibit in $A \times B$. We assume $C$ cores available for parallelization and a Gibbs sampler with $T$ iterations. Then, the overall computational complexity of \texttt{fabl} with hashing is $O(F n_A n_B /C) + O(T P n_B^2/ C)$.
+\end{lemma}
+		%\begin{proof}
+	
+		We consider two steps: constructing the comparison vectors and the Gibbs sampler. The computational complexity of all pairwise comparisons across $A$ and $B$ is $O(F n_A n_B)$. The hashing procedure for all pairwise comparisons is also $O(F n_A n_B)$. With $C$ processors available, we can split these computations across $C$ equally sized partitions and compute these comparisons in parallel, so the complexity becomes $O(F n_A n_B /C)$. There are then trivial computational costs associated with synthesizing summary statistics across these partitions. We note that this contribution to computational complexity applies for all versions of \cite{fellegi_theory_1969} algorithms unless they use blocking to reduce the comparison space.
+			
+			Without hashing, the computational complexity of updating the $\bm{m}$ and $\bm{u}$ parameters is $O(F n_A n_B)$. However, by doing calculations over the agreement patterns rather than the individual records, hashing reduces the overall complexity to $O(P)$. The complexity of updating $\bm{Z}$ sequentially at the record level as in \cite{sadinle_bayesian_2017} is $O(n_A n_B)$. With hashing, we first sample the agreement pattern of the match with complexity $O(n_B P)$, and then we sample the record exhibiting that pattern with complexity $O(n_B)$. Thus, the complexity of sampling $\bm{Z}$ in a single iteration is $O(n_B P)$. Since $P << n_A$ in most applications, we have reduced the complexity of sampling $\bm{Z}$ from $O(F n_A n_B)$ under \texttt{BRL} to $O(n_B P)$ under \texttt{fabl}. With parallelization, this complexity is further reduced to $O(n_B P /C)$, and so the entire Gibbs sampler has complexity $O(T n_B P / C).$
+			In summary, the total computational complexity for \texttt{fabl} is $O(F n_A n_B / C) + O(T n_B P / C).$
+			%\end{proof}
+
 \subsection{Additional Simulation}\label{app:simulation-2}
 
 We repeat the simulation from Section~\ref{sec:simulations} with a larger proportion of the records in $B$ having matches in $A$. Specifically, we increase the number of such records to 150, rather than 50. As shown in Figures~\ref{fig:sim-vabl-comparison-2} and \ref{fig:sim-multilink-comparison-2}, the precision for \texttt{multilink} without filtering and for \texttt{fastLink} is much better in this setting, but still is not competitive with \texttt{DRL}. 
@@ -688,6 +774,17 @@ We repeat the simulation from Section~\ref{sec:simulations} with a larger propor
 	\includegraphics[width=0.8\textwidth]{../figures/poisson_fig2_app.png}
 	\caption{Results from simulation study of described in Appendix~\ref{app:simulation-2} for \texttt{multilink} (with and without filtering) and \texttt{DRL}.}
 	\label{fig:sim-multilink-comparison-2}
+\end{figure}
+
+\subsection{Simulation Traceplots}\label{app:simulation-traceplots}
+
+
+Describe behavior of $\eta$ traceplot.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../figures/poisson_eta_trace.png}
+	\caption{Traceplot for $\bm{\eta}$ under \texttt{DRL} for sample linkage task in simulation described in Section~\ref{sec:simulations}.}
+	\label{fig:eta-traceplot}
 \end{figure}
 
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  7 SEP 2024 13:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  10 SEP 2024 18:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -990,150 +990,187 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [9] [10]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 287.
+put line 316.
  [11] [12] [13] [14] [15]
-<../figures/poisson_fig1.png, id=415, 307.1475pt x 205.7286pt>
+<../figures/poisson_fig1.png, id=423, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig1.png Graphic file (type png)
 <use ../figures/poisson_fig1.png>
-Package pdftex.def Info: ../figures/poisson_fig1.png  used on input line 412.
+Package pdftex.def Info: ../figures/poisson_fig1.png  used on input line 439.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
-<../figures/poisson_fig2.png, id=418, 307.1475pt x 205.7286pt>
+<../figures/poisson_fig2.png, id=426, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig2.png Graphic file (type png)
 <use ../figures/poisson_fig2.png>
-Package pdftex.def Info: ../figures/poisson_fig2.png  used on input line 419.
+Package pdftex.def Info: ../figures/poisson_fig2.png  used on input line 446.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
  [16] [17 <../figures/poisson_fig1.png>]
 [18 <../figures/poisson_fig2.png>] [19]
-<../figures/ncvr_thresholds.png, id=457, 320.1561pt x 153.4533pt>
+<../figures/ncvr_thresholds.png, id=465, 320.1561pt x 153.4533pt>
 File: ../figures/ncvr_thresholds.png Graphic file (type png)
 <use ../figures/ncvr_thresholds.png>
-Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 467
+Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 494
 .
 (pdftex.def)             Requested size: 416.04016pt x 199.42834pt.
  [20] [21 <../figures/ncvr_thresholds.png>] [22] (./multiple_match.bbl [23] [24
 ] [25] [26]) [27]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 503.
+(hyperref)                removing `math shift' on input line 530.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 503.
+(hyperref)                removing `subscript' on input line 530.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 503.
+(hyperref)                removing `math shift' on input line 530.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 532.
+(hyperref)                removing `math shift' on input line 559.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 532.
+(hyperref)                removing `subscript' on input line 559.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 532.
+(hyperref)                removing `math shift' on input line 559.
 
 [28] [29] [30] [31]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 609.
+(hyperref)                removing `math shift' on input line 636.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 609.
+(hyperref)                removing `subscript' on input line 636.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 609.
+(hyperref)                removing `math shift' on input line 636.
 
 [32]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 634.
+(hyperref)                removing `math shift' on input line 661.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\eta' on input line 634.
+(hyperref)                removing `\eta' on input line 661.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 634.
+(hyperref)                removing `subscript' on input line 661.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 634.
+(hyperref)                removing `math shift' on input line 661.
 
 [33]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 650.
+(hyperref)                removing `math shift' on input line 677.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 650.
+(hyperref)                removing `math shift' on input line 677.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 650.
+(hyperref)                removing `math shift' on input line 677.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 650.
+(hyperref)                removing `math shift' on input line 677.
 
 [34]
-<../figures/poisson_fig1_app.png, id=577, 307.1475pt x 205.7286pt>
+
+! LaTeX Error: Environment proof undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.754 		\begin{proof}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: \begin{document} ended by \end{proof}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.759 			\end{proof}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[35] [36]
+<../figures/poisson_fig1_app.png, id=602, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig1_app.png Graphic file (type png)
 <use ../figures/poisson_fig1_app.png>
-Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 68
-1.
+Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 76
+7.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
-<../figures/poisson_fig2_app.png, id=580, 307.1475pt x 205.7286pt>
+<../figures/poisson_fig2_app.png, id=605, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig2_app.png Graphic file (type png)
 <use ../figures/poisson_fig2_app.png>
-Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 68
-8.
+Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 77
+4.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
- [35] [36 <../figures/poisson_fig1_app.png> <../figures/poisson_fig2_app.png>] 
-(./multiple_match.aux)
+<../figures/poisson_eta_trace.png, id=608, 339.1872pt x 203.0787pt>
+File: ../figures/poisson_eta_trace.png Graphic file (type png)
+<use ../figures/poisson_eta_trace.png>
+Package pdftex.def Info: ../figures/poisson_eta_trace.png  used on input line 7
+85.
+(pdftex.def)             Requested size: 369.8174pt x 221.43506pt.
+ [37] [38 <../figures/poisson_fig1_app.png> <../figures/poisson_fig2_app.png>] 
+[39 <../figures/poisson_eta_trace.png>] (./multiple_match.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `multiple_match.out' has not changed.
-(rerunfilecheck)             Checksum: 9CE0A1E98F4A3ACB4196CB24B394EAFB;3902.
+(rerunfilecheck)             Checksum: E8838880FD29D08604514F8CD15797FD;4379.
  ) 
 Here is how much of TeX's memory you used:
- 27891 strings out of 478276
- 539153 string characters out of 5850489
- 879405 words of memory out of 5000000
- 45281 multiletter control sequences out of 15000+600000
- 489069 words of font info for 168 fonts, out of 8000000 for 9000
+ 27925 strings out of 478276
+ 539749 string characters out of 5850489
+ 880742 words of memory out of 5000000
+ 45298 multiletter control sequences out of 15000+600000
+ 489564 words of font info for 172 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,20n,89p,1336b,535s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,21n,89p,1336b,535s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2021/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021/texmf-dist/fonts/t
 ype1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
-><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/tex
-live/2021/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive
-/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2021/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:
-/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2
-021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf
--dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2021/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msbm10.pfb>
-Output written on multiple_match.pdf (36 pages, 670973 bytes).
+public/amsfonts/cm/cmitt10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.p
+fb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/tex
+live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/202
+1/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2021/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2021/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive
+/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2021/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2021/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/a
+msfonts/symbols/msbm10.pfb>
+Output written on multiple_match.pdf (39 pages, 802595 bytes).
 PDF statistics:
- 724 PDF objects out of 1000 (max. 8388607)
- 607 compressed objects within 7 object streams
- 134 named destinations out of 1000 (max. 500000)
- 38190 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 764 PDF objects out of 1000 (max. 8388607)
+ 640 compressed objects within 7 object streams
+ 143 named destinations out of 1000 (max. 500000)
+ 38723 words of extra memory for PDF output out of 42996 (max. 10000000)
 
