@@ -12,7 +12,7 @@ burn = S * .1
 
 dupe_rate <- c("low", "mid", "high")
 folder_names <- list.files("data/poisson_sims/", full.names = F)
-methods <- c("vabl", "fabl", "DRL", "fastLink")
+methods <- c("vabl_2", "fabl")
 
 df_list <- vector("list", length = length(dupe_rate))
 
@@ -73,30 +73,7 @@ for(d in seq_along(folder_names)){
   Z_hat <- make_Zhat_pairs(result_mm$Z_hat)
   fabl_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
 
-  start <- proc.time()[3]
-  out_mm <- fabl_mm(hash, S = S, burn = burn, show_progress = F)
-  time <- proc.time()[3] - start
-  result_mm <- estimate_links_mm(out_mm, hash, resolve = T, transitivity = F)
-  Z_hat <- result_mm$Z_hat[, 1:2]
-  #Z_hat <- make_Zhat_pairs(result_mm$Z_hat)
-  drl_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
-
-  #saveRDS(out_mm, "out/poisson_sim_chain")
-  start <- proc.time()[3]
-  fl_out <- fastLink::fastLink(file_A, file_B, varnames = names(file_A)[c(4, 5, 6, 7, 8)],
-                               stringdist.match = names(file_A)[c(4, 5, 6, 7, 8)],
-                               partial.match = names(file_A)[c(4, 5)],
-                               stringdist.method = "lv",
-                               cut.a = 1, cut.p = .75, dedupe.matches = F, threshold.match = .5,
-                               n.cores = 1, verbose = F, return.all = F)
-  time <- proc.time()[3] - start
-
-  Z_hat <- data.frame(id_1 = fl_out$matches$inds.a,
-                      id_2 = fl_out$matches$inds.b)
-  fastlink_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
-
-
-  df <- rbind(vabl_result, fabl_result, drl_result, fastlink_result) %>%
+  df <- rbind(vabl_result, fabl_result) %>%
     data.frame() %>%
     mutate(duplication = dupe_rate[d],
            method = methods)
@@ -107,5 +84,5 @@ for(d in seq_along(folder_names)){
 final <- df_list %>%
   do.call(rbind, .)
 
-saveRDS(final, paste0("out/poisson/sim_", stringr::str_pad(j, 3, "left", "0")))
+saveRDS(final, paste0("out/poisson_fabl/sim_", stringr::str_pad(j, 3, "left", "0")))
 #saveRDS(final, paste0("out/poisson_2/sim_", stringr::str_pad(j, 3, "left", "0")))

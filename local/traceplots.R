@@ -3,6 +3,8 @@ library(ggplot2)
 
 chain <- readRDS("out/poisson_sim_chain")
 
+# eta
+
 eta_samps <- lapply(1:900, function(x){
   chain$eta[[x]] %>%
     data.frame() %>%
@@ -23,6 +25,46 @@ eta_samps %>%
 
 ggsave("figures/poisson_eta_trace.png")
 
+# m
 
 
+fields <- names(file_A)[c(4, 5, 6, 7, 8)]
+levels <- c(3, 3, 2, 2, 2)
+fields_vec <- sapply(1:5, function(x){
+  rep(fields[x], levels[x])
+}) %>%
+  unlist()
 
+k_vec <- sapply(1:5, function(x){
+  seq_len(levels[x])
+}) %>%
+  unlist()
+values <- as.vector(chain$m)
+
+m_df <- data.frame(value = values, field = rep(fields_vec, 900), k = rep(k_vec, 900), iter = rep(1:900, each = 12))
+
+
+m_df %>%
+  ggplot() +
+  aes(x = iter, y = value) +
+  geom_line() +
+  facet_grid(k ~field) +
+  labs(x = "Iteration", y = expression(m[fl])) +
+  theme_bw(base_size = 9)
+
+ggsave("figures/poisson_m_trace.png")
+
+
+values <- as.vector(chain$u)
+
+u_df <- data.frame(value = values, field = rep(fields_vec, 900), k = rep(k_vec, 900), iter = rep(1:900, each = 12))
+
+u_df %>%
+  ggplot() +
+  aes(x = iter, y = value) +
+  geom_line() +
+  facet_grid(k ~field) +
+  labs(x = "Iteration", y = expression(u[fl])) +
+  theme_bw(base_size = 9)
+
+ggsave("figures/poisson_u_trace.png")
