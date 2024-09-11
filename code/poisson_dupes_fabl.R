@@ -67,7 +67,7 @@ for(d in seq_along(folder_names)){
   vabl_result <- c(evaluate_links(Z_hat, Z_true, n_A, "pairs"), time)
 
   start <- proc.time()[3]
-  out_mm <- fabl(hash, S = S, burn = burn, show_progress = F)
+  out_mm <- fabl_mm(hash, S = S, burn = burn, show_progress = F, max_K = 1)
   time <- proc.time()[3] - start
   result_mm <- estimate_links(out_mm, hash, resolve = T)
   Z_hat <- make_Zhat_pairs(result_mm$Z_hat)

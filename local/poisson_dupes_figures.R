@@ -3,9 +3,10 @@ library(ggplot2)
 library(tidyr)
 
 results <- readRDS("out/poisson_all")
+results_fabl <- readRDS("out/poisson_fabl_all")
 results_ml <- readRDS("out/poisson_ml_all")
 results_filter <- readRDS("out/poisson_ml_filter_all")
-results <- rbind(results, results_ml, results_filter)
+results <- rbind(results, results_fabl, results_ml, results_filter)
 
 # results <- readRDS("out/poisson_2_all")
 # results_ml <- readRDS("out/poisson_2_ml_all")
@@ -15,13 +16,14 @@ results <- rbind(results, results_ml, results_filter)
 names(results)[3] <- "F-measure"
 
 df <- results %>%
+  filter(method != "vabl_2") %>%
   pivot_longer(cols = 1:4, names_to = "metric") %>%
   mutate(metric = factor(metric,
                          c("Recall", "Precision", "F-measure", "elapsed"))) %>%
   mutate(duplication = factor(duplication,
                          c("low", "mid", "high"))) %>%
   mutate(method = factor(method,
-                              c("vabl", "fastLink", "multilink",
+                              c("vabl", "fabl", "fastLink", "multilink",
                                 "multilink_filter", "DRL"))) %>%
   group_by(method, metric, duplication) %>%
   summarize(median = quantile(value, .5, na.rm = T),
