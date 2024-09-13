@@ -2,6 +2,7 @@
 
 \usepackage[hypertexnames=false]{hyperref}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage{enumerate}
 
@@ -47,6 +48,7 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}{Lemma}
+%\newtheorem{proof}{Proof}
 \def \brian#1{{\color{red} (#1)}}
 \def \serge#1{{\color{blue} (#1)}}
 \def \beka#1{{\color{green} (#1)}}
@@ -87,7 +89,7 @@
  %For this reason, we do not enforce transitive closure throughout the Gibbs sampler as done in \cite{marchant_distributed_2019} and \cite{aleshinguendel2021multifile}, but rather assume it, and create a coherent set of linkages through post-processing. This allows for a record linkage model that is robust to internal duplications while maintaining the computational advantages of the original \texttt{fabl} model.
 
 %There have been several other attempts to estimate more flexible linkage structures within the comparison vector framework, but each has significant drawbacks in practice. First, the original \cite{fellegi_theory_1969} method that models the linkage status of each record pair as independent typically results in one record in one file being matched with multiple records in the other file. This initial estimate of the linkage structure is usually refined through post-processing to create a bipartite matching \cite{jaro1989}. As of yet, this post-processing has not been adapted to estimate more general linkage structures, and the initial estimate without any post-processing is known to have poor precision. \cite{aleshin2023multifile} allowed for multiple matches within and across datafiles, but requires that the modeller explicitly set a maximum linkage cluster size, and models the dependency between records in such a way that limits scalability. 
-Probabilistic record linkage uses statistical methods to identify matching records within and across databases, generally without the use of unique identifiers. This is an increasingly important task in ``data cleaning,'' either for its own sake, or as a preliminary step before conducting subsequent analysis. This problem is increasingly important in health care \citep{gutman_bayesian_2013, hof2017probabilistic}, governmental statistics \citep{Jaro1995, Fortinietal01}, human rights statistics \citep{lum2013applications, price2015documents, Sadosky2015, sadinle_detecting_2014, sadinle_bayesian_2018}, author name disambiguation \citep{lai_2011, zhang2018name}, and forensic science \citep{Tai2019}. In this paper, we propose a method for conducting record linkage between a duplicate free reference file and a reference file that may have internal duplications. \brian{Is "internal duplications" unclear?" I could just say "duplications"?}
+Probabilistic record linkage uses statistical methods to identify matching records within and across databases, generally without the use of unique identifiers. This is an increasingly important task in ``data cleaning,'' either for its own sake, or as a preliminary step before conducting subsequent analysis. This problem is increasingly important in health care \citep{gutman_bayesian_2013, hof2017probabilistic}, governmental statistics \citep{Jaro1995, Fortinietal01}, human rights statistics \citep{lum2013applications, price2015documents, Sadosky2015, sadinle_detecting_2014, sadinle_bayesian_2018}, author name disambiguation \citep{lai_2011, zhang2018name}, and forensic science \citep{Tai2019}. In this paper, we propose a method for conducting record linkage between a duplicate free reference file and a target file that may have duplications within itself.
 
 %It is common for data collectors to have one list of records with a rigorous sampling mechanism trusted to have no internal duplications, or have to cleaned a list over time such 
 
@@ -99,7 +101,7 @@ In the original FS formulation, the matching status of each record pair is consi
 
 Given these challenges, much work has been done to increase the speed and scalability of FS methods. One approach is to use probabilistic or deterministic methods to reduce the number of record pairs considered as possible matches. With ``blocking,'' the analyst uses some feature in the data to allocate records into smaller partitions (or blocks), and runs a linkage algorithm independently on each block \citep{christen_data_2012}. Blocking on an unreliable field, however, can lead to missed matches, making this form of blocking often undesirable \citep{steorts_comparison_2014}. ``Filtering,'' is a similar technique which uses some deterministic or probabilistic criteria to set the match probability for certain comparison vectors to zero after they have been created \citep{murray2016probabilistic, mcveigh2019scaling}. Without reducing the number of comparison vectors in the model, \cite{enamorado_using_2019} used a lower dimensional representation of the set of comparison vectors that allowed for faster parameter estimation of the standard FS model. \cite{kundinger_2023} then adopted this approach for a faster implementation of the bipartite model of \cite{sadinle_bayesian_2017}. \cite{kundinger_2024_vabl} then used variational inference for further computational gains.
  
-In this work, we continue to build on the these advances and provide a scalable record linkage method without the stringent assumption that each file is free of duplicates. We propose Dirichlet Record Linkage (\texttt{DRL}), an extension of the comparison vector record linkage framework for the scenario of linking one duplicate-free reference file to another file with unknown amounts of internal duplications. To do so, we model the parameter governing the amount of matches between files as a Dirichlet process. Since the resulting set of possible matches for each record is extremely high dimensional, we propose a Gibbs sampler utilizing the stick-breaking representation of the Dirichlet process for tractable posterior inference. We adopt the dimension reduction techniques of \cite{kundinger_2023} for additional gains in speed and scalability. Through simulation studies, we show that this method is able to link a reference file to a target file with various amounts of internal duplications without making any distributional assumptions on the nature of these duplications. Through a case study of voter registration records, we show that this method scalable to a linkage task involving 400,000 records without the use of blocking. 
+In this work, we continue to build on the these advances and provide a scalable record linkage method without the stringent assumption that each file is free of duplicates. We propose Dirichlet Record Linkage (\texttt{DRL}), an extension of the comparison vector record linkage framework for the scenario of linking one duplicate free reference file to a target file that may have duplications within itself (referred to as ``internal duplications"). To do so, we model the parameter governing the amount of matches between files as a Dirichlet process. Since the resulting set of possible matches for each record is extremely high dimensional, we propose a Gibbs sampler utilizing the stick-breaking representation of the Dirichlet process for tractable posterior inference. We adopt the dimension reduction techniques of \cite{kundinger_2023} for additional gains in speed and scalability. Through simulation studies, we show that this method is able to link a reference file to a target file with various amounts of internal duplications without making any distributional assumptions on the nature of these duplications. Through a case study of voter registration records, we show that this method scalable to a linkage task involving 400,000 records without the use of blocking. 
 
 In what follows, Section~\ref{sec:prior-work} reviews the work of \cite{fellegi_theory_1969} and a selection of Bayesian extensions to contextualize our contribution. Section~\ref{sec:drl} introduces \texttt{DRL}, and describes our method for efficient posterior sampling. Sections~\ref{sec:simulations} and \ref{sec:case-study} demonstrate the speed and accuracy of our method relative to several other FS techniques in a series of simulations and a case study of voter registration records in North Carolina. Finally, Section~\ref{sec:conclusion} discusses areas for further research.
 
@@ -194,8 +196,6 @@ This prior says that a record $B$ has some match in $A$ with probability $\pi$, 
 
 %We showed in \cite{kundinger_2023} and \cite{kundinger_2024_vabl} that the \texttt{fabl} framework tends to outperform standard FS when each record in $B$ has at most one match in $A$. However, 
 
-\brian{I edited this a bit for clarity. Do you think this should at the beginning or the end of this section? I like it at the beginning, to motivate the new material.}
-
 Although the \texttt{fabl} framework is effective and efficient when $A$ has no internal duplications, significant problems arise when a record in $B$ has multiple matching records in $A$. In particular, posterior probability is normalized among all records in $A$, such that none of the matches achieves high enough posterior probability to be identified in the Bayes estimate. This amounts to a paradox: the more matches that record $B_j$ has in $A$, the less likely the algorithm is to find a match. Here, we attempt to resolve this paradox by extending the \texttt{fabl} framework to handle these internal duplications in $A$. We emphasize that we are not interested in deduplication within $A$ for its own sake, but rather aim to conduct record linkage in light the problems posed by these duplications. Therefore, duplications within files that have no duplications across files will go undetected; we believe this acceptable for many practical applications. 
 
 We provide updated notation to describe matching in this setting. We drop the convention of labelling datasets such that $n_A \geq n_B$, and instead let $B$ denote the file that we assume is free of internal duplicates. In this setting, we refer to the duplicate free file $B$ as the reference file, and the other file $A$ as the target file. Let $Z_j = (Z_{j, 1}, \ldots)$ be a set containing the indices for all of the records in $A$ that are a match with record $B_j$, with $Z_j = \emptyset$ to denoting when $B_j$ has no match in $A$. Let $\bm{Z} = \{Z_j | j \in [n_B] \}$ denote the collection of all such sets for all records in $B$. Lastly, let $|Z_j|$ denote the number of records in $A$ that are linked to $B_j$. 
@@ -224,12 +224,10 @@ where for all $i \in [n_A]$ and $j \in [n_B]$,
 	%\label{eqn:fs_weight}
 	w_{ij} = \prod_{f=1}^{F}\prod_{l = 1}^{L_f} \left(\frac{m_{fl}}{u_{fl}}\right)^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} .
 \end{align*}
-Unfortunately, while the full conditional in \eqref{eqn:joint_posterior} has a closed form, sampling from it directly is infeasible for almost any record linkage task. In particular, there are $2^{n_A}$ possible matchings for each $B_j$, such that even enumerating these possible matchings would be computationally demanding. With MCMC however, we can sequentially sample individual components of $Z_j$ at a much lower computational cost.
+Unfortunately, while the full conditional in \eqref{eqn:joint_posterior} has a closed form, sampling from it directly is infeasible for almost any record linkage task. In particular, there are $2^{n_A}$ possible matchings for each $B_j$, such that even enumerating these possible matchings would be computationally demanding. In Section~\ref{sec:sequential-sampler}, we show how we can sequentially sample individual components of $Z_j$ at a much lower computational cost. In Section~\ref{sec:efficient-inference}, we outline our approach to further reduce computational complexity
 %Unfortunately, while the full conditional in \eqref{eqn:joint_posterior} has a closed form, sampling from it directly is infeasible for almost any record linkage task. In particular, there are $2^{n_A}$ possible matchings for each $B_j$, such that even enumerating these possible matchings would be computationally demanding. One could reduce this set of possible matchings by setting a maximum number of matches, $K$, per record in $B$, but this would still require $\sum_{k = 1}^K \frac{n_A!}{(n_A - k)!k!}$ possible options for the set $Z_j$, and would be prohibitive for most values of $n_A$ seen in record linkage problems. With MCMC however, we can sequentially sample individual components of $Z_j$ at a much lower computational cost, and learn $K$ from the data, rather than setting it ahead of time. 
 
 %In Section~\ref{sec:sequential-sampler}, we break the joint distribution of $Z_j$ into a sequence of more simple conditional univariate distributions. In Section~\ref{app:efficient-sampling}, we adapt methodology from \cite{kundinger_2023} to further reduce computational complexity. Additional details about initialization and posterior sampling for $\bm{m}$, $\bm{u}$, and $\bm{\eta}$ are provided in Appendix~\ref{app:gibbs-sampler}. In Section~\ref{sec:bayes-estimate}, we provide a loss function and decision rule to produce a point estimate of the linkage structure.
-
-%\brian{Note discrepancy about power law?}
 
 \subsection{Sampling $Z_j$} \label{sec:sequential-sampler} 
 
@@ -267,19 +265,17 @@ This sequential sampler produces an output $Z_j^{(s)} = q = (q_1, \ldots, q_k)$ 
 \end{align*}
 Thus, the probability that the sequential process samples each of the components of $q$ (in any order) is equal to the joint probability of $q$ as expressed in the joint distribution in (\ref{eqn:joint_posterior}).
 
+We summarize the full Gibbs sampler in Algorithm~\ref{alg:gibbs-sampler}. We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = \emptyset$ for all $j \in [n_B]$. We then iteratively sample $\bm{m}$,  $\bm{u}$, $\bm{\eta}$, and $\bm{Z}$ for a prespecified number of Gibbs iterations. The full conditional for $Z_{j, k}^{(s)}$ is provided in Appendix~\ref{app:sequential-sampler}, the full conditional for $\bm{\eta}^{(s)}$ is provided in Appendix~\ref{app:sample-eta}, and full conditionals for $\bm{m}^{(s)}$ and $\bm{u}^{(s)}$ are provided in Appendix~\ref{app:derive-m-u}. 
+
 %$D_k^{(s)} = [n_{B}] \setminus \{j | Z_{j, k}^{(s)} = \emptyset\}$
 
-\subsection{Summary of Gibbs Sampler}\label{sec:gibbs-sampler}
+%\subsection{Summary of Gibbs Sampler}\label{sec:gibbs-sampler}
 
-We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = \emptyset$ for all $j \in [n_B]$. We then iteratively sample $\bm{m}$,  $\bm{u}$, $\bm{\eta}$, and $\bm{Z}$ for a prespecified number of Gibbs iterations. The full conditional for $Z_{j, k}^{(s)}$ is provided in Appendix~\ref{app:sequential-sampler}, the full conditional for $\bm{\eta}^{(s)}$ is provided in Appendix~\ref{app:sample-eta}, and full conditionals for $\bm{m}^{(s)}$ and $\bm{u}^{(s)}$ are provided in Appendix~\ref{app:derive-m-u}. We summarize this sampler in Algorithm~\ref{alg:gibbs-sampler}.
+%We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = \emptyset$ for all $j \in [n_B]$. We then iteratively sample $\bm{m}$,  $\bm{u}$, $\bm{\eta}$, and $\bm{Z}$ for a prespecified number of Gibbs iterations. The full conditional for $Z_{j, k}^{(s)}$ is provided in Appendix~\ref{app:sequential-sampler}, the full conditional for $\bm{\eta}^{(s)}$ is provided in Appendix~\ref{app:sample-eta}, and full conditionals for $\bm{m}^{(s)}$ and $\bm{u}^{(s)}$ are provided in Appendix~\ref{app:derive-m-u}. We summarize this sampler in Algorithm~\ref{alg:gibbs-sampler}.
 
 %A computationally efficient method to sample $\bm{Z}$ using the hashing described in Appendix~\ref{app:hashing} is provided in Appendix~\ref{app:efficient-sampling}. 
 
 %Algorithm~\ref{alg:gibbs-sampler} provides a complete overview of the Gibbs sampler used in \texttt{DRL}. We provide derivations of the full conditional distributions for $\bm{m}$ and $\bm{u}$ in Appendix~\ref{app:derive-m-u}, and derivations for $\bm{\eta}$ in Appendix~\ref{app:sample-eta}. 
-
-%We use the notation $D_k^{(s)} = \{j \in [n_B]| Z_{j, k}^{(s)} \neq \emptyset\}$ to denote the set of records in $B$ for which the algorithm attempts to find matches in matching step $k$ in Gibbs iteration $s$ (with $D_0^{(s)} = [n_B]$).
-
-%Define $B_k = \{j \in [n_B]| Z_{j, k-1} \neq \emptyset\}$ with $B_1 = [n_B]$. At stage $k$ of the matching step, the sampler samples a potential match for each record in $B_k$. The matching step terminates at step $k^{(*)}$ when $B_{k*} = \emptyset$.
 
 %\SetKwComment{Comment}{/* }{ */}
 %\RestyleAlgo{ruled}
@@ -288,7 +284,7 @@ We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = 
 %	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 %	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 %	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{Initialize}{Initialize}
-%	\Input{Data $\bm{\Gamma}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\bm{\beta}_{\eta}$} 
+%	\Input{Data $\bm{\Gamma}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\beta_{\eta}$} 
 %	%\Output{$\hat{\Delta}, \hat{\bm{m}}, \hat{\bm{u}}, \hat{\bm{\eta}}$}
 %	\Initialize{$Z_j = \emptyset, \forall j \in [n_B]$}
 %	\For{$s \in [S]$}{
@@ -317,7 +313,7 @@ We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = 
 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{Initialize}{Initialize}
-	\Input{Data $\bm{\Gamma}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\bm{\beta}_{\eta}$} 
+	\Input{Data $\bm{\Gamma}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\beta_{\eta}$} 
 	%\Output{$\hat{\Delta}, \hat{\bm{m}}, \hat{\bm{u}}, \hat{\bm{\eta}}$}
 	\Initialize{$Z_j = \emptyset, \forall j \in [n_B]$}
 	\For{$s \in [S]$}{
@@ -351,21 +347,25 @@ We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = 
 	\Return{$\{\bm{Z}^{(s)}, \bm{m}^{(s)}, \bm{u}^{(s)}, \bm{\eta}^{(s)}\}_{s=1}^S$}
 \end{algorithm}
 
-%\alpha_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \in Z_j)
+\subsection{Efficient Posterior Inference} \label{sec:efficient-inference}
 
-We take a moment to emphasize the computational advantages to this approach. Sampling from the full conditional shown in (\ref{eqn:joint_posterior}) has complexity $O(2^{n_A}n_B)$, and would be nearly impossible for any reasonable record linkage task. Using the sequential sampler shown in (\ref{eqn:sequential_posterior}) has complexity $O\left(n_A \sum_{k=1}^{n_A} n_{k-1}^{(s)}\right)$, where $n_k^{(s)} = |D_{k}^{(s)}| = \sum_{j=1}^{n_B} I\left(|Z_j^{(s)}| \geq k\right)$ is the number of records in $B$ linked to at least $k$ records in $A$ in Gibbs iteration $s$. 
+As described in Algorithm~\ref{alg:gibbs-sampler}, the Gibbs sampler for \texttt{DRL} has computational complexity that depends on both $n_A$ and $n_B$, making it infeasible for large linkage tasks. Adapting the methodology of \cite{kundinger_2023}, however, we use hashing to substantially reduce this computational complexity. 
+%We provide a brief overview the approach here, and refer readers to the Appendix~\ref{app:hashing} for details.
 
-Even with the sequential sampler however, this complexity would still grow quadratically as the size of the linkage task grows. Therefore, we follow the methodology from \cite{kundinger_2023} to conduct sampling at the level of the unique instances of $\gamma_{ij}$ in the linkage task, instead of all $n_A n_B$ comparison vectors, to greatly reduce computational complexity. We review this methodology in Appendix~\ref{app:hashing}, and provide an adaptation of \eqref{eqn:sequential_posterior} using this methodology in Appendix~\ref{app:efficient-sampling}. Using this approach, the sampler has complexity $O\left(P \sum_{k=1}^{n_A} n_{k-1}^{(s)}\right)$, which grows linearly in the size of the base dataset. Lastly, we note since records in $B$ generally have a small number duplicates in $A$, most terms in the summation  $\sum_{k=1}^{n_A} n_{k-1}^{(s)}$ are zero. Thus, we have produced a computationally efficient sampler with complexity comparable to the $O(P n_B)$ complexity of \texttt{fabl}. 
+Since each component $\gamma_{ij}^f$ of the comparison vector is discrete, there are only finitely many possible realizations of the comparison vector $\gamma_{ij}$. Let $P$ be the number of unique agreement patterns observed in $\bm{\gamma}$. This number is bounded above by $P^{*} =  \prod_{f=1}^F (L_f + 1)$, where the addition of 1 to $L_f$ for each field accounts for the possibility of missing values. This upper bound does not scale with $n_A$ or $n_B$, but rather is determined by $F$ and $L_f$. By viewing each comparison vector as the realization of one agreement pattern rather than $F$ components, we greatly reduce the dimensionality of the linkage task and calculate summary statistics for efficient posterior inference.  We provide a more thorough explanation of this hashing procedure in  Appendix~\ref{app:hashing}. 
 
-\brian{Beka commented that computational complexity should be ``proven." This doesn't really seem like something to be proved though. In particular, there is no way to really relate the true amount of duplications $n_k$ to the number of duplicatations found in Gibbs iterations $n_k^{(s)}$, which is a random quantity (and generally greater that $n_k$). Its more a description than a proof.}
+Most importantly for \texttt{DRL}, we use hashing to break the sampler in \eqref{eqn:sequential_posterior} into two steps. First, we sample the agreement pattern for $Z_{j,k}$ among the $P$ agreement patterns exhibited in the data. Second, we sample the record $Z_{j,k}$ uniformly among all records in $A$ with comparison vectors exhibiting that pattern. We provide details in  Appendix~\ref{app:efficient-sampling}. We also provide an efficient posterior update for $\bm{m}$ and $\bm{u}$ in Appendix~\ref{app:derive-m-u}. These changes can greatly improve the speed of the sampler, as described in Lemma~\ref{lemma:complexity} and the subsequent discussion.
 
-%However, sampling from (\ref{eqn:gibbs1}) and (\ref{eqn:gibbs2}) has complexity $O\left(P (n_B + \sum_{k=1}^K n_{k-1}^{(s)})\right)$, which grows linearly in the size of the base dataset. Thus, we have produced a computationally efficient sampler with speed comparable to the $O(P n_B)$ complexity of \texttt{fabl}.
+\begin{lemma}\label{lemma:complexity}
+	Let $n_A$ and $n_B$ be the number of records in files $A$ and $B$, respectively. Let $F$ be the number of fields used for comparisons across records, and $P$ be the number of patterns that comparison vectors exhibit in $A \times B$. We assume $C$ cores available for parallelization and a Gibbs sampler with $T$ iterations. Then, the overall computational complexity of \texttt{DRL} with hashing is $O(F n_A n_B /C) + O(T P n_A n_B / C)$.
+\end{lemma}
+\begin{proof}
+	We showed in \cite{kundinger_2023} that the complexity for constructing the comparison vectors was $O(F n_A n_B /C)$. We also showed that the complexity for sampling $\bm{m}$ and $\bm{u}$ is $O(P)$. We therefore focus on here on the complexity of sampling $\bm{Z}$. 
+	
+	At each matching step, we sample $Z_{j,k}$ for each $j \in D_{k-1}$. In each instance, we first sample the agreement pattern of the match with complexity $O(P)$, and then we sample the record exhibiting that pattern with complexity $O(1)$. For any matching step $k$, $|D_{k-1}| \leq n_B$, so that the complexity is at worst $O(P n_B)$. For any linkage task, each record $j \in [n_B]$ matches to at most $n_A$ records in $A$, so that the complexity is at worst $O(P n_A n_B)$. Therefore, with parallelization over $C$ cores for $T$ iterations, sampling $\bm{Z}$ has complexity $O(T P n_A n_B / C).$ Thus, the overall computational complexity of \texttt{DRL} with hashing is $O(F n_A n_B /C) + O(T P n_A n_B / C)$.
+\end{proof}
 
-%This sequential sampler amounts to an extension of \texttt{fabl} with an iterative matching phase. See Appendix~\ref{app:gibbs-sampler} for a full derivation and explanation of the Gibbs sampler.
-
-
-
-
+The complexity proven in Lemma~\ref{lemma:complexity} is a loose upper bound that is only seen in the unrealistic linkage scenario where every record in $B$ matches to every record in $A$ (so that all records in the both data files refer to the same entity). In practice, sampling $\bm{Z}^{(s)}$ at iteration $s$ has complexity $O\left(P \sum_{k=1}^{n_A} n_{k-1}^{(s)}\right)$ where $n_k^{(s)} = \sum_{j=1}^{n_B} I(|Z_j^{(s)}| \geq k)$ is the number of records in $B$ with at least $k$ links in $A$. This quantity grows with the number of records in $B$ and with the rate of internal duplication in $A$, but does not grow with $n_A$. In particular, since records in $B$ generally have a small number duplicates in $A$, most terms in the summation  $\sum_{k=1}^{n_A} n_{k-1}^{(s)}$ are zero. We show in Section~\ref{sec:simulations} that \texttt{DRL} exhibits similar computation time to \texttt{fabl} when the rate of duplication is low, and modest increases to computation time as the rate of duplication grows. 
 
 \subsection{Bayes Estimate}\label{sec:bayes-estimate} 
 
@@ -543,7 +543,11 @@ In future work, we seek to adapt the methodology presented here to more closely 
 \section{Appendix}
 \label{sec:appendix}
 
-\subsection{Full Conditional for the Set $Z_j$}\label{app:joint-distribution}
+\subsection{Full Conditional Distributions} \label{app:full-conditionals}
+
+In this section, we provide derivations for all full conditional distributions referenced in the paper. We provide the derivation for the full set $Z_j$ in Appendix~\ref{app:joint-distribution}, for the component $Z_{j,k}$ in Appendix~\ref{app:sequential-sampler}, for $\bm{\eta}$ in Appendix~\ref{app:sample-eta}, and for $bm{m}$ and $\bm{u}$ in Appendix~\ref{app:derive-m-u}.
+
+\subsubsection{Full Conditional for the Set $Z_j$} \label{app:joint-distribution}
 
 We express the likelihood in \eqref{eqn:likelihood} for the model assumptions of \texttt{DRL} as
 \begin{align*} %\label{eqn:drl-likelihood}
@@ -572,7 +576,7 @@ Lastly, we multiply the likelihood by the prior in (\ref{eqn:drl-prior}) to obta
 %\end{subequations}
 Importantly, the constant $c_j$ is not found in the final expression because the probability mass associated with every potential value for $Z_j$ shares the same $c_j$. This does not occur due to proportionality.
 
-\subsection{Full Conditional for Component $Z_{j, k}$} \label{app:sequential-sampler}
+\subsubsection{Full Conditional for Component $Z_{j, k}$}  \label{app:sequential-sampler}
 We now provide the derivation of the sequential sampler, following the argument presented in Section \ref{app:joint-distribution}. Suppose $B_j$ has been linked to $k$ records in $A$. Recall that $Z_{j, -k}^{(s)} = (Z_{j, 1}^{(s)}, \ldots, Z_{j, k-1}^{(s)})$ denotes the vector of records already linked to $B_j$ in Gibbs iteration $s$. When $B_j$ has no additional link in $A$, the contribution to the likelihood is a product of the $u$ parameters for all remaining records. That is, 
 \begin{align*}
 	\mathbb{P}(\Gamma_{.j}| \bm{m}, \bm{u}, \bm{\pi}, Z_{j, k}^{(s)} = \emptyset, Z_{j, -k}^{(s)} = q_{-k}) = \prod_{i \notin q_{-k}} \prod_{f=1}^{F}\prod_{l=1}^{L_f} u_{fl}^{I(\gamma_{ij}^f = l)I_{obs}(\gamma_{ij}^f)} = c_{Z_{j, -k}^{(s)}}.
@@ -595,84 +599,6 @@ To obtain the posterior, we multiply by the prior in (\ref{eqn:sequential_prior}
 	\end{cases}
 \end{align*}
 Importantly, the constant $c_{Z_{j, -k}}^{(s)}$ is not found in the final expression because the probability mass associated with every potential value for $Z_{j, k}^{(s)}$ shares the same $c_{Z_{j, -k}}^{(s)}$. This does not occur due to proportionality. 
-
-
-\subsection{Hashing for Efficient Posterior Inference}\label{app:hashing}
-Following \cite{kundinger_2023} we use hashing to reduce the computational complexity of the Gibbs sampler. Since each component $\gamma_{ij}^f$ of the comparison vector is discrete, there are only finitely many possible realizations of the comparison vector $\gamma_{ij}$. Let $P$ be the number of unique agreement patterns observed in $\bm{\gamma}$. This number is bounded above by $P^{*} =  \prod_{f=1}^F (L_f + 1)$, where the addition of 1 to $L_f$ for each field accounts for the possibility of missing values. This upper bound does not scale with $n_A$ or $n_B$, but rather is determined by $F$ and $L_f$.  
-
-We adopt a hashing function to map the $P$ unique agreement patterns present in the comparison vectors to the integers in $[P]$. Let
-\begin{equation*}
-	%\label{eq:hashfunc}
-	h_f^{(i,j)} = I_{obs}( \gamma_{ij}^f) 2^{\gamma_{ij}^f + I(f>1) \times \sum_{e=1}^{f-1}(L_{e} - 1)}
-\end{equation*}
-denote a hashed value for field $f$ for record pair $(i,j)$. Summing over the fields for the agreement pattern of record pair $(i,j)$ gives the hash value $h^{(i,j)}=\sum_{f=1}^Fh_f^{(i,j)}$. We enumerate the unique hashed agreement patterns from $1$ to $P$. Denote each agreement pattern as $h_p=(h_p^1,\dots,h_p^F)$, so that when record pair $(i,j)$ exhibits agreement pattern $p$, we write $\gamma_{ij}=h_p$.  Collect the agreement patterns as $\mathcal{P}=\{h_p\mid p\in[P]\}$.
-
-Let $e(h_p)$ denote the $\sum_{f=1}^FL_f$ length vector in which the $l + \sum_{k=1}^{f-1} L_k$ component is 1 when $h_p^f = l$, and 0 otherwise. Observe that $e(h_p)$ represents a long version of $h_p$, which is useful for computational purposes. Let $N_{p_j}=\sum_{i=1}^{n_B}I(\gamma_{ij}=h_p)$ denote the number of records in $A$ with which record $j$ in $B$ has agreement pattern $p$. Collect these counts in $\mathcal{N}=\{N_{p_j}\mid j\in[n_B], p\in[P]\}.$ Let $N_p=\sum_{j=1}^{n_B}N_{p_j}$ denote the total number of record pairs with agreement pattern $p$. Finally, let $r_{p_j}=\{i\in[n_A]\mid \gamma_{ij}=h_p\}$ be the set of records in $A$ with which record $j$ in $B$ has agreement pattern $p$, and collect these sets as $\mathcal{R}=\{r_{p_j}\mid p\in[P], j\in[n_B]\}$. 
-
-The set $\tilde{\bm{\Gamma}}=\{ \mathcal{P}, \mathcal{R},\mathcal{N}\}$ fully characterizes the information in $\bm{\Gamma}$ at a reduced storage cost. In particular, by letting 
-\[
-m_p = \prod_{f=1}^F\prod_{l=1}^{L_f} m_{fl}^{I(h_p^{f}=l)I_{obs}(h_p^{f})}
-\]
-and
-\[
-u_p = \prod_{f=1}^F\prod_{l=1}^{L_f} u_{fl}^{I(h_p^{f}=l)I_{obs}(h_p^{f})},
-\]
-the likelihood function in \eqref{eqn:likelihood} can be written as
-\begin{equation}
-	\label{eq:likelihood-hash}
-	\mathcal{L}(\bm{Z}, m,u\mid\tilde{\Gamma})=\prod_{j=1}^{n_B}\prod_{p=1}^{P}\prod_{i\in r_{p_j}}m_p^{I(i \in Z_j)}u_{p}^{I(i \notin Z_j)}.
-\end{equation}
-Thus this hashing procedure allows for exact inference on the original model, without any approximation.
-
-\subsubsection{Batched Computation of Comparison Vectors} \label{app:batching}
-When it becomes infeasible to store all $n_A  n_B$ comparison vectors at one time, we partition $A$ and $B$ into $t_1$ and $t_2$ smaller disjoint batches, as proposed by \cite{kundinger_2023}. Let $\{A^1, \dots, A^{t_1}\}$ be a partition of $A$ such that 
-$$\cup_{a=1}^{t_1} A^a = A \quad \text{and} \quad A^a \cap A^{a'}=\emptyset \quad \text{for all} \quad a \neq a'.$$  Likewise, let $\{B^1, \dots, B^{t_2}\}$ be a partition of $B$ such that 
-$$\cup_{b=1}^{t_2} B^b = B \quad \text{and} \quad B^b \cap B^{b'}=\emptyset \quad \text{for all} \quad b \neq b'.$$ For each $a$ and $b$, we compute comparison vectors for all records in $A^a \times B^b$, creating the comparison matrix $\bm{\Gamma}^{ab}$. 
-
-We then perform hashing on the batch of comparison data, obtain a compressed $\tilde{\bm{\Gamma}}^{ab}$, and delete the memory intensive matrix $\bm{\Gamma}^{ab}$ before continuing with the next batch of data. That is, we calculate
-\begin{align*}
-	r_{p_j}^{ab} &= \{i \in [n_A]\mid \gamma_{ij} = h_p, i\in A^a, j \in B^b\}, \\
-	N_{p_j}^{ab} &= |r_{p_j}^{ab}|.
-\end{align*}
-%where $r_{p_j}^{ab}$ is needed to compute point estimates as outlined in Appendix \ref{app:bayes-estimate}.
-We compute these quantities for each batch in parallel. Finally, summary statistics from each pairwise batch comparison are combined to recover summary statistics for the full comparison matrix $\bm{\Gamma}$ through
-\begin{align}
-	r_{p_j} &= \{r_{p_j}^{ab}\}_{a=1, b=1}^{t_1,t_2} \label{eq:rpj}  \\
-	\text{and } N_{p_j} &= \sum_{a = 1}^{t_1} \sum_{b = 1}^{t_2} N_{p_j}^{ab}. \notag
-\end{align}
-
-We can further reduce memory costs through storage efficient indexing (SEI) \citep{kundinger_2023}. All records $i$ in $A$ that share agreement pattern $p$ with record $B_j$ have the same weight $w_{p}$ (as described in Appendix \ref{app:hashing}). These records have the same probability to be identified as the link for record $B_j$. Thus, records $i \in r_{p_j}$ with large $N_{p_j}$ are unlikely to be sampled consistently enough to be deemed a match in the Bayes estimate. Rather than store all of these record labels, we store only a small number $S$. For each $r_{p_j}^{ab}$, we sample $S$ indices without replacement to form SEI$(r_{p_j}^{ab})$. We collect these memory-reduced lists to form SEI$(r_{p_j})$ as in (\ref{eq:rpj}), and collect these to form SEI$(\mathcal{R})$.
-
-Lastly, when using SEI along with batching in this manner, we implicitly restrict the sequential sampler described in Section~\ref{sec:sequential-sampler}. If $|\text{SEI}(r_{p_j})| < N_{p_j}$ after conducting SEI, there is a non-zero probability we can sample an agreement pattern in \eqref{eqn:gibbs1} and not have a corresponding record label for it when sampling in \eqref{eqn:gibbs2}. Therefore, when using SEI, we must limit the amount of sequential sampling steps to some number $K < S$.
-
-\subsection{Gibbs Sampler}\label{app:gibbs-sampler}
-
-We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = \emptyset$ for all $j \in [n_B]$. We then iteratively sample $\bm{m}$,  $\bm{u}$, $\bm{\eta}$, and $\bm{Z}$ for a prespecified number of Gibbs iterations. A computationally efficient method to sample $\bm{Z}$ using the hashing described in Appendix~\ref{app:hashing} is provided in Appendix~\ref{app:efficient-sampling}. The the full conditional for $\bm{\eta}$ is provided in Appendix~\ref{app:sample-eta}, and full conditionals for $\bm{m}$ and $\bm{u}$ are provided in Appendix~\ref{app:derive-m-u}.
-
-\subsubsection{Efficient Sequential Sampling for Components $Z_{j, k}$}\label{app:efficient-sampling}
-
-Let $\tilde{\bm{\Gamma}}=\{ \mathcal{P}, \mathcal{R},\mathcal{N}\}$ denote the set of summary statistics described in Appendix~\ref{app:hashing}. We provide a computationally efficient implementation of the sampler in \eqref{eqn:sequential_posterior} by using, and updating, quantities in $\mathcal{R}$ and $\mathcal{N}$ as the sequential sampler progresses. Let $r_{p_j}(k) = r_{p_j} \ (Z_{j, 1}, \ldots Z_{j, k-1})$ be the set of records of agreement pattern $p$ available for matching at the $k^{th}$ matching step, and let $N_{p_j}(k) = |r_{p_j}(k)|$ be the number of such records. We first sample among $P + 1$ options for the agreement pattern between $B_j$ and its potential link. Define $r$ as an arbitrary set of records. We have
-\begin{align}
-	\label{eqn:gibbs1}
-	p\left( Z_{j, k} \in r \mid \tilde{\bm{\Gamma}}, \bm{m}, \bm{u}, \eta_k \right) \propto
-	\begin{cases} 
-		\frac{\eta_k N_{p_j}(k)}{n_A - (k - 1)}  w_{p},  & r = r_{p_j}(k); \\
-		1- \eta_k , &  r = \emptyset. \\
-	\end{cases}
-\end{align}
-Since all remaining records in $A$ sharing the same agreement pattern with $B_j$ are equally likely, we then sample among candidate records uniformly using
-\begin{align}
-	\label{eqn:gibbs2}
-	p\left(Z_{j, k} = q \mid Z_{j, k} \in r, \bm{m}, \bm{u}, \eta_k \right) = \begin{cases} 
-		\frac{1}{N_{p_j}(k)}, & r = r_{p_j}(k) \text{ and } q \in r; \\
-		1, & r = \emptyset \text{ and } q = \emptyset. \\
-	\end{cases}
-\end{align}
-Sampling from \eqref{eqn:gibbs1} and \eqref{eqn:gibbs2} is mathematically equivalent to sampling from the full conditional for $Z_{j,k}$ in \eqref{eqn:sequential_posterior}.
-
-%We take a moment to emphasize the computational advantages to this approach. Sampling from the full conditional shown in (\ref{eqn:joint_posterior}) would have complexity $O(2^{n_A}n_B)$, and would be nearly impossible for any reasonable record linkage task. Using the sequential sampler shown in (\ref{eqn:sequential_posterior}) in Gibbs iteration $s$ has complexity $O\left(n_A (n_B + \sum_{k=1}^K n_{k-1}^{(s)})\right)$, where $n_k^{(s)} = \sum_{j=1}^{n_B} I\left(|Z_j^{(s)}| \geq k\right)$ is the number of records in $B$ linked to at least $k$ records in $A$. Even with the sequential sampler, this complexity  would still grow quadratically as the size of the linkage task grows. However, sampling from (\ref{eqn:gibbs1}) and (\ref{eqn:gibbs2}) has complexity $O\left(P (n_B + \sum_{k=1}^K n_{k-1}^{(s)})\right)$, which grows linearly in the size of the base dataset. Thus, we have produced a computationally efficient sampler with speed comparable to the $O(P n_B)$ complexity of \texttt{fabl}.
-
-%The full conditionals for $\bm{m}$ and $\bm{u}$ are similar to those shown in \cite{kundinger_2023}, and are thus moved to Appendix~\ref{app:derive-m-u}. Full conditionals for $Z_j$ and $\bm{\eta}$ are provided in Sections~\ref{sec:sampling-zjk} and \ref{sec:sampling-zjk} respectively below. 
 
 \subsubsection{Sampling Match Rate $\eta_k$}\label{app:sample-eta}
 
@@ -698,31 +624,72 @@ The $\bm{m}$ and $\bm{u}$ parameters are updated through standard multinomial-Di
 \end{align*}
 where $\alpha_{fl}(\bm{Z})= \alpha_{fl} + \sum_{i=1}^{n_A}  \sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f)I(\gamma_{ij}^f = l) I(i \in Z_j)$. Analogous procedures lead to $\mathcal{L}(u_{fl}| \bm{\Gamma}, \bm{m}, \bm{Z}, \bm{\eta})$  $\propto u_{fl}^{\beta_{fl}(\bm{Z}) - 1}$, where $\beta_{fl}(\bm{Z})= \beta_{fl} + \sum_{i=1}^{n_A}  \sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f)I(\gamma_{ij}^f = l) I(i \notin Z_j)$. Thus, for the vectors of parameters $\bm{m}_f$ and $\bm{u}_f$, we have
 %\begin{subequations}
-	\begin{align}
-		\bm{m}_f|\bm{\Gamma}, \bm{Z}, \bm{u}, \bm{\eta} &\sim \text{Dirichlet}(\alpha_{f1}(\bm{Z}), \ldots, \alpha_{fL_f}(\bm{Z}), \notag \\
-		\bm{u}_f|\bm{\Gamma}, \bm{Z}, \bm{m}, \bm{\eta} &\sim \text{Dirichlet}(\beta_{f1}(\bm{Z}), \ldots, \beta_{fL_f}(\bm{Z})), \notag \\
-		\text{where }\alpha_{fl}(\bm{Z})&= \alpha_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \in Z_j), \label{eqn:alpha_update} \\
-		\text{and } \beta_{fl}(\bm{Z})&=  \beta_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B}  I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \notin Z_j) \label{eqn:beta_update}.
-	\end{align}
-%\end{subequations}
+\begin{align}
+	\bm{m}_f|\bm{\Gamma}, \bm{Z}, \bm{u}, \bm{\eta} &\sim \text{Dirichlet}(\alpha_{f1}(\bm{Z}), \ldots, \alpha_{fL_f}(\bm{Z}), \notag \\
+	\bm{u}_f|\bm{\Gamma}, \bm{Z}, \bm{m}, \bm{\eta} &\sim \text{Dirichlet}(\beta_{f1}(\bm{Z}), \ldots, \beta_{fL_f}(\bm{Z})), \notag \\
+	\text{where }\alpha_{fl}(\bm{Z})&= \alpha_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B} I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \in Z_j), \label{eqn:alpha_update} \\
+	\text{and } \beta_{fl}(\bm{Z})&=  \beta_{fl} + \sum_{i=1}^{n_A}\sum_{j=1}^{n_B}  I_{obs}(\gamma_{ij}^f) I(\gamma_{ij}^f = l) I(i \notin Z_j) \label{eqn:beta_update}.
+\end{align}
 
-Using the hashing techniques provided in Appendix~\ref{app:hashing} and likelihood as expressed in \eqref{eq:likelihood-hash}, we can perform these updates in a more efficient manner. Let $\bm{\alpha_0} = (\alpha_{11}, \ldots, \alpha_{F L_F})$ and $\bm{\beta_0}= (\beta_{11}, \ldots, \beta_{F L_F})$ be concatenated vectors of prior parameters for the $\bm{m}$ and $\bm{u}$ distributions respectively. The terms needed for the posterior updates for the $\bm{m}$ and $\bm{u}$ parameters are given by the appropriate components of the vectors
-%\begin{subequations}
-	\begin{align}
-		\bm{\alpha(\bm{Z})} &= \bm{\alpha_0} + \sum_{p=1}^P n_p\left(\bm{Z} \right) \times e(h_p), \label{efficient_alpha} \\
-		\bm{\beta(\bm{Z})} &= \bm{\beta_0} + \sum_{p=1}^P \left(N_p - n_p\left(\bm{Z}\right)\right) \times e(h_p), \label{efficient_beta}
-	\end{align}
-%\end{subequations}
-where $n_p(\bm{Z}) = \sum_{i = 1}^{n_A}\sum_{j = 1}^{n_B} I(i \in Z_{j}) I\left(\gamma_{ij} = h_p \right)$ is the number of matching record pairs with agreement pattern $h_p$. Specifically, the $l + \sum_{k=1}^{f-1} L_k$ components of (\ref{efficient_alpha}) and (\ref{efficient_beta}) provide the posterior updates for level $l$ and field $f$ in (\ref{eqn:alpha_update}) and (\ref{eqn:beta_update}). These vectorized summations can be computed more efficiently than summing over $n_A n_B$ record pairs for each field and agreement level.
+\subsection{Hashing for Efficient Posterior Inference}\label{app:hashing}
+Following \cite{kundinger_2023} we use hashing to reduce the computational complexity of the Gibbs sampler. Since each component $\gamma_{ij}^f$ of the comparison vector is discrete, there are only finitely many possible realizations of the comparison vector $\gamma_{ij}$. Let $P$ be the number of unique agreement patterns observed in $\bm{\gamma}$. This number is bounded above by $P^{*} =  \prod_{f=1}^F (L_f + 1)$, where the addition of 1 to $L_f$ for each field accounts for the possibility of missing values. This upper bound does not scale with $n_A$ or $n_B$, but rather is determined by $F$ and $L_f$.  
 
-\subsection{Summary of Efficient Gibbs Sampler with Hashing} \label{app:efficient-algorithm}
+We adopt a hashing function to map the $P$ unique agreement patterns present in the comparison vectors to the integers in $[P]$. Let
+\begin{equation*}
+	%\label{eq:hashfunc}
+	h_f^{(i,j)} = I_{obs}( \gamma_{ij}^f) 2^{\gamma_{ij}^f + I(f>1) \times \sum_{e=1}^{f-1}(L_{e} - 1)}
+\end{equation*}
+denote a hashed value for field $f$ for record pair $(i,j)$. Summing over the fields for the agreement pattern of record pair $(i,j)$ gives the hash value $h^{(i,j)}=\sum_{f=1}^Fh_f^{(i,j)}$. We enumerate the unique hashed agreement patterns from $1$ to $P$. Denote each agreement pattern as $h_p=(h_p^1,\dots,h_p^F)$, so that when record pair $(i,j)$ exhibits agreement pattern $p$, we write $\gamma_{ij}=h_p$.  Collect the agreement patterns as $\mathcal{P}=\{h_p\mid p\in[P]\}$.
+
+Let $e(h_p)$ denote the $\sum_{f=1}^FL_f$ length vector in which the $l + \sum_{k=1}^{f-1} L_k$ component is 1 when $h_p^f = l$, and 0 otherwise. Observe that $e(h_p)$ represents a long version of $h_p$, which is useful for computational purposes. Let $N_{p_j}=\sum_{i=1}^{n_B}I(\gamma_{ij}=h_p)$ denote the number of records in $A$ with which record $j$ in $B$ has agreement pattern $p$. Collect these counts in $\mathcal{N}=\{N_{p_j}\mid j\in[n_B], p\in[P]\}.$ Let $N_p=\sum_{j=1}^{n_B}N_{p_j}$ denote the total number of record pairs with agreement pattern $p$. Finally, let $r_{p_j}=\{i\in[n_A]\mid \gamma_{ij}=h_p\}$ be the set of records in $A$ with which record $j$ in $B$ has agreement pattern $p$, and collect these sets as $\mathcal{R}=\{r_{p_j}\mid p\in[P], j\in[n_B]\}$. 
+
+The set $\tilde{\bm{\Gamma}}=\{ \mathcal{P}, \mathcal{R},\mathcal{N}\}$ fully characterizes the information in $\bm{\Gamma}$ at a reduced storage cost. In particular, by letting 
+\[
+m_p = \prod_{f=1}^F\prod_{l=1}^{L_f} m_{fl}^{I(h_p^{f}=l)I_{obs}(h_p^{f})}
+\]
+and
+\[
+u_p = \prod_{f=1}^F\prod_{l=1}^{L_f} u_{fl}^{I(h_p^{f}=l)I_{obs}(h_p^{f})},
+\]
+the likelihood function in \eqref{eqn:likelihood} can be written as
+\begin{equation}
+	\label{eq:likelihood-hash}
+	\mathcal{L}(\bm{Z}, \bm{m}, \bm{u} \mid \tilde{\Gamma}) = \prod_{j=1}^{n_B} \prod_{p=1}^{P} \prod_{i\in r_{p_j}} m_p^{I(i \in Z_j)} u_{p}^{I(i \notin Z_j)}.
+\end{equation}
+Thus this hashing procedure allows for exact inference on the original model, without any approximation.
+
+\subsubsection{Batched Computation of Comparison Vectors} \label{app:batching}
+When it becomes infeasible to store all $n_A  n_B$ comparison vectors at one time, we partition $A$ and $B$ into $t_1$ and $t_2$ smaller disjoint batches, as proposed by \cite{kundinger_2023}. Let $\{A^1, \dots, A^{t_1}\}$ be a partition of $A$ such that 
+$$\cup_{a=1}^{t_1} A^a = A \quad \text{and} \quad A^a \cap A^{a'}=\emptyset \quad \text{for all} \quad a \neq a'.$$  Likewise, let $\{B^1, \dots, B^{t_2}\}$ be a partition of $B$ such that 
+$$\cup_{b=1}^{t_2} B^b = B \quad \text{and} \quad B^b \cap B^{b'}=\emptyset \quad \text{for all} \quad b \neq b'.$$ For each $a$ and $b$, we compute comparison vectors for all records in $A^a \times B^b$, creating the comparison matrix $\bm{\Gamma}^{ab}$. 
+
+We then perform hashing on the batch of comparison data, obtain a compressed $\tilde{\bm{\Gamma}}^{ab}$, and delete the memory intensive matrix $\bm{\Gamma}^{ab}$ before continuing with the next batch of data. That is, we calculate
+\begin{align*}
+	r_{p_j}^{ab} &= \{i \in [n_A]\mid \gamma_{ij} = h_p, i\in A^a, j \in B^b\}, \\
+	N_{p_j}^{ab} &= |r_{p_j}^{ab}|.
+\end{align*}
+%where $r_{p_j}^{ab}$ is needed to compute point estimates as outlined in Appendix \ref{app:bayes-estimate}.
+We compute these quantities for each batch in parallel. Finally, summary statistics from each pairwise batch comparison are combined to recover summary statistics for the full comparison matrix $\bm{\Gamma}$ through
+\begin{align}
+	r_{p_j} &= \{r_{p_j}^{ab}\}_{a=1, b=1}^{t_1,t_2} \label{eq:rpj}  \\
+	\text{and } N_{p_j} &= \sum_{a = 1}^{t_1} \sum_{b = 1}^{t_2} N_{p_j}^{ab}. \notag
+\end{align}
+
+We can further reduce memory costs through storage efficient indexing (SEI) \citep{kundinger_2023}. All records $i$ in $A$ that share agreement pattern $p$ with record $B_j$ have the same weight $w_{p}$ (as described in Appendix \ref{app:hashing}). These records have the same probability to be identified as the link for record $B_j$. Thus, records $i \in r_{p_j}$ with large $N_{p_j}$ are unlikely to be sampled consistently enough to be deemed a match in the Bayes estimate. Rather than store all of these record labels, we store only a small number $S$. For each $r_{p_j}^{ab}$, we sample $S$ indices without replacement to form SEI$(r_{p_j}^{ab})$. We collect these memory-reduced lists to form SEI$(r_{p_j})$ as in (\ref{eq:rpj}), and collect these to form SEI$(\mathcal{R})$.
+
+Lastly, when using SEI along with batching in this manner, we implicitly restrict the sequential sampler described in Section~\ref{sec:sequential-sampler}. If $|\text{SEI}(r_{p_j})| < N_{p_j}$ after conducting SEI, there is a non-zero probability we can sample an agreement pattern in \eqref{eqn:gibbs1} and not have a corresponding record label for it when sampling in \eqref{eqn:gibbs2}. Therefore, when using SEI, we must limit the amount of sequential sampling steps to some number $K < S$.
+
+\subsection{Efficient Gibbs Sampler}\label{app:gibbs-sampler}
+
+%We initialize $\bm{Z}$ to reflect no matches across data files; that is, $Z_j = \emptyset$ for all $j \in [n_B]$. We then iteratively sample $\bm{m}$,  $\bm{u}$, $\bm{\eta}$, and $\bm{Z}$ for a prespecified number of Gibbs iterations. 
+A computationally efficient method to sample $\bm{Z}$ using the hashing described in Appendix~\ref{app:hashing} is provided in Appendix~\ref{app:efficient-sampling}. The the full conditional for $\bm{\eta}$ is provided in Appendix~\ref{app:sample-eta}, and full conditionals for $\bm{m}$ and $\bm{u}$ are provided in Appendix~\ref{app:derive-m-u}. We summarize the complete efficient Gibbs sampler in Algorithm~\ref{alg:gibbs-sampler-efficient}.
 
 \begin{algorithm}
 	\caption{Efficient Gibbs Sampler for Dirichlet Record Linkage}\label{alg:gibbs-sampler-efficient}
 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{Initialize}{Initialize}
-	\Input{Data $\tilde{\bm{\Gamma}}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\bm{\beta}_{\eta}$} 
+	\Input{Data $\tilde{\bm{\Gamma}}$ and hyperparameters $\bm{\alpha}, \bm{\beta},$ and $\beta_{\eta}$} 
 	%\Output{$\hat{\Delta}, \hat{\bm{m}}, \hat{\bm{u}}, \hat{\bm{\eta}}$}
 	\Initialize{$Z_j = \emptyset, \forall j \in [n_B]$}
 	\For{$s \in [S]$}{
@@ -749,37 +716,54 @@ where $n_p(\bm{Z}) = \sum_{i = 1}^{n_A}\sum_{j = 1}^{n_B} I(i \in Z_{j}) I\left(
 					\frac{\eta_k^{(s+1)} N_{p_j}{(s+1)}(k)}{n_A - (k - 1)}  w_{p}^{(s+1)},  & r^{(s+1)} = r_{p_j}^{(s+1)}(k); \\
 					1- \eta_k^{(s+1)} , &  r^{(s+1)} = \emptyset. \\
 				\end{cases}$
-			
+				
 				Sample $Z_{j, k}^{(s+1)} \propto \begin{cases} 
 					\frac{1}{N_{p_j}^{(s+1)}(k)}, & r^{(s+1)} = r_{p_j}^{(s+1)}(k) \text{ and } q \in r^{(s+1)}; \\
 					1, & r^{(s+1)} = \emptyset \text{ and } q = \emptyset. \\
 				\end{cases}$
 			}
-		
+			
 			Set $k = k + 1$
 		}
 	}
 	\Return{$\{\bm{Z}^{(s)}, \bm{m}^{(s)}, \bm{u}^{(s)}, \bm{\eta}^{(s)}\}_{s=1}^S$}
 \end{algorithm}
 
-\subsection{Computational Complexity}
+\subsubsection{Efficient Sequential Sampling for Components $Z_{j, k}$} \label{app:efficient-sampling}
 
-In this Appendix, we prove the computation complexity for \texttt{DRL}. 
+Let $\tilde{\bm{\Gamma}}=\{ \mathcal{P}, \mathcal{R},\mathcal{N}\}$ denote the set of summary statistics described in Appendix~\ref{app:hashing}. We provide a computationally efficient implementation of the sampler in \eqref{eqn:sequential_posterior} by using, and updating, quantities in $\mathcal{R}$ and $\mathcal{N}$ as the sequential sampler progresses. Let $r_{p_j}(k) = r_{p_j} \ (Z_{j, 1}, \ldots Z_{j, k-1})$ be the set of records of agreement pattern $p$ available for matching at the $k^{th}$ matching step, and let $N_{p_j}(k) = |r_{p_j}(k)|$ be the number of such records. We first sample among $P + 1$ options for the agreement pattern between $B_j$ and its potential link. Define $r$ as an arbitrary set of records. We have
+\begin{align}
+	\label{eqn:gibbs1}
+	p\left( Z_{j, k} \in r \mid \tilde{\bm{\Gamma}}, \bm{m}, \bm{u}, \eta_k \right) \propto
+	\begin{cases} 
+		\frac{\eta_k N_{p_j}(k)}{n_A - (k - 1)}  w_{p},  & r = r_{p_j}(k); \\
+		1- \eta_k , &  r = \emptyset. \\
+	\end{cases}
+\end{align}
+Since all remaining records in $A$ sharing the same agreement pattern with $B_j$ are equally likely, we then sample among candidate records uniformly using
+\begin{align}
+	\label{eqn:gibbs2}
+	p\left(Z_{j, k} = q \mid Z_{j, k} \in r, \bm{m}, \bm{u}, \eta_k \right) = \begin{cases} 
+		\frac{1}{N_{p_j}(k)}, & r = r_{p_j}(k) \text{ and } q \in r; \\
+		1, & r = \emptyset \text{ and } q = \emptyset. \\
+	\end{cases}
+\end{align}
+Sampling from \eqref{eqn:gibbs1} and \eqref{eqn:gibbs2} is mathematically equivalent to sampling from the full conditional for $Z_{j,k}$ in \eqref{eqn:sequential_posterior}.
 
-\begin{lemma}\label{lemma:complexity}
-		Let $n_A$ and $n_B$ be the number of records in files $A$ and $B$, respectively. Let $F$ be the number of fields used for comparisons across records, and $P$ be the number of patterns that comparison vectors exhibit in $A \times B$. We assume $C$ cores available for parallelization and a Gibbs sampler with $T$ iterations. Then, the overall computational complexity of \texttt{fabl} with hashing is $O(F n_A n_B /C) + O(T P n_B^2/ C)$.
-\end{lemma}
-		%\begin{proof}
-	
-		We consider two steps: constructing the comparison vectors and the Gibbs sampler. The computational complexity of all pairwise comparisons across $A$ and $B$ is $O(F n_A n_B)$. The hashing procedure for all pairwise comparisons is also $O(F n_A n_B)$. With $C$ processors available, we can split these computations across $C$ equally sized partitions and compute these comparisons in parallel, so the complexity becomes $O(F n_A n_B /C)$. There are then trivial computational costs associated with synthesizing summary statistics across these partitions. We note that this contribution to computational complexity applies for all versions of \cite{fellegi_theory_1969} algorithms unless they use blocking to reduce the comparison space.
-			
-			Without hashing, the computational complexity of updating the $\bm{m}$ and $\bm{u}$ parameters is $O(F n_A n_B)$. However, by doing calculations over the agreement patterns rather than the individual records, hashing reduces the overall complexity to $O(P)$. The complexity of updating $\bm{Z}$ sequentially at the record level as in \cite{sadinle_bayesian_2017} is $O(n_A n_B)$. With hashing, we first sample the agreement pattern of the match with complexity $O(n_B P)$, and then we sample the record exhibiting that pattern with complexity $O(n_B)$. Thus, the complexity of sampling $\bm{Z}$ in a single iteration is $O(n_B P)$. Since $P << n_A$ in most applications, we have reduced the complexity of sampling $\bm{Z}$ from $O(F n_A n_B)$ under \texttt{BRL} to $O(n_B P)$ under \texttt{fabl}. With parallelization, this complexity is further reduced to $O(n_B P /C)$, and so the entire Gibbs sampler has complexity $O(T n_B P / C).$
-			In summary, the total computational complexity for \texttt{fabl} is $O(F n_A n_B / C) + O(T n_B P / C).$
-			%\end{proof}
+\subsubsection{Efficient Sampling for $m$ and $u$} \label{app:efficient-m-and-u}
+
+Using the hashing techniques provided in Appendix~\ref{app:hashing} and likelihood as expressed in \eqref{eq:likelihood-hash}, we can perform these updates references in Appendix~\ref{app:derive-m-u} in a more efficient manner. Let $\bm{\alpha_0} = (\alpha_{11}, \ldots, \alpha_{F L_F})$ and $\bm{\beta_0}= (\beta_{11}, \ldots, \beta_{F L_F})$ be concatenated vectors of prior parameters for the $\bm{m}$ and $\bm{u}$ distributions respectively. The terms needed for the posterior updates for the $\bm{m}$ and $\bm{u}$ parameters are given by the appropriate components of the vectors
+\begin{align}
+	\bm{\alpha(\bm{Z})} &= \bm{\alpha_0} + \sum_{p=1}^P n_p\left(\bm{Z} \right) \times e(h_p), \label{efficient_alpha} \\
+	\bm{\beta(\bm{Z})} &= \bm{\beta_0} + \sum_{p=1}^P \left(N_p - n_p\left(\bm{Z}\right)\right) \times e(h_p), \label{efficient_beta}
+\end{align}
+where $n_p(\bm{Z}) = \sum_{i = 1}^{n_A}\sum_{j = 1}^{n_B} I(i \in Z_{j}) I\left(\gamma_{ij} = h_p \right)$ is the number of matching record pairs with agreement pattern $h_p$. Specifically, the $l + \sum_{k=1}^{f-1} L_k$ components of (\ref{efficient_alpha}) and (\ref{efficient_beta}) provide the posterior updates for level $l$ and field $f$ in (\ref{eqn:alpha_update}) and (\ref{eqn:beta_update}). These vectorized summations can be computed more efficiently than summing over $n_A n_B$ record pairs for each field and agreement level.
 
 \subsection{Additional Simulation}\label{app:simulation-2}
 
 We repeat the simulation from Section~\ref{sec:simulations} with a larger proportion of the records in $B$ having matches in $A$. Specifically, we increase the number of such records to 150, rather than 50. As shown in Figures~\ref{fig:sim-vabl-comparison-2} and \ref{fig:sim-multilink-comparison-2}, the precision for \texttt{multilink} without filtering and for \texttt{fastLink} is much better in this setting, but still is not competitive with \texttt{DRL}. 
+
+\brian{I don't really thinking this appendix is necessary}
 
 \begin{figure}[t]
 	\centering
@@ -797,8 +781,11 @@ We repeat the simulation from Section~\ref{sec:simulations} with a larger propor
 
 \subsection{Simulation Traceplots}\label{app:simulation-traceplots}
 
+We provide traceplots for a select a representative linkage task at the high duplication rate from the simulation described in Section~\ref{sec:simulations}. Traceplots for the total number of links, $\bm{\eta}$, $\bm{m}$, and $\bm{u}$ are provided in Figures~\ref{fig:total-match-traceplot} through \ref{fig:u-traceplot}.
 
-Describe behavior of $\eta$ traceplot.
+We note that the variance for $\eta_k$ reflected in the traceplots until $k=7$. This is because as $k$ increases, the sequential sampler acts upon fewer records in $B$, and there are lower counts involved in the posterior update for $\eta_k$. Starting at $k=8$, there are visible stretches of iterations in which $\eta_k$ remains constant. This because one record in $B$ linking to 8 or more records in a rare event, and the sequential sampler generally terminates before then. 
+
+\brian{Serge's paper only provides one traceplot, and Sadinle's doesn't provide any. I'd like to omit $m$ and $u$, as I feel there is nothing interesting to say about them. Also, it turns out that the code I used to generate the data only altered age and occupation by adding missingness, not by adding errors (which is why the $m$ parameters look as they do). This doesn't invalidate the simulation, but it invites questions. I can figure out how to fix that, but it might take a while.}
 
 \begin{figure}[t]
 	\centering
@@ -828,18 +815,8 @@ Describe behavior of $\eta$ traceplot.
 	\label{fig:u-traceplot}
 \end{figure}
 
+\subsection{Case Study Traceplots}
+
+\brian{If I want to include these, I have to re-run the algorithm. I can do that, but I figured I'd send you the updated draft first.}
+
 \end{document}
-
-%In Figure~\ref{fig:sim-multilink-comparison}, we see that \texttt{multilink} without filtering tends to have both poor recall and precision in this setting. With filtering, \texttt{multilink} achieves comparable performance to \texttt{DRL} at the low duplication setting. 
-
-%In these simulations, standard \texttt{fabl} drastically underperforms, so much so we omit results from the figures below. For each record in $B$ with matching records in $A$, the posterior match probability is split between the two matching records. Due to the randomness of the Gibbs sampler, one of the records occasionally has a posterior probability over 0.5 and is thus identified through the Bayes estimate, but often, both records have posterior probability below 0.5. Under \texttt{vabl}, the posterior probability of the two records is cut precisely in half, and thus \texttt{vabl} did not identify any matching record pairs in any of the simulations. Again, these results are omitted.
-
-%We see that \texttt{fastLink} generally has poorer performance than the more complex models at mid to high overlap. In particular, without a post-processing step tailors the scenario where one record in $B$ can match to multiple records in $A$, \texttt{fastLink} tends to produce a large number of false positives, hindering precision, as shown in Figure \ref{fig:sadinle-precision}.
-
-%The performance of \texttt{multilink} is more varied. When using substantive prior information, \texttt{multilink} outperforms \texttt{DRL} in terms of overall F-measure in the medium and high overlap settings. However, when the number of matching records pairs is low, \texttt{multilink} underperforms. This may be because the model being fit is more complex, and so it is more difficult to learn the parameters from such few observations. Notably however, the performance of \texttt{multilink} is highly sensitive to prior specification. When using default settings, \texttt{multilink} showed considerably lower recall and precision at all levels of error and overlap.
-
-
-
-%The "fabl swap" approach here is also strong. It generally has higher recall, but lower precision. This makes sense, because it doesn't need to consecutive matching algorithim in order to find the "multiple matches", but it also doesn't employ any post processing to clean up erroneous matches. In all simulations, multiple match and fabl swap have similar f-measure. (Not sure exactly how I want to analyze that. In NCVR, there is more of a difference.) 
-
-%We see that \texttt{DRL} is a strong alternative to \texttt{multilink} and \texttt{fastLink} in this setting. \texttt{DRL} maintains strong performance even in the low overlap scenario where \texttt{multilink} fails, and outperforms \texttt{fastLink} in terms of F-measure at all levels of error and overlap. We accomplish this through default, uniform priors for the sequence of $\eta_k$ parameters, without needing the informative priors required for \texttt{multilink}. Additionally, the average computation time for 1000 iterations of the Gibbs sampler for \texttt{DRL} was around 30 seconds, while it was around 1000 seconds for \texttt{multilink}. 

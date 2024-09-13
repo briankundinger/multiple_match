@@ -39,7 +39,7 @@ n2 <- hash$n2
 
 ptm <- proc.time()
 print(1)
-chain <- fabl_mm(hash, S = S, burn = burn, max_K = 10)
+chain <- fabl_mm(hash, S = S, burn = burn, max_K = 5)
 saveRDS(chain, "../../../../../usr/xtmp/bak47/mm/ncvr_b_dedupe/chain/fabl_mm_inf")
 seconds <- proc.time() - ptm
 print(2)

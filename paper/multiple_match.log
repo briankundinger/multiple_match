@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  11 SEP 2024 11:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.25)  13 SEP 2024 12:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -217,6 +217,18 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 LaTeX Info: Redefining \[ on input line 2938.
 LaTeX Info: Redefining \] on input line 2939.
 )
+(c:/texlive/2021/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks22
+\thm@bodyfont=\toks23
+\thm@headfont=\toks24
+\thm@notefont=\toks25
+\thm@headpunct=\toks26
+\thm@preskip=\skip53
+\thm@postskip=\skip54
+\thm@headsep=\skip55
+\dth@everypar=\toks27
+)
 (c:/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -239,7 +251,7 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 )
 (c:/texlive/2021/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
-\@enLab=\toks22
+\@enLab=\toks28
 )
 (c:/texlive/2021/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
@@ -279,15 +291,15 @@ nment
 (c:/texlive/2021/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count285
-\float@exts=\toks23
+\float@exts=\toks29
 \float@box=\box52
-\@float@everytoks=\toks24
+\@float@everytoks=\toks30
 \@floatcapt=\box53
 )
 (c:/texlive/2021/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 )
-\@float@every@algorithm=\toks25
+\@float@every@algorithm=\toks31
 \c@algorithm=\count286
 )
 (c:/texlive/2021/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
@@ -297,13 +309,13 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \c@ALG@line=\count287
 \c@ALG@rem=\count288
 \c@ALG@nested=\count289
-\ALG@tlm=\skip53
-\ALG@thistlm=\skip54
+\ALG@tlm=\skip56
+\ALG@thistlm=\skip57
 \c@ALG@Lnr=\count290
 \c@ALG@blocknr=\count291
 \c@ALG@storecount=\count292
 \c@ALG@tmpcounter=\count293
-\ALG@tmplength=\skip55
+\ALG@tmplength=\skip58
 ) (c:/texlive/2021/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
 
@@ -311,7 +323,7 @@ Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (c:/texlive/2021/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
 \c@AlgoLine=\count294
-\algocf@hangindent=\skip56
+\algocf@hangindent=\skip59
 
 (c:/texlive/2021/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
@@ -323,36 +335,36 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 (c:/texlive/2021/texmf-dist/tex/latex/relsize/relsize.sty
 Package: relsize 2013/03/29 ver 4.1
 )
-\skiptotal=\skip57
-\skiplinenumber=\skip58
-\skiprule=\skip59
-\skiphlne=\skip60
-\skiptext=\skip61
-\skiplength=\skip62
-\algomargin=\skip63
-\skipalgocfslide=\skip64
+\skiptotal=\skip60
+\skiplinenumber=\skip61
+\skiprule=\skip62
+\skiphlne=\skip63
+\skiptext=\skip64
+\skiplength=\skip65
+\algomargin=\skip66
+\skipalgocfslide=\skip67
 \algowidth=\dimen167
 \inoutsize=\dimen168
 \inoutindent=\dimen169
 \interspacetitleruled=\dimen170
 \interspacealgoruled=\dimen171
 \interspacetitleboxruled=\dimen172
-\algocf@ruledwidth=\skip65
+\algocf@ruledwidth=\skip68
 \algocf@inoutbox=\box54
 \algocf@inputbox=\box55
-\AlCapSkip=\skip66
-\AlCapHSkip=\skip67
-\algoskipindent=\skip68
+\AlCapSkip=\skip69
+\AlCapHSkip=\skip70
+\algoskipindent=\skip71
 \algocf@nlbox=\box56
 \algocf@hangingbox=\box57
 \algocf@untilbox=\box58
-\algocf@skipuntil=\skip69
+\algocf@skipuntil=\skip72
 \algocf@capbox=\box59
-\algocf@lcaptionbox=\skip70
-\algoheightruledefault=\skip71
-\algoheightrule=\skip72
-\algotitleheightruledefault=\skip73
-\algotitleheightrule=\skip74
+\algocf@lcaptionbox=\skip73
+\algoheightruledefault=\skip74
+\algoheightrule=\skip75
+\algotitleheightruledefault=\skip76
+\algotitleheightrule=\skip77
 \c@algocfline=\count296
 \c@algocfproc=\count297
 \c@algocf=\count298
@@ -361,9 +373,9 @@ Package: relsize 2013/03/29 ver 4.1
 )
 (c:/texlive/2021/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip75
+\multirow@colwidth=\skip78
 \multirow@cntb=\count299
-\multirow@dima=\skip76
+\multirow@dima=\skip79
 \bigstrutjot=\dimen173
 )
 (c:/texlive/2021/texmf-dist/tex/latex/sectsty/sectsty.sty
@@ -386,9 +398,9 @@ Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
 \col@sep=\dimen174
 \ar@mcellbox=\box62
 \extrarowheight=\dimen175
-\NC@list=\toks26
-\extratabsurround=\skip77
-\backup@length=\skip78
+\NC@list=\toks32
+\extratabsurround=\skip80
+\backup@length=\skip81
 \ar@cellbox=\box63
 )
 \TX@col@width=\dimen176
@@ -397,13 +409,13 @@ Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
 \TX@target=\dimen179
 \TX@delta=\dimen180
 \TX@cols=\count300
-\TX@ftn=\toks27
+\TX@ftn=\toks33
 )
 (c:/texlive/2021/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (c:/texlive/2021/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (c:/texlive/2021/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks28
+\pgfutil@everybye=\toks34
 \pgfutil@tempdima=\dimen181
 \pgfutil@tempdimb=\dimen182
 
@@ -423,11 +435,11 @@ Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
 Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks29
-\pgfkeys@temptoks=\toks30
+\pgfkeys@pathtoks=\toks35
+\pgfkeys@temptoks=\toks36
 
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
-\pgfkeys@tmptoks=\toks31
+\pgfkeys@tmptoks=\toks37
 ))
 \pgf@x=\dimen183
 \pgf@y=\dimen184
@@ -445,9 +457,9 @@ Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 \c@pgf@countb=\count302
 \c@pgf@countc=\count303
 \c@pgf@countd=\count304
-\t@pgf@toka=\toks32
-\t@pgf@tokb=\toks33
-\t@pgf@tokc=\toks34
+\t@pgf@toka=\toks38
+\t@pgf@tokb=\toks39
+\t@pgf@tokc=\toks40
 \pgf@sys@id@count=\count305
  (c:/texlive/2021/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
@@ -494,9 +506,9 @@ Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
 \pgfmath@dimen=\dimen193
 \pgfmath@count=\count308
 \pgfmath@box=\box65
-\pgfmath@toks=\toks35
-\pgfmath@stack@operand=\toks36
-\pgfmath@stack@operation=\toks37
+\pgfmath@toks=\toks41
+\pgfmath@stack@operand=\toks42
+\pgfmath@stack@operation=\toks43
 )
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.te
@@ -633,8 +645,8 @@ Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
 \pgffor@iter=\dimen276
 \pgffor@skip=\dimen277
-\pgffor@stack=\toks38
-\pgffor@toks=\toks39
+\pgffor@stack=\toks44
+\pgffor@toks=\toks45
 ))
 (c:/texlive/2021/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
@@ -690,7 +702,7 @@ Package: microtype 2022/03/14 v3.0d Micro-typographical refinements (RS)
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count322
 )
-\MT@toks=\toks40
+\MT@toks=\toks46
 \MT@tempbox=\box75
 \MT@count=\count323
 LaTeX Info: Redefining \noprotrusionifhmode on input line 1027.
@@ -706,7 +718,7 @@ File: microtype-pdftex.def 2022/03/14 v3.0d Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 900.
 LaTeX Info: Redefining \lslig on input line 900.
-\MT@outer@space=\skip79
+\MT@outer@space=\skip82
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
@@ -718,14 +730,14 @@ Package: import 2020/04/01  v 6.2
 )
 (c:/texlive/2021/texmf-dist/tex/latex/titling/titling.sty
 Package: titling 2009/09/04 v2.1d maketitle typesetting
-\thanksmarkwidth=\skip80
-\thanksmargin=\skip81
-\droptitle=\skip82
+\thanksmarkwidth=\skip83
+\thanksmargin=\skip84
+\droptitle=\skip85
 )
 (c:/texlive/2021/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip83
-\bibsep=\skip84
+\bibhang=\skip86
+\bibsep=\skip87
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count325
 )
@@ -860,33 +872,30 @@ File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count330
 \l__pdf_internal_box=\box98
 )
-(./multiple_match.aux
-
-LaTeX Warning: Label `fig:u-traceplot' multiply defined.
-
-)
+(./multiple_match.aux)
 \openout1 = `multiple_match.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-Package hyperref Info: Link coloring OFF on input line 66.
- (c:/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+Package hyperref Info: Link coloring OFF on input line 68.
+
+(c:/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
 (c:/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
@@ -897,9 +906,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count331
 )
-LaTeX Info: Redefining \ref on input line 66.
-LaTeX Info: Redefining \pageref on input line 66.
-LaTeX Info: Redefining \nameref on input line 66.
+LaTeX Info: Redefining \ref on input line 68.
+LaTeX Info: Redefining \pageref on input line 68.
+LaTeX Info: Redefining \nameref on input line 68.
 
 (./multiple_match.out) (./multiple_match.out)
 \@outlinefile=\write4
@@ -913,12 +922,12 @@ LaTeX Info: Redefining \nameref on input line 66.
 \scratchbox=\box99
 \nofMPsegments=\count333
 \nofMParguments=\count334
-\everyMPshowfont=\toks41
+\everyMPshowfont=\toks47
 \MPscratchCnt=\count335
 \MPscratchDim=\dimen290
 \MPnumerator=\count336
 \makeMPintoPDFobject=\count337
-\everyMPtoPDFconversion=\toks42
+\everyMPtoPDFconversion=\toks48
 ) (c:/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -928,18 +937,18 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \microtypecontext on input line 66.
-Package microtype Info: Applying patch `item' on input line 66.
-Package microtype Info: Applying patch `toc' on input line 66.
-Package microtype Info: Applying patch `eqnum' on input line 66.
-Package microtype Info: Applying patch `footnote' on input line 66.
+LaTeX Info: Redefining \microtypecontext on input line 68.
+Package microtype Info: Applying patch `item' on input line 68.
+Package microtype Info: Applying patch `toc' on input line 68.
+Package microtype Info: Applying patch `eqnum' on input line 68.
+Package microtype Info: Applying patch `footnote' on input line 68.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 66.
+LaTeX Info: Redefining \showhyphens on input line 68.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -948,7 +957,7 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 69.
 
 
 (c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -957,7 +966,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (c:/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 69.
 
 
 (c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -981,173 +990,193 @@ Package amsmath Warning: Foreign command \atopwithdelims;
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 234.
+(hyperref)                removing `math shift' on input line 232.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 234.
+(hyperref)                removing `subscript' on input line 232.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 234.
+(hyperref)                removing `math shift' on input line 232.
 
 [9] [10]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 316.
- [11] [12] [13] [14] [15]
-<../figures/poisson_fig1.png, id=427, 307.1475pt x 205.7286pt>
+put line 312.
+ [11] [12] [13] [14] [15] [16]
+<../figures/poisson_fig1.png, id=437, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig1.png Graphic file (type png)
 <use ../figures/poisson_fig1.png>
 Package pdftex.def Info: ../figures/poisson_fig1.png  used on input line 439.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
-<../figures/poisson_fig2.png, id=430, 307.1475pt x 205.7286pt>
+<../figures/poisson_fig2.png, id=440, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig2.png Graphic file (type png)
 <use ../figures/poisson_fig2.png>
 Package pdftex.def Info: ../figures/poisson_fig2.png  used on input line 446.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
- [16] [17 <../figures/poisson_fig1.png>]
-[18 <../figures/poisson_fig2.png>]
-<../figures/poisson_time.png, id=455, 396.2805pt x 193.6836pt>
+ [17] [18 <../figures/poisson_fig1.png>]
+[19 <../figures/poisson_fig2.png>]
+<../figures/poisson_time.png, id=466, 386.4036pt x 172.9662pt>
 File: ../figures/poisson_time.png Graphic file (type png)
 <use ../figures/poisson_time.png>
 Package pdftex.def Info: ../figures/poisson_time.png  used on input line 468.
-(pdftex.def)             Requested size: 369.8174pt x 180.76222pt.
- [19 <../figures/poisson_time.png>] [20]
-<../figures/ncvr_thresholds.png, id=481, 320.1561pt x 153.4533pt>
+(pdftex.def)             Requested size: 369.8174pt x 165.55212pt.
+ [20 <../figures/poisson_time.png>] [21]
+<../figures/ncvr_thresholds.png, id=490, 320.1561pt x 153.4533pt>
 File: ../figures/ncvr_thresholds.png Graphic file (type png)
 <use ../figures/ncvr_thresholds.png>
 Package pdftex.def Info: ../figures/ncvr_thresholds.png  used on input line 510
 .
 (pdftex.def)             Requested size: 416.04016pt x 199.42834pt.
 
-[21 <../figures/ncvr_thresholds.png>] [22] [23] (./multiple_match.bbl [24]
-[25] [26] [27]) [28]
+[22 <../figures/ncvr_thresholds.png>] [23] [24] (./multiple_match.bbl [25]
+[26] [27] [28]) [29]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 546.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 546.
+(hyperref)                removing `math shift' on input line 550.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 546.
+(hyperref)                removing `subscript' on input line 550.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 575.
+(hyperref)                removing `math shift' on input line 550.
+
+[30]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 579.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 575.
+(hyperref)                removing `subscript' on input line 579.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 575.
+(hyperref)                removing `math shift' on input line 579.
 
-[29] [30] [31] [32]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 652.
-
+[31]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 652.
+(hyperref)                removing `math shift' on input line 603.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 652.
-
-[33]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 677.
+(hyperref)                removing `\eta' on input line 603.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\eta' on input line 677.
+(hyperref)                removing `subscript' on input line 603.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 677.
+(hyperref)                removing `math shift' on input line 603.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 677.
-
-[34]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 693.
+(hyperref)                removing `math shift' on input line 619.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 693.
+(hyperref)                removing `math shift' on input line 619.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 693.
+(hyperref)                removing `math shift' on input line 619.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 693.
+(hyperref)                removing `math shift' on input line 619.
 
-[35] [36] [37]
-<../figures/poisson_fig1_app.png, id=618, 307.1475pt x 205.7286pt>
+[32] [33] [34] [35]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 732.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 732.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 732.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 753.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 753.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 753.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 753.
+
+[36] [37]
+<../figures/poisson_fig1_app.png, id=621, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig1_app.png Graphic file (type png)
 <use ../figures/poisson_fig1_app.png>
-Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 78
-6.
+Package pdftex.def Info: ../figures/poisson_fig1_app.png  used on input line 77
+0.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
-<../figures/poisson_fig2_app.png, id=621, 307.1475pt x 205.7286pt>
+<../figures/poisson_fig2_app.png, id=624, 307.1475pt x 205.7286pt>
 File: ../figures/poisson_fig2_app.png Graphic file (type png)
 <use ../figures/poisson_fig2_app.png>
-Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 79
-3.
+Package pdftex.def Info: ../figures/poisson_fig2_app.png  used on input line 77
+7.
 (pdftex.def)             Requested size: 369.8174pt x 247.72064pt.
-<../figures/poisson_total_match_trace.png, id=624, 302.0886pt x 126.2316pt>
+ [38]
+<../figures/poisson_total_match_trace.png, id=641, 302.0886pt x 126.2316pt>
 File: ../figures/poisson_total_match_trace.png Graphic file (type png)
 <use ../figures/poisson_total_match_trace.png>
 Package pdftex.def Info: ../figures/poisson_total_match_trace.png  used on inpu
-t line 805.
+t line 792.
 (pdftex.def)             Requested size: 369.8174pt x 154.54547pt.
-<../figures/poisson_eta_trace.png, id=627, 339.1872pt x 203.0787pt>
+<../figures/poisson_eta_trace.png, id=644, 339.1872pt x 203.0787pt>
 File: ../figures/poisson_eta_trace.png Graphic file (type png)
 <use ../figures/poisson_eta_trace.png>
-Package pdftex.def Info: ../figures/poisson_eta_trace.png  used on input line 8
-12.
+Package pdftex.def Info: ../figures/poisson_eta_trace.png  used on input line 7
+99.
 (pdftex.def)             Requested size: 416.04016pt x 249.11288pt.
-<../figures/poisson_m_trace.png, id=630, 372.6723pt x 171.5208pt>
+<../figures/poisson_m_trace.png, id=647, 372.6723pt x 171.5208pt>
 File: ../figures/poisson_m_trace.png Graphic file (type png)
 <use ../figures/poisson_m_trace.png>
-Package pdftex.def Info: ../figures/poisson_m_trace.png  used on input line 819
+Package pdftex.def Info: ../figures/poisson_m_trace.png  used on input line 806
 .
 (pdftex.def)             Requested size: 416.04016pt x 191.48692pt.
-<../figures/poisson_u_trace.png, id=633, 372.6723pt x 171.5208pt>
+<../figures/poisson_u_trace.png, id=650, 372.6723pt x 171.5208pt>
 File: ../figures/poisson_u_trace.png Graphic file (type png)
 <use ../figures/poisson_u_trace.png>
-Package pdftex.def Info: ../figures/poisson_u_trace.png  used on input line 826
+Package pdftex.def Info: ../figures/poisson_u_trace.png  used on input line 813
 .
 (pdftex.def)             Requested size: 416.04016pt x 191.48692pt.
- [38] [39 <../figures/poisson_fig1_app.png> <../figures/poisson_fig2_app.png>] 
-[40 <../figures/poisson_total_match_trace.png> <../figures/poisson_eta_trace.pn
-g>] [41 <../figures/poisson_m_trace.png> <../figures/poisson_u_trace.png>] (./m
+ [39 <../figures/poisson_fig1_app.png>] [40 <../figures/poisson_fig2_app.png> <
+../figures/poisson_total_match_trace.png>] [41 <../figures/poisson_eta_trace.pn
+g> <../figures/poisson_m_trace.png>] [42 <../figures/poisson_u_trace.png>] (./m
 ultiple_match.aux)
 
-LaTeX Warning: There were multiply-defined labels.
+Package rerunfilecheck Warning: File `multiple_match.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
-Package rerunfilecheck Info: File `multiple_match.out' has not changed.
-(rerunfilecheck)             Checksum: B5F4B4FFDB60318D312B45A2F9CBDD63;4560.
+Package rerunfilecheck Info: Checksums for `multiple_match.out':
+(rerunfilecheck)             Before: 4808AB659138073EB1C46D87687784D0;4598
+(rerunfilecheck)             After:  BF53D8D9AEE6D82CF90EADD227A8CBF9;4767.
  ) 
 Here is how much of TeX's memory you used:
- 27968 strings out of 478276
- 540905 string characters out of 5850489
- 881227 words of memory out of 5000000
- 45326 multiletter control sequences out of 15000+600000
- 489564 words of font info for 172 fonts, out of 8000000 for 9000
+ 28041 strings out of 478276
+ 542088 string characters out of 5850489
+ 882711 words of memory out of 5000000
+ 45395 multiletter control sequences out of 15000+600000
+ 489455 words of font info for 171 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,21n,89p,1336b,535s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,21n,89p,1349b,535s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2021/texmf-dis
@@ -1170,10 +1199,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2021/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmtt12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/a
 msfonts/symbols/msbm10.pfb>
-Output written on multiple_match.pdf (41 pages, 1103985 bytes).
+Output written on multiple_match.pdf (42 pages, 1104683 bytes).
 PDF statistics:
- 801 PDF objects out of 1000 (max. 8388607)
- 667 compressed objects within 7 object streams
- 154 named destinations out of 1000 (max. 500000)
+ 814 PDF objects out of 1000 (max. 8388607)
+ 679 compressed objects within 7 object streams
+ 156 named destinations out of 1000 (max. 500000)
  38751 words of extra memory for PDF output out of 42996 (max. 10000000)
 
